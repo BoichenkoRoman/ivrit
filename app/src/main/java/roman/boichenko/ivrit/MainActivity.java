@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         initNavigationView();
         //   initTabs();
 
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .addToBackStack(null)
