@@ -1,4 +1,4 @@
-package roman.boichenko.remindme.fragments;
+package roman.boichenko.ivrit.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import roman.boichenko.remindme.R;
+import roman.boichenko.ivrit.R;
 
 public class ExampleFragment extends Fragment {
 

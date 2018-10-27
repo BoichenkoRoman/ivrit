@@ -1,4 +1,4 @@
-package roman.boichenko.remindme;
+package roman.boichenko.ivrit;
 
 
 import android.os.Bundle;
@@ -15,10 +15,10 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 
-import roman.boichenko.remindme.adapter.TabsPagerFragmentAdapter;
-import roman.boichenko.remindme.fragments.About;
-import roman.boichenko.remindme.fragments.ExampleFragment;
-import roman.boichenko.remindme.fragments.Test2;
+import roman.boichenko.ivrit.adapter.TabsPagerFragmentAdapter;
+import roman.boichenko.ivrit.fragments.About;
+import roman.boichenko.ivrit.fragments.ExampleFragment;
+import roman.boichenko.ivrit.fragments.Test2;
 
 public class MainActivity extends AppCompatActivity {
     private static final int LAYOUT = R.layout.activity_main;

@@ -1,4 +1,4 @@
-package roman.boichenko.remindme;
+package roman.boichenko.ivrit;
 
 public class Constant {
 

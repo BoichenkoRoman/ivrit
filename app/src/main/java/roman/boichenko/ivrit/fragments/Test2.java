@@ -1,14 +1,11 @@
-package roman.boichenko.remindme.fragments;
+package roman.boichenko.ivrit.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,17 +13,16 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
-import roman.boichenko.remindme.R;
+import roman.boichenko.ivrit.R;
 
 // import roman.boichenko.remindme.MainActivity;
 
-public class About extends Fragment {
+public class Test2 extends Fragment {
     Context context;
   //  WebView WV_about1;
   //  WebView WV_about2;
 
-    private static final String TAG = "MY_TAG About";
+    private static final String TAG = "MY_TAG Test2";
 
     @Override
     public void onAttach(Activity activity) {
@@ -48,7 +44,7 @@ public class About extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.about, container, false);
+        View view = inflater.inflate(R.layout.test2, container, false);
        // ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 
         //   actionBar.show();   // Показать ActionBar

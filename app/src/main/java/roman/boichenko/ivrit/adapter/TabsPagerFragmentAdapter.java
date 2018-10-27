@@ -1,10 +1,10 @@
-package roman.boichenko.remindme.adapter;
+package roman.boichenko.ivrit.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import roman.boichenko.remindme.fragments.ExampleFragment;
+import roman.boichenko.ivrit.fragments.ExampleFragment;
 
 public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
 
