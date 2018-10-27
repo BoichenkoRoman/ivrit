@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <item android:title="Пункт 1">
+        <menu>
+            <item
+                android:id="@+id/search"
+                android:icon="@drawable/ic_search_white_24dp"
+                android:orderInCategory="1"
+                android:title="@string/searchTitle" />
+
+
+
+            <item
+                android:id="@+id/ExampleFragment"
+                android:icon="@drawable/ic_message_text"
+                android:orderInCategory="3"
+                android:title="ExampleFragment" />
+
+            <item
+                android:id="@+id/test2"
+                android:icon="@drawable/ic_message_text"
+                android:orderInCategory="3"
+                android:title="Test2" />
+        </menu>
+    </item>
+
+
+
+
+    <item android:title="Пункт 2">
+    <menu>
+        <item
+            android:id="@+id/nav_share2"
+
+            android:title="Share" />
+        <item
+            android:id="@+id/nav_send2"
+
+            android:title="Send" />
+    </menu>
+</item>
+
+
+
+    <item android:title="Пункт 3">
+        <menu>
+            <item
+                android:id="@+id/nav_share3"
+
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send3"
+
+                android:title="Send" />
+            <item
+                android:id="@+id/about"
+
+                android:title="About" />
+        </menu>
+    </item>
+
+
+
+
+
+
+
+
+
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+
+                android:title="Send" />
+        </menu>
+    </item>
+
+
+
+
+
+
+
+
+
+
+</menu>

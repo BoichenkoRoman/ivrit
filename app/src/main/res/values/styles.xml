@@ -1,0 +1,40 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar" />
+
+    <style name="AppDefault" parent="AppTheme">-
+        Customize your theme here.
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorWhite</item>
+
+
+        <!--  <item name="windowActionBar">false</item>   дефоултный акшен бар не показываеться -->
+    </style>
+
+    <!--<style name="AppRed" parent="AppTheme">- -->
+    <!--Customize your theme here.-->
+    <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+    <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+    <!--<item name="colorAccent">@color/colorAccent</item>-->
+    <!---->
+    <!--<item name="windowActionBar">false</item>   &lt;!&ndash; дефоултный акшен бар не показываеться &ndash;&gt;-->
+    <!--</style>-->
+
+
+    <style name="AppDefault2" parent="AppTheme">-
+        Customize your theme here.
+        <item name="colorPrimary">@color/colorPrimary2</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark2</item>
+        <item name="colorAccent">@color/colorAccent2</item>
+        <item name="colorControlNormal">@color/colorWhite2</item>
+
+
+        <!--  <item name="windowActionBar">false</item>   дефоултный акшен бар не показываеться -->
+    </style>
+
+
+
+</resources>
