@@ -3,16 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="192dp"
     android:orientation="vertical"
-    android:background="@color/colorPrimaryDark2">
+    android:background="@drawable/banderaisrael"
 
+    >
+
+<!--<ImageView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:src="@drawable/banderaisrael"/>-->
 
     <TextView
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="150dp"
         android:layout_marginLeft="20dp"
-        android:textSize="20sp"
+        android:textSize="22sp"
+        android:textColor="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="mymail@mail.com"/>
+        android:text="Изучай иврит свободно"/>
 
 
 
