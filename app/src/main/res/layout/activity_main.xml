@@ -21,7 +21,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary" />
+                android:background="@color/colorPrimary" />
 
 
             <!--<android.support.design.widget.TabLayout-->
@@ -37,8 +37,8 @@
                 android:id="@+id/fragment_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="10dp"
-                android:background="#fff0"></FrameLayout>
+                android:padding="3dp"
+                android:background="#52ecbb"></FrameLayout>
 
         </android.support.design.widget.AppBarLayout>
 

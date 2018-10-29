@@ -4,7 +4,6 @@ package roman.boichenko.ivrit;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -15,14 +14,13 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 
-import roman.boichenko.ivrit.adapter.TabsPagerFragmentAdapter;
-import roman.boichenko.ivrit.fragments.About;
+import roman.boichenko.ivrit.fragments.Words;
 import roman.boichenko.ivrit.fragments.ExampleFragment;
 import roman.boichenko.ivrit.fragments.Test2;
 
 public class MainActivity extends AppCompatActivity {
     private static final int LAYOUT = R.layout.activity_main;
-    private Toolbar toolbar;
+    public static Toolbar toolbar;
     private DrawerLayout drawerLayout;
     FragmentManager fragmentManager;
     private ViewPager viewPager;
@@ -48,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .addToBackStack(null)
-                .add(R.id.fragment_container, new About(), "AddNewMazgan")
+                .add(R.id.fragment_container, new Words(), "AddNewMazgan")
                 .commit();
 
 
@@ -83,19 +81,13 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
                 //  переход по меню из  NavigationView
                 switch (menuItem.getItemId()) {
-                    case R.id.test2:
-                        getSupportFragmentManager()
-                                .beginTransaction()
-                                .addToBackStack(null)
-                                .replace(R.id.fragment_container, new Test2(), "Test2")
-                                .commit();
 
-                        break;
+
                     case R.id.about:
                         getSupportFragmentManager()
                                 .beginTransaction()
                                 .addToBackStack(null)
-                                .replace(R.id.fragment_container, new About(), "About")
+                                .replace(R.id.fragment_container, new Words(), "Words")
                                 .commit();
 
                         break;
@@ -103,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager()
                                 .beginTransaction()
                                 .addToBackStack(null)
-                                .replace(R.id.fragment_container, ExampleFragment.getInstanse(), "About")
+                                .replace(R.id.fragment_container, ExampleFragment.getInstanse(), "Words")
                                 .commit();
 
                         break;

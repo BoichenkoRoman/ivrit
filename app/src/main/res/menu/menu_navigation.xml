@@ -9,7 +9,7 @@
                 android:id="@+id/search"
                 android:icon="@drawable/ic_search_white_24dp"
                 android:orderInCategory="1"
-                android:title="@string/searchTitle" />
+                android:title="Повторение слов" />
 
 
 
@@ -18,12 +18,6 @@
                 android:icon="@drawable/ic_message_text"
                 android:orderInCategory="3"
                 android:title="ExampleFragment" />
-
-            <item
-                android:id="@+id/test2"
-                android:icon="@drawable/ic_message_text"
-                android:orderInCategory="3"
-                android:title="Test2" />
         </menu>
     </item>
 
