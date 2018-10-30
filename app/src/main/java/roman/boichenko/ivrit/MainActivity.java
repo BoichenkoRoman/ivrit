@@ -16,7 +16,7 @@ import android.widget.FrameLayout;
 
 import roman.boichenko.ivrit.fragments.Words;
 import roman.boichenko.ivrit.fragments.ExampleFragment;
-import roman.boichenko.ivrit.fragments.Test2;
+
 
 public class MainActivity extends AppCompatActivity {
     private static final int LAYOUT = R.layout.activity_main;

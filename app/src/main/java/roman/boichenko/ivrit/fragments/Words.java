@@ -2,22 +2,33 @@ package roman.boichenko.ivrit.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 
 import roman.boichenko.ivrit.MainActivity;
 import roman.boichenko.ivrit.R;
 
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.Toast;
+
+import static roman.boichenko.ivrit.R.style.CustomTextView;
 // import roman.boichenko.remindme.MainActivity;
 
 public class Words extends Fragment {
@@ -26,6 +37,8 @@ public class Words extends Fragment {
     //  WebView WV_about2;
     TextView textView;
     TextView textView2;
+
+    GridLayout gridLayout;
     private static final String TAG = "MY_TAG Words";
 
     @Override
@@ -58,6 +71,11 @@ public class Words extends Fragment {
         //    WV_about2 = view.findViewById(R.id.WV_about2);
         //  Toolbar  toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         MainActivity.toolbar.setTitle("Повторение слов");
+        gridLayout = view.findViewById(R.id.gridLayout);
+        //    gridLayout.setColumnCount(10);
+
+        gridLayout.setPadding(10, 10, 10, 10);
+
 
         textView = view.findViewById(R.id.textView);
         textView2 = view.findViewById(R.id.textView2);
@@ -78,8 +96,67 @@ public class Words extends Fragment {
 
 
         String slovo2 = removeМocalization(slovo1);
-        Log.d(TAG, "slovo2: " + slovo2 + "  " + slovo2.length());
+        int slovo_length = slovo2.length();
+        Log.d(TAG, "slovo2: " + slovo2 + "  " + slovo_length);
         textView2.setText(slovo2);
+
+
+        //  GridLayout.setColumnCount(10);
+        // GridLayout.setRowCount(5);
+
+
+        for (int i = 0; i < slovo_length; i++) {
+
+            final TextView txt = new TextView(context, null, R.style.CustomTextView);
+            txt.setId(slovo_length - 1 - i);
+
+            //   Log.d(TAG, "onStart: " + slovo2.charAt(i));
+
+            //    txt.setText(String.valueOf(i));
+            txt.setText(String.valueOf(slovo2.charAt(slovo_length - 1 - i)));
+            txt.setTextSize(25);
+
+            //      txt.setBackgroundResource(R.color.my_color);
+            //   LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+            LayoutParams layoutParams = new LayoutParams(75, 75);
+
+            //    layoutParams.gravity = Gravity.CENTER;
+            //  layoutParams.setMargins(10, 10, 10, 10);
+
+
+
+
+/*
+            txt.setShadowLayer(
+                    10f,   //float radius
+                    15f,  //float dx
+                    15f,  //float dy
+                    0xFFFFFFFF //int color
+            );
+*/
+
+//                txt.setTextAppearance(R.style.CustomTextView);
+
+
+            // layoutParams.setWidth(LayoutParams.WRAP_CONTENT);
+            txt.setGravity(Gravity.CENTER);
+            txt.setLayoutParams(layoutParams);
+            //     txt.setShadowLayer(10, 10, 10, 9999);
+
+
+            txt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View viewIn) {
+                    Log.d(TAG, "1 " + txt.getId());
+                    Toast.makeText(context, txt.getText() + "  " + txt.getId(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            gridLayout.addView(txt);
+
+        }
+
+
     }
 
 

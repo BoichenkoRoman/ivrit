@@ -35,6 +35,14 @@
         <!--  <item name="windowActionBar">false</item>   дефоултный акшен бар не показываеться -->
     </style>
 
+    <style name="CustomTextView">
+        <item name="android:width">75dp</item>
+        <item name="android:height">75dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:paddingLeft">25dp</item>
+        <item name="android:layout_gravity">center</item>
 
+    </style>
 
 </resources>
