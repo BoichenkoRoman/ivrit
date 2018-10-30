@@ -118,7 +118,7 @@ public class Words extends Fragment {
 
             //      txt.setBackgroundResource(R.color.my_color);
             //   LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-            LayoutParams layoutParams = new LayoutParams(75, 75);
+            LayoutParams layoutParams = new LayoutParams(130, LayoutParams.WRAP_CONTENT);
 
             //    layoutParams.gravity = Gravity.CENTER;
             //  layoutParams.setMargins(10, 10, 10, 10);

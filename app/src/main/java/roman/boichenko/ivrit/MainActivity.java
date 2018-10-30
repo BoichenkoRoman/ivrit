@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .addToBackStack(null)
-                .add(R.id.fragment_container, new Words(), "AddNewMazgan")
+             //   .addToBackStack(null)
+                .add(R.id.fragment_container, new Words(), "Words")
                 .commit();
 
 
