@@ -78,9 +78,7 @@ public class Words extends Fragment {
 
 
         String slovo2 = removeМocalization(slovo1);
-
         Log.d(TAG, "slovo2: " + slovo2 + "  " + slovo2.length());
-
         textView2.setText(slovo2);
     }
 
