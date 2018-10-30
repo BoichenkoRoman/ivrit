@@ -72,10 +72,16 @@ public class Words extends Fragment {
         super.onStart();
 
         String slovo1 = "לֶקסִיקוֹן";
-        Log.d(TAG, "slovo1  : " + slovo1);
-        textView.setText(slovo1);
 
-        textView2.setText(removeМocalization(slovo1));
+        textView.setText(slovo1);
+        Log.d(TAG, "slovo1: " + slovo1 + "  " + slovo1.length());
+
+
+        String slovo2 = removeМocalization(slovo1);
+
+        Log.d(TAG, "slovo2: " + slovo2 + "  " + slovo2.length());
+
+        textView2.setText(slovo2);
     }
 
 
