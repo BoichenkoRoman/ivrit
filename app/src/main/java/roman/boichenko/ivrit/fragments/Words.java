@@ -88,7 +88,7 @@ public class Words extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
+        Log.d(TAG, "onStart: ");
         String slovo1 = "לֶקסִיקוֹן";
 
         textView.setText(slovo1);
@@ -96,6 +96,7 @@ public class Words extends Fragment {
 
 
         String slovo2 = removeМocalization(slovo1);
+
         int slovo_length = slovo2.length();
         Log.d(TAG, "slovo2: " + slovo2 + "  " + slovo_length);
         textView2.setText(slovo2);
@@ -104,7 +105,7 @@ public class Words extends Fragment {
         //  GridLayout.setColumnCount(10);
         // GridLayout.setRowCount(5);
 
-
+        gridLayout.removeAllViews();
         for (int i = 0; i < slovo_length; i++) {
 
             final TextView txt = new TextView(context, null, R.style.CustomTextView);
