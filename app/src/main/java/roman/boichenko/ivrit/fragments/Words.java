@@ -146,7 +146,6 @@ public class Words extends Fragment {
                                               // сохраняем текст, введенный до нажатия Enter в переменную
                                               String strWord = editText.getText().toString();
                                               //    Toast.makeText(context, "введеное слово - " + strWord, Toast.LENGTH_SHORT).show();
-
                                               wordVerification(strWord);
                                               return true;
                                           }
