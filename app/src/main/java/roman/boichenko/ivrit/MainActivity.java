@@ -1,6 +1,8 @@
 package roman.boichenko.ivrit;
 
 
+import android.accounts.AccountManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -10,10 +12,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 
+import com.google.android.gms.common.AccountPicker;
+
+import roman.boichenko.ivrit.fragments.Test2;
 import roman.boichenko.ivrit.fragments.Words;
 import roman.boichenko.ivrit.fragments.ExampleFragment;
 
@@ -25,8 +33,9 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     private ViewPager viewPager;
     public static FrameLayout fragment_container;
-
-
+    public static TextView textView_navigation_header;
+    int PICK_ACCOUNT_REQUEST = 1;
+    private static final String TAG = "MY_TAG MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppDefault2); //  указали какая тема по умолчанию
@@ -41,6 +50,16 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
         initNavigationView();
         //   initTabs();
+
+
+        Intent googlePickerIntent = AccountPicker.newChooseAccountIntent(null, null,
+                new String[]{"com.google"},
+                false, null, null, null, null);
+
+        startActivityForResult(googlePickerIntent, PICK_ACCOUNT_REQUEST);
+
+
+
 
 
         getSupportFragmentManager()
@@ -74,7 +93,13 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
+
+        View header = navigationView.getHeaderView(0);
+        textView_navigation_header = (TextView)header.findViewById(R.id.textView_navigation_header);
+
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -82,15 +107,25 @@ public class MainActivity extends AppCompatActivity {
                 //  переход по меню из  NavigationView
                 switch (menuItem.getItemId()) {
 
-
-                    case R.id.about:
+                    case R.id.test2:
                         getSupportFragmentManager()
                                 .beginTransaction()
-                                .addToBackStack(null)
+                              //  .addToBackStack(null)
+                                .replace(R.id.fragment_container, new Test2(), "Test2")
+                                .commit();
+
+                        break;
+
+                    case R.id.spelling_of_words:
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                            //    .addToBackStack(null)
                                 .replace(R.id.fragment_container, new Words(), "Words")
                                 .commit();
 
                         break;
+
+                        /*
                         case R.id.ExampleFragment:
                         getSupportFragmentManager()
                                 .beginTransaction()
@@ -99,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                                 .commit();
 
                         break;
-
+*/
                 }
 
 
@@ -125,4 +160,27 @@ public class MainActivity extends AppCompatActivity {
     private void showNotificationTab() {
         viewPager.setCurrentItem(Constant.TAB_TWO);
     }
+
+
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        Log.d(TAG, "onActivityResult: ");
+
+        if (requestCode == PICK_ACCOUNT_REQUEST && resultCode == RESULT_OK) {
+            String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+
+            //  TextView infoTextView = (TextView) findViewById(R.id.textView);
+            textView_navigation_header.setText(accountName);
+
+       //     Log.d(TAG, "onActivityResult: " + data.getStringExtra(AccountManager.KEY_ACCOUNT_TYPE));
+       //    Log.d(TAG, "onActivityResult: " + data.getStringExtra(AccountManager.KEY_AUTHTOKEN));
+       //     Log.d(TAG, "onActivityResult: " + data.getStringExtra(AccountManager.KEY_USERDATA));
+
+            MainActivity.textView_navigation_header.setText(accountName);
+        }
+    }
+
+
+
+
 }

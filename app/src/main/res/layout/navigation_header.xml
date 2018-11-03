@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="192dp"
-    android:background="@drawable/banderaisrael"
+    android:background="@drawable/banderaisrael_3"
     android:orientation="vertical"
 
     >
@@ -13,19 +13,36 @@
     <!--android:src="@drawable/banderaisrael"/>-->
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="130dp"
         android:shadowColor="#000"
 
         android:shadowDx="0"
         android:shadowDy="0"
-        android:shadowRadius="10"
+        android:shadowRadius="5"
         android:text="@string/text_logo"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
+
+
+        />
+
+    <TextView
+        android:id="@+id/textView_navigation_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:shadowColor="#000"
+
+
+        android:text="11111"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="15sp"
 
 
         />

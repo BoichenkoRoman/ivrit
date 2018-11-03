@@ -5,9 +5,19 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
+   <Button
+       android:id="@+id/buttom_test2"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="акаунт "/>
+
+
+
 <TextView
+    android:id="@+id/text_test2"
     android:padding="5dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Test 2"/>
+    android:text="Test 2"
+   />
 </LinearLayout>

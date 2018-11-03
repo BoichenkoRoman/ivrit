@@ -2,41 +2,32 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-
     <item android:title="Пункт 1">
         <menu>
+
             <item
-                android:id="@+id/search"
+                android:id="@+id/spelling_of_words"
                 android:icon="@drawable/ic_search_white_24dp"
                 android:orderInCategory="1"
-                android:title="Повторение слов" />
-
+                android:title="Правописание слов" />
 
 
             <item
-                android:id="@+id/ExampleFragment"
-                android:icon="@drawable/ic_message_text"
-                android:orderInCategory="3"
-                android:title="ExampleFragment" />
+                android:id="@+id/test2"
+                android:title="Test2" />
         </menu>
     </item>
 
 
-
-
     <item android:title="Пункт 2">
-    <menu>
-        <item
-            android:id="@+id/nav_share2"
+        <menu>
 
-            android:title="Share" />
-        <item
-            android:id="@+id/nav_send2"
+            <item
+                android:id="@+id/nav_send2"
 
-            android:title="Send" />
-    </menu>
-</item>
-
+                android:title="Send" />
+        </menu>
+    </item>
 
 
     <item android:title="Пункт 3">
@@ -49,20 +40,9 @@
                 android:id="@+id/nav_send3"
 
                 android:title="Send" />
-            <item
-                android:id="@+id/about"
 
-                android:title="About" />
         </menu>
     </item>
-
-
-
-
-
-
-
-
 
 
     <item android:title="Communicate">
@@ -77,14 +57,6 @@
                 android:title="Send" />
         </menu>
     </item>
-
-
-
-
-
-
-
-
 
 
 </menu>
