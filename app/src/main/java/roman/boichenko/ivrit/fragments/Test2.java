@@ -29,6 +29,7 @@ import android.widget.TextView;
 import com.google.android.gms.common.AccountPicker;
 
 
+import roman.boichenko.ivrit.External_storage.GetBDwords;
 import roman.boichenko.ivrit.MainActivity;
 import roman.boichenko.ivrit.R;
 
@@ -38,7 +39,7 @@ import static android.app.Activity.RESULT_OK;
 public class Test2 extends Fragment {
     Context context;
     Button button;
-    TextView textView;
+      static TextView textView;
     int PICK_ACCOUNT_REQUEST = 1;
     private static final String TAG = "MY_TAG Test2";
 
@@ -53,7 +54,7 @@ public class Test2 extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        }
+    }
 
     @Nullable
     @Override
@@ -67,27 +68,31 @@ public class Test2 extends Fragment {
 
 
         textView = view.findViewById(R.id.text_test2);
-
-
-
-
         setHasOptionsMenu(true);  // добавляем меню из фрагмента  в наше активити
         return view;
     }
 
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
+        GetBDwords getBDwords = new GetBDwords();
+        getBDwords.getListWords();
+
+
+
+
 
     }
-
-
-
 
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
+    public static void textView_setText(int number) {
+        textView.setText(String.valueOf(number));
     }
 }

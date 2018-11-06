@@ -84,8 +84,6 @@ public class Words extends Fragment {
     public void onStart() {
         super.onStart();
         //Log.d(TAG, "onStart: ");
-
-
         final String slovo1 = "לֶקסִיקוֹן";
 
         textView.setText("лексикон");

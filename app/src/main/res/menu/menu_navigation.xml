@@ -15,6 +15,10 @@
             <item
                 android:id="@+id/test2"
                 android:title="Test2" />
+
+            <item
+                android:id="@+id/Alphabet"
+                android:title="Алфавит" />
         </menu>
     </item>
 
