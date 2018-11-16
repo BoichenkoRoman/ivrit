@@ -1,7 +1,6 @@
 package roman.boichenko.ivrit.External_storage;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import roman.boichenko.ivrit.DTO.Words;
-import roman.boichenko.ivrit.fragments.Test2;
+import roman.boichenko.ivrit.fragments.LearningWords;
 
 
 public class GetBDwords {
@@ -43,7 +42,7 @@ public class GetBDwords {
                         Log.d(TAG, "onResponse: "+ w.toString());
 
                     }
-                    Test2.textView_setText(listWords.size());
+                    LearningWords.textView_setText(listWords.size());
 
 
                 } else {

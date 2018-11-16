@@ -102,7 +102,7 @@ public class Words {
 
     @Override
     public String toString() {
-        return "Words{" +
+        return "SpellingOfWords{" +
                 "id=" + id +
                 ", russian='" + russian + '\'' +
                 ", hebrew='" + hebrew + '\'' +

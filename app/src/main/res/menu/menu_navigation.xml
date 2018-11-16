@@ -4,18 +4,14 @@
 
     <item android:title="Пункт 1">
         <menu>
-
             <item
                 android:id="@+id/spelling_of_words"
                 android:icon="@drawable/ic_search_white_24dp"
                 android:orderInCategory="1"
                 android:title="Правописание слов" />
-
-
             <item
                 android:id="@+id/test2"
                 android:title="Test2" />
-
             <item
                 android:id="@+id/Alphabet"
                 android:title="Алфавит" />
@@ -28,7 +24,6 @@
 
             <item
                 android:id="@+id/nav_send2"
-
                 android:title="Send" />
         </menu>
     </item>

@@ -29,7 +29,7 @@ import roman.boichenko.ivrit.R;
 
 import android.widget.LinearLayout.LayoutParams;
 
-public class Words extends Fragment {
+public class SpellingOfWords extends Fragment {
     Context context;
 
     TextView textView;
@@ -43,7 +43,7 @@ public class Words extends Fragment {
 
     EditText editText;
 
-    private static final String TAG = "MY_TAG Words";
+    private static final String TAG = "MY_TAG SpellingOfWords";
 
     @Override
     public void onAttach(Activity activity) {
@@ -189,6 +189,7 @@ public class Words extends Fragment {
 
 
     private void hideKeyboard() {
+        //скрыть клавиатуру
         Activity activity = getActivity();
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         try {
@@ -219,7 +220,7 @@ public class Words extends Fragment {
 
     public void buttononClick() {
         //   Toast.makeText(context, "111", Toast.LENGTH_SHORT).show();
-        //  Log.d(TAG, "buttononClick: 111");
+      //  Log.d(TAG, "buttononClick: 111");
         wordVerification("");
     }
 

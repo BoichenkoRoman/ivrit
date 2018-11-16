@@ -20,11 +20,10 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 
-import com.google.android.gms.common.AccountPicker;
+import com.idescout.sql.SqlScoutServer;
 
-import roman.boichenko.ivrit.fragments.Test2;
-import roman.boichenko.ivrit.fragments.Words;
-import roman.boichenko.ivrit.fragments.ExampleFragment;
+import roman.boichenko.ivrit.fragments.LearningWords;
+import roman.boichenko.ivrit.fragments.SpellingOfWords;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -37,31 +36,32 @@ public class MainActivity extends AppCompatActivity {
     public static TextView textView_navigation_header;
     int PICK_ACCOUNT_REQUEST = 1;
     private static final String TAG = "MY_TAG MainActivity";
-    public static String accountName;
-
+    public static String accountName = "123@123.ru";
+    private SqlScoutServer sqlScoutServer;
+  //  WordDB db2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppDefault2); //  указали какая тема по умолчанию
 
+        sqlScoutServer = SqlScoutServer.create(this, getPackageName());
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
 
         fragment_container = findViewById(R.id.fragment_container);
-        /* */
 
 
         initToolbar();
         initNavigationView();
 
         // для   выбора акаунта  google
-        Intent googlePickerIntent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"}, false, null, null, null, null);
-        startActivityForResult(googlePickerIntent, PICK_ACCOUNT_REQUEST);
+        //  Intent googlePickerIntent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"}, false, null, null, null, null);
+        //  startActivityForResult(googlePickerIntent, PICK_ACCOUNT_REQUEST);
 
 
         getSupportFragmentManager()
                 .beginTransaction()
                 //   .addToBackStack(null)
-                .add(R.id.fragment_container, new Test2(), "Words")
+                .add(R.id.fragment_container, new LearningWords(), "SpellingOfWords")
                 .commit();
 
 
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager()
                                 .beginTransaction()
                                 //  .addToBackStack(null)
-                                .replace(R.id.fragment_container, new Test2(), "Test2")
+                                .replace(R.id.fragment_container, new LearningWords(), "LearningWords")
                                 .commit();
                         break;
 
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager()
                                 .beginTransaction()
                                 //    .addToBackStack(null)
-                                .replace(R.id.fragment_container, new Words(), "Words")
+                                .replace(R.id.fragment_container, new SpellingOfWords(), "SpellingOfWords")
                                 .commit();
                         break;
                 }
@@ -139,11 +139,9 @@ public class MainActivity extends AppCompatActivity {
 
             //  TextView infoTextView = (TextView) findViewById(R.id.textView);
             textView_navigation_header.setText(accountName);
-
             //     Log.d(TAG, "onActivityResult: " + data.getStringExtra(AccountManager.KEY_ACCOUNT_TYPE));
             //    Log.d(TAG, "onActivityResult: " + data.getStringExtra(AccountManager.KEY_AUTHTOKEN));
             //     Log.d(TAG, "onActivityResult: " + data.getStringExtra(AccountManager.KEY_USERDATA));
-
             textView_navigation_header.setText(accountName);
         }
     }
@@ -160,5 +158,37 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
+
+    @Override
+    protected void onResume() {
+        sqlScoutServer.resume();
+        super.onResume();
+
+        //   db2.getCatDAO().add(new Word(1, "Барсик", 7, "Рэгдолл"));
+       //    db2.getCatDAO().add(new Word(2, "Васька", 5, "Мейнкун"));
+       //     db2.getCatDAO().add(new Word(30, "Мурзик", 2, "Бирма"));
+
+
+//
+
+    }
+
+    @Override
+    protected void onPause() {
+        sqlScoutServer.destroy();
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        sqlScoutServer.destroy();
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        sqlScoutServer.destroy();
+        super.onDestroy();
+    }
 
 }
