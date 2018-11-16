@@ -12,24 +12,48 @@ public class Word {
     public  //( autoGenerate = true)
             int id;
 
-    public String name;
+    public String russian;
+    public String hebrew;
+    public String hebrewPlural;
+    public String transcription;
+    public String transcriptionPlural;
+    public String gender;
+    public String theme;
+    public String example;
+    public long timeStamp;
+    public int waiting_time;
 
-    @ColumnInfo(name = "number")
-    int number;
 
-//    String breed;
-
-  //  @Ignore
- //   private String gender;
-
-    public Word(int id, String name, int number) {
-
+    public Word(int id, String russian, String hebrew, String hebrewPlural, String transcription, String transcriptionPlural, String gender, String theme, String example, long timeStamp, int waiting_time) {
         this.id = id;
-        this.name = name;
-        this.number = number;
-       // this.breed = breed;
+        this.russian = russian;
+        this.hebrew = hebrew;
+        this.hebrewPlural = hebrewPlural;
+        this.transcription = transcription;
+        this.transcriptionPlural = transcriptionPlural;
+        this.gender = gender;
+        this.theme = theme;
+        this.example = example;
+        this.timeStamp = timeStamp;
+        this.waiting_time = waiting_time;
     }
 
+    @Override
+    public String toString() {
+        return "Word{" +
+                "id=" + id +
+                ", russian='" + russian + '\'' +
+                ", hebrew='" + hebrew + '\'' +
+                ", hebrewPlural='" + hebrewPlural + '\'' +
+                ", transcription='" + transcription + '\'' +
+                ", transcriptionPlural='" + transcriptionPlural + '\'' +
+                ", gender='" + gender + '\'' +
+                ", theme='" + theme + '\'' +
+                ", example='" + example + '\'' +
+                ", timeStamp=" + timeStamp +
+                ", waiting_time=" + waiting_time +
+                '}';
+    }
 }
 
 

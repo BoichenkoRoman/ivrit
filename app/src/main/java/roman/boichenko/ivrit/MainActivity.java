@@ -4,6 +4,7 @@ package roman.boichenko.ivrit;
 import android.accounts.AccountManager;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -22,10 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.google.android.gms.common.AccountPicker;
 import com.idescout.sql.SqlScoutServer;
 
-import roman.boichenko.ivrit.DTO.wordsBD.Word;
 import roman.boichenko.ivrit.DTO.wordsBD.WordDB;
 import roman.boichenko.ivrit.External_storage.GetBDwords;
 import roman.boichenko.ivrit.fragments.LearningWords;
@@ -44,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MY_TAG MainActivity";
     public static String accountName = "123@123.ru";
     private SqlScoutServer sqlScoutServer;
-    WordDB db;
+    public  static WordDB db;
+    SharedPreferences sPref;
+    final String SharedPreferences_BD = "SharedPreferences_BD";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
         initNavigationView();
 
         // для   выбора акаунта  google
-     //   Intent googlePickerIntent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"}, false, null, null, null, null);
-      //   startActivityForResult(googlePickerIntent, PICK_ACCOUNT_REQUEST);
+        //   Intent googlePickerIntent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"}, false, null, null, null, null);
+        //   startActivityForResult(googlePickerIntent, PICK_ACCOUNT_REQUEST);
 
 
     }
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     private void initNavigationView() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         //  drawerLayout.setScrimColor(3333);
-       // drawerLayout.setDrawerElevation(0f);
+        // drawerLayout.setDrawerElevation(0f);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.view_navigation_open, R.string.view_navigation_close);
         drawerLayout.setDrawerListener(toggle);
@@ -164,23 +165,48 @@ public class MainActivity extends AppCompatActivity {
         sqlScoutServer.resume();
         super.onResume();
 
-
         db = Room.databaseBuilder(this, WordDB.class, "words_db")
                 .allowMainThreadQueries()  //получить доступ к базе данных в основном потоке с помощью
                 .build();
 
-        //    db.getWordDAO().add(new Word(1, "слово 1 ", 7));
-        //    db.getWordDAO().add(new Word(2, "слово 2", 7));
-        //    db.getWordDAO().add(new Word(77, "слово 3", 7));
+        if (!read_SP_BD()) {
+            Log.d(TAG, "onResume: запись в базу данных новых слов ");
+            //    db.getWordDAO().add(new Word(1, "слово 1 ", 7));
+            //    db.getWordDAO().add(new Word(2, "слово 2", 7));
+            //   db.getWordDAO().add(new Word(77, "слово 3", 7));
+            save_SP_BD();
 
-        // запрос слов с сервера
-        //  GetBDwords getBDwords = new GetBDwords();
-        //  getBDwords.getListWords();
+            // запрос слов с сервера
+            GetBDwords getBDwords = new GetBDwords();
+            getBDwords.getListWords();
+
+        }
+
+
+
         getSupportFragmentManager()
                 .beginTransaction()
-                //   .addToBackStack(null)
-                .add(R.id.fragment_container, LearningWords.newInstance(db), "SpellingOfWords")
+                //  .addToBackStack(null)
+                .replace(R.id.fragment_container, LearningWords.newInstance(db), "LearningWords")
                 .commit();
+    }
+
+
+
+
+
+    private boolean read_SP_BD() {
+        sPref = getPreferences(MODE_PRIVATE);
+        boolean saved_db = sPref.getBoolean(SharedPreferences_BD, false);
+
+        return saved_db;
+    }
+
+    private void save_SP_BD() {
+        sPref = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+        ed.putBoolean(SharedPreferences_BD, true);
+        ed.commit();
     }
 
     @Override
@@ -200,8 +226,6 @@ public class MainActivity extends AppCompatActivity {
         sqlScoutServer.destroy();
         super.onDestroy();
     }
-
-
 
 
 }

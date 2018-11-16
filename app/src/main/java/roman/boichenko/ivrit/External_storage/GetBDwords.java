@@ -9,13 +9,13 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import roman.boichenko.ivrit.DTO.Words;
-import roman.boichenko.ivrit.fragments.LearningWords;
+import roman.boichenko.ivrit.DTO.wordsBD.Word;
+import roman.boichenko.ivrit.MainActivity;
 
 
 public class GetBDwords {
     private static final String TAG = "MY_TAG GetBDwords";
-    public static ArrayList<Words> listWords = new ArrayList<>();
+    private static ArrayList<Word> listWords = new ArrayList<>();
 
     public GetBDwords() {
         //getListWords();
@@ -23,26 +23,27 @@ public class GetBDwords {
 
 
     public void getListWords() {
-        HttpProvider.getInstance().getListWords(new Callback<List<Words>>() {
+        HttpProvider.getInstance().getListWords(new Callback<List<Word>>() {
             @Override
-            public void onResponse(Call<List<Words>> call, Response<List<Words>> response) {
-                Log.d(TAG, "onResponse:  response.body" +response.body());
-                Log.d(TAG, "onResponse:  response.message" +response.message());
-                Log.d(TAG, "onResponse:  response" +response);
-                Log.d(TAG, "onResponse:  errorBody" +response.errorBody());
-
-
+            public void onResponse(Call<List<Word>> call, Response<List<Word>> response) {
+                //    Log.d(TAG, "onResponse:  response.body" + response.body());
+                //   Log.d(TAG, "onResponse:  response.message" + response.message());
+                //   Log.d(TAG, "onResponse:  response" + response);
+                //   Log.d(TAG, "onResponse:  errorBody" + response.errorBody());
 
                 if (response.isSuccessful()) {
                     // TODO
                     listWords.addAll(response.body());
 
-                    for (Words w : listWords
-                         ) {
-                        Log.d(TAG, "onResponse: "+ w.toString());
-
+                    for (Word w : listWords) {
+                      //  Log.d(TAG, "onResponse: " + w.toString());
                     }
-                    LearningWords.textView_setText(listWords.size());
+
+                    Log.d(TAG, "onResponse: listWords.size() " + listWords.size());
+
+              MainActivity.db.getWordDAO().insertAll(listWords);
+             //   LearningWords.textView_setText(listWords.size());
+
 
 
                 } else {
@@ -56,10 +57,11 @@ public class GetBDwords {
             }
 
             @Override
-            public void onFailure(Call<List<Words>> call, Throwable t) {
+            public void onFailure(Call<List<Word>> call, Throwable t) {
                 showError(" Connection error!");
             }
         });
+
     }
 
 
