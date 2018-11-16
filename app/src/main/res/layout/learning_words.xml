@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/text_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Test 2" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint=" что вести " />
+
+        <Button
+            android:id="@+id/buttom_test3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="отправить" />
+
+    </LinearLayout>
+
+
+    <!-- показать ответ -->
+    <LinearLayout
+        android:id="@+id/LL_show_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+      >
+
+        <Button
+            android:id="@+id/button_show_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="показать ответ" />
+
+
+    </LinearLayout>
+
+
+    <!-- отложить слово на время  -->
+    <LinearLayout
+        android:id="@+id/LL_time_for_words"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:visibility="invisible"
+        android:textColor="@color/colorWhite">
+
+
+        <Button
+            android:id="@+id/button_10"
+            style="@style/CustomButton"
+            android:background="@color/Button_1"
+           />
+
+        <Button
+            android:id="@+id/button_11"
+            style="@style/CustomButton"
+            android:background="@color/Button_2"
+            android:text="трудно" />
+
+        <Button
+
+            android:id="@+id/button_12"
+            style="@style/CustomButton"
+            android:background="@color/Button_3"
+            android:text="Хорошо" />
+
+        <Button
+            android:id="@+id/button_13"
+            style="@style/CustomButton"
+            android:background="@color/Button_4"
+            android:text="Легко" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

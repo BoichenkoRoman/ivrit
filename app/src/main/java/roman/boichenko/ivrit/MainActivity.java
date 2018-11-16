@@ -2,6 +2,7 @@ package roman.boichenko.ivrit;
 
 
 import android.accounts.AccountManager;
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,10 +19,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
+import com.google.android.gms.common.AccountPicker;
 import com.idescout.sql.SqlScoutServer;
 
+import roman.boichenko.ivrit.DTO.wordsBD.Word;
+import roman.boichenko.ivrit.DTO.wordsBD.WordDB;
+import roman.boichenko.ivrit.External_storage.GetBDwords;
 import roman.boichenko.ivrit.fragments.LearningWords;
 import roman.boichenko.ivrit.fragments.SpellingOfWords;
 
@@ -38,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MY_TAG MainActivity";
     public static String accountName = "123@123.ru";
     private SqlScoutServer sqlScoutServer;
-  //  WordDB db2;
+    WordDB db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppDefault2); //  указали какая тема по умолчанию
@@ -54,15 +61,8 @@ public class MainActivity extends AppCompatActivity {
         initNavigationView();
 
         // для   выбора акаунта  google
-        //  Intent googlePickerIntent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"}, false, null, null, null, null);
-        //  startActivityForResult(googlePickerIntent, PICK_ACCOUNT_REQUEST);
-
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                //   .addToBackStack(null)
-                .add(R.id.fragment_container, new LearningWords(), "SpellingOfWords")
-                .commit();
+     //   Intent googlePickerIntent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"}, false, null, null, null, null);
+      //   startActivityForResult(googlePickerIntent, PICK_ACCOUNT_REQUEST);
 
 
     }
@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
+                Toast.makeText(MainActivity.this, "Поиск слова", Toast.LENGTH_SHORT).show();
+                //TODO
                 return false;
             }
         });
@@ -81,9 +83,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initNavigationView() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
         //  drawerLayout.setScrimColor(3333);
-        // drawerLayout.setDrawerElevation(0f);
+       // drawerLayout.setDrawerElevation(0f);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.view_navigation_open, R.string.view_navigation_close);
         drawerLayout.setDrawerListener(toggle);
@@ -91,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
-
         View header = navigationView.getHeaderView(0);
         textView_navigation_header = (TextView) header.findViewById(R.id.textView_navigation_header);
 
@@ -102,11 +102,11 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
                 //  переход по меню из  NavigationView
                 switch (menuItem.getItemId()) {
-                    case R.id.test2:
+                    case R.id.learning_words:  // запоминание слов
                         getSupportFragmentManager()
                                 .beginTransaction()
                                 //  .addToBackStack(null)
-                                .replace(R.id.fragment_container, new LearningWords(), "LearningWords")
+                                .replace(R.id.fragment_container, LearningWords.newInstance(db), "LearningWords")
                                 .commit();
                         break;
 
@@ -164,13 +164,23 @@ public class MainActivity extends AppCompatActivity {
         sqlScoutServer.resume();
         super.onResume();
 
-        //   db2.getCatDAO().add(new Word(1, "Барсик", 7, "Рэгдолл"));
-       //    db2.getCatDAO().add(new Word(2, "Васька", 5, "Мейнкун"));
-       //     db2.getCatDAO().add(new Word(30, "Мурзик", 2, "Бирма"));
 
+        db = Room.databaseBuilder(this, WordDB.class, "words_db")
+                .allowMainThreadQueries()  //получить доступ к базе данных в основном потоке с помощью
+                .build();
 
-//
+        //    db.getWordDAO().add(new Word(1, "слово 1 ", 7));
+        //    db.getWordDAO().add(new Word(2, "слово 2", 7));
+        //    db.getWordDAO().add(new Word(77, "слово 3", 7));
 
+        // запрос слов с сервера
+        //  GetBDwords getBDwords = new GetBDwords();
+        //  getBDwords.getListWords();
+        getSupportFragmentManager()
+                .beginTransaction()
+                //   .addToBackStack(null)
+                .add(R.id.fragment_container, LearningWords.newInstance(db), "SpellingOfWords")
+                .commit();
     }
 
     @Override
@@ -190,5 +200,8 @@ public class MainActivity extends AppCompatActivity {
         sqlScoutServer.destroy();
         super.onDestroy();
     }
+
+
+
 
 }
