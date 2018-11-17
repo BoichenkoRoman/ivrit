@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.common.AccountPicker;
 import com.idescout.sql.SqlScoutServer;
 
 import roman.boichenko.ivrit.DTO.wordsBD.WordDB;
@@ -42,12 +43,15 @@ public class MainActivity extends AppCompatActivity {
     public static TextView textView_navigation_header;
     int PICK_ACCOUNT_REQUEST = 1;
     private static final String TAG = "MY_TAG MainActivity";
-    public static String accountName = "123@123.ru";
+
     private SqlScoutServer sqlScoutServer;
     public static WordDB db;
+
     SharedPreferences sPref;
     static final String SharedPreferences_BD = "SharedPreferences_BD";
 
+    public static String accountName = "123@123.ru";
+    public static boolean admin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
         initNavigationView();
 
         // для   выбора акаунта  google
-        //   Intent googlePickerIntent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"}, false, null, null, null, null);
-        //   startActivityForResult(googlePickerIntent, PICK_ACCOUNT_REQUEST);
+     //   Intent googlePickerIntent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"}, false, null, null, null, null);
+      //  startActivityForResult(googlePickerIntent, PICK_ACCOUNT_REQUEST);
 
 
     }
@@ -109,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager()
                                 .beginTransaction()
                                 //  .addToBackStack(null)
-                                .replace(R.id.fragment_container, LearningWords.newInstance(db), "LearningWords")
+                                .replace(R.id.fragment_container, new Learning(), "LearningWords")
                                 .commit();
                         break;
 
@@ -126,11 +130,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-/*
-    private void showNotificationTab() {
-        viewPager.setCurrentItem(Constant.TAB_TWO);
-    }
-*/
 
     @Override
     // для   выбора акаунта  google
@@ -139,13 +138,18 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == PICK_ACCOUNT_REQUEST && resultCode == RESULT_OK) {
             accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
-
             //  TextView infoTextView = (TextView) findViewById(R.id.textView);
             textView_navigation_header.setText(accountName);
             //     Log.d(TAG, "onActivityResult: " + data.getStringExtra(AccountManager.KEY_ACCOUNT_TYPE));
             //    Log.d(TAG, "onActivityResult: " + data.getStringExtra(AccountManager.KEY_AUTHTOKEN));
             //     Log.d(TAG, "onActivityResult: " + data.getStringExtra(AccountManager.KEY_USERDATA));
             textView_navigation_header.setText(accountName);
+
+            if (accountName.equals("boichenko.roman@gmail.com")) {
+                admin = true;
+            }
+
+
         }
     }
 
@@ -176,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
             save_SP_BD();
 
             // запрос слов с сервера
-            GetBDwords getBDwords = new GetBDwords();
+            GetBDwords getBDwords = new GetBDwords(this);
             getBDwords.getListWords();
 
         } else {

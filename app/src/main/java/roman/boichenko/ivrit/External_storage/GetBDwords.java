@@ -1,5 +1,6 @@
 package roman.boichenko.ivrit.External_storage;
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -12,14 +13,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import roman.boichenko.ivrit.DTO.wordsBD.Word;
 import roman.boichenko.ivrit.MainActivity;
+import roman.boichenko.ivrit.fragments.Learning.LearningWords;
 
 
 public class GetBDwords {
     private static final String TAG = "MY_TAG GetBDwords";
     private static ArrayList<Word> listWords = new ArrayList<>();
+    private Context context;
 
-    public GetBDwords() {
-        //getListWords();
+    public GetBDwords(Context context) {
+        this.context = context;
     }
 
 
@@ -43,7 +46,7 @@ public class GetBDwords {
                     Log.d(TAG, "onResponse: база загружена размер  " + listWords.size());
 
                     MainActivity.db.getWordDAO().insertAll(listWords);
-                    //   LearningWords.textView_setText(listWords.size());
+                    Toast.makeText(context, "Pагружено слов: " + listWords.size(), Toast.LENGTH_LONG).show();
 
                 } else {
                     showError("Server error");

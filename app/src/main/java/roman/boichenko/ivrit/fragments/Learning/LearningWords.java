@@ -22,6 +22,7 @@ import java.sql.Timestamp;
 
 import roman.boichenko.ivrit.DTO.wordsBD.Word;
 import roman.boichenko.ivrit.DTO.wordsBD.WordDB;
+import roman.boichenko.ivrit.MainActivity;
 import roman.boichenko.ivrit.R;
 
 public class LearningWords extends Fragment {
@@ -44,7 +45,7 @@ public class LearningWords extends Fragment {
     private static final String TAG = "MY_TAG LearningWords";
     WordDB db;
     private Word word;
-
+/*
     public static LearningWords newInstance(WordDB db) {
         Bundle args = new Bundle();
         LearningWords fragment = new LearningWords();
@@ -52,7 +53,7 @@ public class LearningWords extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
+*/
 
     // waiting_time в секундах
     int[] waiting_time = {
@@ -85,11 +86,12 @@ public class LearningWords extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        db = MainActivity.db;
     }
 
-    @Nullable
+  //  @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView( LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.learning_words, container, false);
 
         LL_show_answer = view.findViewById(R.id.LL_show_answer);
@@ -121,7 +123,7 @@ public class LearningWords extends Fragment {
         button_13 = view.findViewById(R.id.button_13);
 
 
-    //    setHasOptionsMenu(true);  // добавляем меню из фрагмента  в наше активити
+        //    setHasOptionsMenu(true);  // добавляем меню из фрагмента  в наше активити
         return view;
     }
 
@@ -133,22 +135,26 @@ public class LearningWords extends Fragment {
 
 
         int limit = 1;
-        long timestamp = getCurrentTimeStamp();    //  timestamp  время
+        long timestamp = Learning.other.getCurrentTimeStamp();    //  timestamp  время
         int count = db.getWordDAO().count(timestamp);
 
         word = db.getWordDAO().getWordByTimeStamp(timestamp, limit);
         Log.d(TAG, "onResponse   11111: " + word.toString());
 
-        String string_info = " ";
-        string_info += "id " + word.id + "  ";
-        string_info += "count  " + count + "  ";
-        string_info += "waiting_time  " + word.waiting_time + "  ";
-        //   text_info_2.setText(String.valueOf(timestamp));
 
-        text_hebrew.setText(String.valueOf(word.hebrew));
-        text_russian.setText(String.valueOf(word.russian));
-        text_transcription.setText(String.valueOf(word.transcription));
-        text_info_1.setText(string_info);
+        if (MainActivity.admin) {
+            String string_info = " ";
+            string_info += "id " + word.id + "  ";
+            string_info += "count  " + count + "  ";
+            string_info += "waiting_time  " + word.waiting_time + "  ";
+            //   text_info_2.setText(String.valueOf(timestamp));
+            text_info_1.setText(string_info);
+        }
+
+            text_hebrew.setText(String.valueOf(word.hebrew));
+            text_russian.setText(String.valueOf(word.russian));
+            text_transcription.setText(String.valueOf(word.transcription));
+
 
 
         if (word.waiting_time >= 11) {
@@ -164,70 +170,44 @@ public class LearningWords extends Fragment {
 
         button_10.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Toast.makeText(context, "СНОВА", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(context, "СНОВА", Toast.LENGTH_SHORT).show();
                 setTimeStamp(waiting_time[0] * 1000L, 0);
             }
         });
         button_11.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Toast.makeText(context, "ТРУДНО", Toast.LENGTH_SHORT).show();
-
                 setTimeStamp(waiting_time[word.waiting_time + 1] * 1000L, word.waiting_time + 1);
             }
         });
         button_12.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //  Toast.makeText(context, "ХОРОШО", Toast.LENGTH_SHORT).show();
-
                 setTimeStamp(waiting_time[word.waiting_time + 2] * 1000L, word.waiting_time + 2);
             }
         });
         button_13.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //    Toast.makeText(context, "ЛЕГКО", Toast.LENGTH_SHORT).show();
-
                 setTimeStamp(waiting_time[word.waiting_time + 3] * 1000L, word.waiting_time + 3);
             }
         });
     }
 
     private void setTimeStamp(long time, int waiting_time) {
-        //   Log.d(TAG, "setTimeStamp: time  " + time);
-        //   Log.d(TAG, "setTimeStamp: waiting_time  " + waiting_time);
-        long timestamp3 = getCurrentTimeStamp();
-        //  Log.d(TAG, "getCurrentTimeStamp: " + timestamp3);
-        //   Toast.makeText(context, "" + time, Toast.LENGTH_SHORT).show();
+        long timestamp3 = Learning.other.getCurrentTimeStamp();
         db.getWordDAO().updateWord(word.id, timestamp3 + time, waiting_time);
 
         getFragmentManager().
                 beginTransaction()
                 //  .addToBackStack(null)
-                .replace(R.id.fragment_container, LearningWords.newInstance(db), "LearningWords")
+                .replace(R.id.fragment_container, new Learning(), "LearningWords")
                 .commit();
     }
 
-    /*
-        @Override
-        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-            super.onCreateOptionsMenu(menu, inflater);
-        }
-    */
-/*
-    public void textView_setText(int number) {
-        text_hebrew.setText(String.valueOf(number));
-    }
-*/
-    public long getCurrentTimeStamp() {
-        try {
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            long timestamp3 = timestamp.getTime();
 
-            return timestamp3;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
+    public static void textView_setText(int number) {
 
+    }
 
 }

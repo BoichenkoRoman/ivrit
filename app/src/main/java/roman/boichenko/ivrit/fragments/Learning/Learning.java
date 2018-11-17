@@ -17,6 +17,7 @@ import roman.boichenko.ivrit.R;
 public class Learning extends Fragment {
     Context context;
     private static final String TAG = "MY_TAG Learning";
+    protected static Other other;
 
     @Override
     public void onAttach(Activity activity) {
@@ -33,7 +34,7 @@ public class Learning extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.learning_words, container, false);
+    View view = inflater.inflate(R.layout.learning, container, false);
 
 
         MainActivity.toolbar.setTitle("Запоминание  слов");
@@ -47,14 +48,14 @@ public class Learning extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
+        other = new Other();
 
         Log.d(TAG, "onResume: ");
 
         getFragmentManager().
                 beginTransaction()
                 //  .addToBackStack(null)
-                .replace(R.id.fragment_container, LearningWords.newInstance(MainActivity.db), "LearningWords")
+                .replace(R.id.fragment_container, new LearningWords(), "LearningWords")
                 .commit();
 
 
