@@ -42,14 +42,14 @@ public interface WordDAO {
     @Query("SELECT COUNT(*) FROM wordsTable WHERE  timeStamp <=:timeStamp ")
     int count(long timeStamp);
 
-
+/*
     // получение   записей по   timeStamp    меньше текушей   и ограничение по лимиту
     @Query("SELECT * FROM wordsTable WHERE  timeStamp <=:timeStamp LIMIT :limit")
     List<Word> getWordsByTimeStamp(long timeStamp, int limit);
-
-
+*/
+//SELECT * FROM `table` ORDER BY RAND() LIMIT 5
     // получение   записей по   timeStamp    меньше текушей   и ограничение по лимиту
-    @Query("SELECT * FROM wordsTable WHERE  timeStamp <=:timeStamp LIMIT :limit")
+    @Query("SELECT * FROM wordsTable  WHERE  timeStamp <=:timeStamp  LIMIT :limit")
     Word getWordByTimeStamp(long timeStamp, int limit);
 
 

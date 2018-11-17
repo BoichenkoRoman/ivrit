@@ -1,6 +1,7 @@
 package roman.boichenko.ivrit.External_storage;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,15 +37,13 @@ public class GetBDwords {
                     listWords.addAll(response.body());
 
                     for (Word w : listWords) {
-                      //  Log.d(TAG, "onResponse: " + w.toString());
+                        //  Log.d(TAG, "onResponse: " + w.toString());
                     }
 
-                    Log.d(TAG, "onResponse: listWords.size() " + listWords.size());
+                    Log.d(TAG, "onResponse: база загружена размер  " + listWords.size());
 
-              MainActivity.db.getWordDAO().insertAll(listWords);
-             //   LearningWords.textView_setText(listWords.size());
-
-
+                    MainActivity.db.getWordDAO().insertAll(listWords);
+                    //   LearningWords.textView_setText(listWords.size());
 
                 } else {
                     showError("Server error");

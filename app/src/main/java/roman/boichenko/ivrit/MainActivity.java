@@ -43,9 +43,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MY_TAG MainActivity";
     public static String accountName = "123@123.ru";
     private SqlScoutServer sqlScoutServer;
-    public  static WordDB db;
+    public static WordDB db;
     SharedPreferences sPref;
-    final String SharedPreferences_BD = "SharedPreferences_BD";
+    static final String SharedPreferences_BD = "SharedPreferences_BD";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,38 +172,30 @@ public class MainActivity extends AppCompatActivity {
 
         if (!read_SP_BD()) {
             Log.d(TAG, "onResume: запись в базу данных новых слов ");
-            //    db.getWordDAO().add(new Word(1, "слово 1 ", 7));
-            //    db.getWordDAO().add(new Word(2, "слово 2", 7));
-            //   db.getWordDAO().add(new Word(77, "слово 3", 7));
             save_SP_BD();
 
             // запрос слов с сервера
             GetBDwords getBDwords = new GetBDwords();
             getBDwords.getListWords();
 
+        } else {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    // .addToBackStack(null)
+                    .replace(R.id.fragment_container, LearningWords.newInstance(db), "LearningWords")
+                    .commit();
+
         }
 
-
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                //  .addToBackStack(null)
-                .replace(R.id.fragment_container, LearningWords.newInstance(db), "LearningWords")
-                .commit();
     }
-
-
-
-
 
     private boolean read_SP_BD() {
         sPref = getPreferences(MODE_PRIVATE);
         boolean saved_db = sPref.getBoolean(SharedPreferences_BD, false);
-
         return saved_db;
     }
 
-    private void save_SP_BD() {
+    public void save_SP_BD() {
         sPref = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor ed = sPref.edit();
         ed.putBoolean(SharedPreferences_BD, true);

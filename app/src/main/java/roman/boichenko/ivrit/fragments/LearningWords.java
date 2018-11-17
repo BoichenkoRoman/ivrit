@@ -16,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +25,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
 
 import roman.boichenko.ivrit.DTO.wordsBD.Word;
 import roman.boichenko.ivrit.DTO.wordsBD.WordDB;
@@ -48,10 +47,11 @@ public class LearningWords extends Fragment {
     TextView text_hebrew;
     TextView text_russian;
     TextView text_transcription;
-    TextView text_info;
+    TextView text_info_1;
+    TextView text_info_2;
     //  EditText editText;
     private static final String TAG = "MY_TAG LearningWords";
-    private static ArrayList<Word> listWords = new ArrayList<>();
+    //    private static ArrayList<Word> listWords = new ArrayList<>();
     WordDB db;
     private Word word;
 
@@ -66,22 +66,22 @@ public class LearningWords extends Fragment {
 
     // waiting_time в секундах
     int[] waiting_time = {
-            180,  //3 мин
+            180,  //3 мин                         [0]
             3600, // 60минут  1 час
-            86400,//  +24 часа
-            2 * 86400, //
+            86400,//  +24 часа = 1 день
+            2 * 86400, //   172800
             5 * 86400, //
             10 * 86400, // 10 дней
             3 * 604800,  //  3 недели
             6 * 604800,  //
             3 * 2629743, //  3 месяца
             6 * 2629743, //
-            31556926, //   год
-            1, 5 * 31556926,
-            2 * 31556926,
-            3 * 31556926};
+            31556926, //   год                    [10]
+            47335389,   //  1,5* 31556926  = 1.5 год
+            2 * 31556926,   //   63113852mc
+            3 * 31556926};    //             //      [13]
 
-    String[] waiting_time_string = {"3 мин", "1 час", "24 часа", "2 дня", "5 дней", "10 дней", "3 недели", "1.5 мес", "3 мес",
+    String[] waiting_time_string = {"3 мин", "1 час", "1 день", "2 дня", "5 дней", "10 дней", "3 недели", "6 недель", "3 мес",
             "6 мес", "1 год", "1.5 года", "2 года", "3 года"};
 
 
@@ -89,7 +89,7 @@ public class LearningWords extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         context = activity;
-        Log.d(TAG, "Fragment1 onAttach");
+        //   Log.d(TAG, "Fragment1 onAttach");
     }
 
     @Override
@@ -109,7 +109,8 @@ public class LearningWords extends Fragment {
         text_hebrew = view.findViewById(R.id.text_hebrew);
         text_russian = view.findViewById(R.id.text_russian);
         text_transcription = view.findViewById(R.id.text_transcription);
-        text_info = view.findViewById(R.id.text_info);
+        text_info_1 = view.findViewById(R.id.text_info_1);
+        text_info_2 = view.findViewById(R.id.text_info_2);
         //   editText = view.findViewById(R.id.editText);
         //    button = view.findViewById(R.id.buttom_test3);
         button_show_answer = view.findViewById(R.id.button_show_answer);
@@ -119,12 +120,12 @@ public class LearningWords extends Fragment {
                 LL_show_answer.setVisibility(View.INVISIBLE);
                 LL_time_for_words.setVisibility(View.VISIBLE);
                 //TODO
-                Log.d(TAG, "onClick: обработка нажатия \"показать ответ\" ");
+                //      Log.d(TAG, "onClick: обработка нажатия \"показать ответ\" ");
                 LL_answer.setVisibility(View.VISIBLE);
 
             }
         });
-
+        MainActivity.toolbar.setTitle("Запоминание  слов");
 
      /*   button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -147,6 +148,13 @@ public class LearningWords extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(TAG, "onResume: waiting_time.length " + waiting_time.length);
+/*
+        for (int n: waiting_time             ) {
+            Log.d(TAG, "onResume: waiting_time " + n);
+        }
+*/
+
 /*
         Cat rec = db.getCatDAO().getCatById(33); // Асинхронно считаем данные из базы. Получаем запись с идентификатором ноль.
         if (rec != null) {
@@ -155,40 +163,31 @@ public class LearningWords extends Fragment {
         }
 
 */
-        String string_info = " ";
-
-        MainActivity.toolbar.setTitle("Изучение  слов ");
-        //    getCurrentTimeStamp();
-
-        //
-        //   Log.d(TAG, "onResume: count " + count);
-        // text_hebrew.setText(String.valueOf(count));
 
 
         int limit = 1;
-        final long timestamp = getCurrentTimeStamp();    //  timestamp  время
+        long timestamp = getCurrentTimeStamp();    //  timestamp  время
         int count = db.getWordDAO().count(timestamp);
 
-        Log.d(TAG, "onResume: timestamp " + timestamp);
-        //     List<Word> listWords = db.getWordDAO().getWordsByTimeStamp(timestamp, limit);
-/*
-        for (Word w : listWords) {
-           // Log.d(TAG, "onResponse: " + w.toString());
-     }
-*/
         word = db.getWordDAO().getWordByTimeStamp(timestamp, limit);
         Log.d(TAG, "onResponse   11111: " + word.toString());
 
+        String string_info = " ";
         string_info += "id " + word.id + "  ";
-
         string_info += "count  " + count + "  ";
         string_info += "waiting_time  " + word.waiting_time + "  ";
+        //   text_info_2.setText(String.valueOf(timestamp));
 
         text_hebrew.setText(String.valueOf(word.hebrew));
         text_russian.setText(String.valueOf(word.russian));
         text_transcription.setText(String.valueOf(word.transcription));
-        text_info.setText(string_info);
+        text_info_1.setText(string_info);
 
+
+        if (word.waiting_time >= 11) {
+            word.waiting_time = 10;
+        }
+        Log.d(TAG, "onResume: word.waiting_time " + word.waiting_time);
 
         button_10.setText(Html.fromHtml("СНОВА <br/><small> " + waiting_time_string[0] + "</small>"));
         button_11.setText(Html.fromHtml("ТРУДНО <br/><small>" + waiting_time_string[word.waiting_time + 1] + "</small>"));
@@ -198,37 +197,40 @@ public class LearningWords extends Fragment {
 
         button_10.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Toast.makeText(context, "СНОВА", Toast.LENGTH_SHORT).show();
-                setTimeStamp(timestamp + waiting_time[0], 0);
+                Toast.makeText(context, "СНОВА", Toast.LENGTH_SHORT).show();
+                setTimeStamp(waiting_time[0] * 1000L, 0);
             }
         });
         button_11.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Toast.makeText(context, "ТРУДНО", Toast.LENGTH_SHORT).show();
-                setTimeStamp(timestamp + waiting_time[word.waiting_time + 1], word.waiting_time + 1);
+
+                setTimeStamp(waiting_time[word.waiting_time + 1] * 1000L, word.waiting_time + 1);
             }
         });
         button_12.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Toast.makeText(context, "ХОРОШО", Toast.LENGTH_SHORT).show();
-                setTimeStamp(timestamp + waiting_time[word.waiting_time + 2], word.waiting_time + 2);
+              //  Toast.makeText(context, "ХОРОШО", Toast.LENGTH_SHORT).show();
+
+                setTimeStamp(waiting_time[word.waiting_time + 2] * 1000L, word.waiting_time + 2);
             }
         });
         button_13.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //  Toast.makeText(context, "ЛЕГКО", Toast.LENGTH_SHORT).show();
-                setTimeStamp(timestamp + waiting_time[word.waiting_time + 3], word.waiting_time + 3);
+                //    Toast.makeText(context, "ЛЕГКО", Toast.LENGTH_SHORT).show();
+
+                setTimeStamp(waiting_time[word.waiting_time + 3] * 1000L, word.waiting_time + 3);
             }
         });
-
-
     }
 
     private void setTimeStamp(long time, int waiting_time) {
-        Log.d(TAG, "setTimeStamp: time  " + time);
-        Log.d(TAG, "setTimeStamp: waiting_time  " + waiting_time);
-        db.getWordDAO().updateWord(word.id, time, waiting_time);
-
+     //   Log.d(TAG, "setTimeStamp: time  " + time);
+     //   Log.d(TAG, "setTimeStamp: waiting_time  " + waiting_time);
+        long timestamp3 = getCurrentTimeStamp();
+      //  Log.d(TAG, "getCurrentTimeStamp: " + timestamp3);
+        //   Toast.makeText(context, "" + time, Toast.LENGTH_SHORT).show();
+        db.getWordDAO().updateWord(word.id, timestamp3 + time, waiting_time);
 
         getFragmentManager().beginTransaction()
                 //  .addToBackStack(null)
@@ -236,78 +238,28 @@ public class LearningWords extends Fragment {
                 .commit();
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-
+    /*
+        @Override
+        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+            super.onCreateOptionsMenu(menu, inflater);
+        }
+    */
+/*
     public void textView_setText(int number) {
         text_hebrew.setText(String.valueOf(number));
     }
-
+*/
     public long getCurrentTimeStamp() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
         try {
-
-            //   SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            //   String currentDateTime = dateFormat.format(new Date()); // Find todays date
-
-            //  Long tsLong = System.currentTimeMillis()/1000;
-            //   String currentDateTime = tsLong.toString();
-
-            Date date = new Date();
-            //   Log.d(TAG, "currentDateTime 2: " + new Timestamp(date.getTime()));
-
-
-            //method 1
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            //    Log.d(TAG, "currentDateTime 1: " + timestamp);
-            //method 2 - via Date
-
-
             long timestamp3 = timestamp.getTime();
-            //return number of milliseconds since January 1, 1970, 00:00:00 GMT
-            //   Log.d(TAG, "currentDateTime 3: " + timestamp3);
-
-
-            //format timestamp
-            //    Log.d(TAG, "currentDateTime 4: " + sdf.format(timestamp));
-
-            //    getDate(timestamp3);
-
-            //   преобразовать дату 13-09-2011  в  timestamp  1315861200000
-            String str_date = "13-09-2011";
-            DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-            Date date4 = (Date) formatter.parse(str_date);
-            //   Log.d(TAG, "Today is " + date4.getTime());
-
 
             return timestamp3;
         } catch (Exception e) {
             e.printStackTrace();
-
-            // return null;
         }
         return 0;
     }
 
-    private String getDate(long timeStamp) {
-
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-            Date date = (new Date(timeStamp));
-
-            //    Log.d(TAG, "netDate  getDate : " + date);
-            //   Log.d(TAG, "netDate  getTime : " + date.getTime());
-            //   Log.d(TAG, "netDate  getHours : " + date.getHours());
-            //   Log.d(TAG, "netDate  getTime : " + date.getTime());
-
-
-            return sdf.format(date);
-        } catch (Exception ex) {
-            return "xx";
-        }
-    }
 
 }
