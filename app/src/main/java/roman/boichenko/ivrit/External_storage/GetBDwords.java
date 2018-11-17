@@ -46,7 +46,7 @@ public class GetBDwords {
                     Log.d(TAG, "onResponse: база загружена размер  " + listWords.size());
 
                     MainActivity.db.getWordDAO().insertAll(listWords);
-                    Toast.makeText(context, "Pагружено слов: " + listWords.size(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Загружено слов: " + listWords.size(), Toast.LENGTH_LONG).show();
 
                 } else {
                     showError("Server error");

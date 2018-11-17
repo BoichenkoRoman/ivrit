@@ -89,9 +89,9 @@ public class LearningWords extends Fragment {
         db = MainActivity.db;
     }
 
-  //  @Nullable
+    @Nullable
     @Override
-    public View onCreateView( LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
+    public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.learning_words, container, false);
 
         LL_show_answer = view.findViewById(R.id.LL_show_answer);
@@ -131,7 +131,7 @@ public class LearningWords extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume: waiting_time.length " + waiting_time.length);
+        Log.d(TAG, "onResume: ");
 
 
         int limit = 1;
@@ -151,10 +151,9 @@ public class LearningWords extends Fragment {
             text_info_1.setText(string_info);
         }
 
-            text_hebrew.setText(String.valueOf(word.hebrew));
-            text_russian.setText(String.valueOf(word.russian));
-            text_transcription.setText(String.valueOf(word.transcription));
-
+        text_hebrew.setText(String.valueOf(word.hebrew));
+        text_russian.setText(String.valueOf(word.russian));
+        text_transcription.setText(String.valueOf(word.transcription));
 
 
         if (word.waiting_time >= 11) {

@@ -28,8 +28,9 @@ import com.idescout.sql.SqlScoutServer;
 
 import roman.boichenko.ivrit.DTO.wordsBD.WordDB;
 import roman.boichenko.ivrit.External_storage.GetBDwords;
+import roman.boichenko.ivrit.fragments.ExampleFragment;
 import roman.boichenko.ivrit.fragments.Learning.Learning;
-import roman.boichenko.ivrit.fragments.Learning.LearningWords;
+
 import roman.boichenko.ivrit.fragments.Learning.SpellingOfWords;
 
 
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     SharedPreferences sPref;
     static final String SharedPreferences_BD = "SharedPreferences_BD";
+    static final String EMAIL = "EMAIL";
 
     public static String accountName = "123@123.ru";
     public static boolean admin = false;
@@ -67,11 +69,25 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
         initNavigationView();
 
-        // для   выбора акаунта  google
-     //   Intent googlePickerIntent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"}, false, null, null, null, null);
-      //  startActivityForResult(googlePickerIntent, PICK_ACCOUNT_REQUEST);
+        db = Room.databaseBuilder(this, WordDB.class, "words_db")
+                .allowMainThreadQueries()  //получить доступ к базе данных в основном потоке с помощью
+                .build();
 
 
+        if (!read_SP_BD()) {  //   первый раз запускаем апликацию
+            Log.d(TAG, "onResume:    первый раз запускаем апликацию");
+
+            // для   выбора акаунта  google
+            Intent googlePickerIntent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"}, false, null, null, null, null);
+            startActivityForResult(googlePickerIntent, PICK_ACCOUNT_REQUEST);
+
+        } else {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    // .addToBackStack(null)
+                    .replace(R.id.fragment_container, new Learning(), "LearningWords")
+                    .commit();
+        }
     }
 
     private void initToolbar() {
@@ -144,13 +160,33 @@ public class MainActivity extends AppCompatActivity {
             //    Log.d(TAG, "onActivityResult: " + data.getStringExtra(AccountManager.KEY_AUTHTOKEN));
             //     Log.d(TAG, "onActivityResult: " + data.getStringExtra(AccountManager.KEY_USERDATA));
             textView_navigation_header.setText(accountName);
+            save_SP_email(EMAIL, accountName);
+
+
+            getWordsfromBD();
+
 
             if (accountName.equals("boichenko.roman@gmail.com")) {
                 admin = true;
             }
-
-
         }
+    }
+
+
+    private void getWordsfromBD() {
+     //   Log.d(TAG, "onResume: запись в базу данных новых слов ");
+     //   Log.d(TAG, "onResume: accountName  " + accountName);
+
+        // запрос слов с сервера
+        GetBDwords getBDwords = new GetBDwords(this);
+        getBDwords.getListWords();
+
+        save_SP_BD(); // сохраняем в  SharedPreferences_BD   что было обращение к БД
+
+        accountName = read_SP_email();
+        textView_navigation_header.setText(accountName);
+
+
     }
 
 
@@ -168,43 +204,54 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        Log.d(TAG, "onResume: ");
         sqlScoutServer.resume();
         super.onResume();
 
-        db = Room.databaseBuilder(this, WordDB.class, "words_db")
-                .allowMainThreadQueries()  //получить доступ к базе данных в основном потоке с помощью
-                .build();
 
-        if (!read_SP_BD()) {
-            Log.d(TAG, "onResume: запись в базу данных новых слов ");
-            save_SP_BD();
 
-            // запрос слов с сервера
-            GetBDwords getBDwords = new GetBDwords(this);
-            getBDwords.getListWords();
+        // ExampleFragment
 
-        } else {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    // .addToBackStack(null)
-                    .replace(R.id.fragment_container, new Learning(), "LearningWords")
-                    .commit();
 
-        }
+        getSupportFragmentManager()
+                .beginTransaction()
+                //    .addToBackStack(null)
+                .replace(R.id.fragment_container, new ExampleFragment(), "SpellingOfWords")
+                .commit();
+
+
+
+
+
 
     }
 
     private boolean read_SP_BD() {
+        // читаем информ из SharedPreferences было ли перове обрашение к
         sPref = getPreferences(MODE_PRIVATE);
         boolean saved_db = sPref.getBoolean(SharedPreferences_BD, false);
         return saved_db;
     }
 
     public void save_SP_BD() {
+        // сохраняем в  SharedPreferences  что было первое обращение к БД
         sPref = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor ed = sPref.edit();
         ed.putBoolean(SharedPreferences_BD, true);
         ed.commit();
+    }
+
+    public void save_SP_email(String name, String value) {
+        // сохраняем в  SharedPreferences email пользователя
+        sPref = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+        ed.putString(name, value);
+        ed.commit();
+    }
+
+    private String read_SP_email() {
+        sPref = getPreferences(MODE_PRIVATE);
+        return sPref.getString(EMAIL, " ");
     }
 
     @Override

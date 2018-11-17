@@ -23,9 +23,15 @@ public class ExampleFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view = inflater.inflate(LAYOUT, container, false);
         return view;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }
