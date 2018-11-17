@@ -22,13 +22,11 @@ import java.sql.Timestamp;
 
 import roman.boichenko.ivrit.DTO.wordsBD.Word;
 import roman.boichenko.ivrit.DTO.wordsBD.WordDB;
-
-import roman.boichenko.ivrit.MainActivity;
 import roman.boichenko.ivrit.R;
 
 public class LearningWords extends Fragment {
     Context context;
-    // Button button;
+
     Button button_show_answer;
     Button button_10;
     Button button_11;
@@ -42,9 +40,8 @@ public class LearningWords extends Fragment {
     TextView text_transcription;
     TextView text_info_1;
     TextView text_info_2;
-    //  EditText editText;
+
     private static final String TAG = "MY_TAG LearningWords";
-    //    private static ArrayList<Word> listWords = new ArrayList<>();
     WordDB db;
     private Word word;
 
@@ -104,36 +101,27 @@ public class LearningWords extends Fragment {
         text_transcription = view.findViewById(R.id.text_transcription);
         text_info_1 = view.findViewById(R.id.text_info_1);
         text_info_2 = view.findViewById(R.id.text_info_2);
-        //   editText = view.findViewById(R.id.editText);
-        //    button = view.findViewById(R.id.buttom_test3);
+
         button_show_answer = view.findViewById(R.id.button_show_answer);
         button_show_answer.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            public void onClick(View v) {  //  кнопка показать ответ
                 //  Toast.makeText(context, "button_show_answer", Toast.LENGTH_SHORT).show();
                 LL_show_answer.setVisibility(View.INVISIBLE);
                 LL_time_for_words.setVisibility(View.VISIBLE);
+                LL_answer.setVisibility(View.VISIBLE);
                 //TODO
                 //      Log.d(TAG, "onClick: обработка нажатия \"показать ответ\" ");
-                LL_answer.setVisibility(View.VISIBLE);
 
             }
         });
-        MainActivity.toolbar.setTitle("Запоминание  слов");
 
-     /*   button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Toast.makeText(context, "отправить", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-*/
         button_10 = view.findViewById(R.id.button_10);
         button_11 = view.findViewById(R.id.button_11);
         button_12 = view.findViewById(R.id.button_12);
         button_13 = view.findViewById(R.id.button_13);
 
 
-        setHasOptionsMenu(true);  // добавляем меню из фрагмента  в наше активити
+    //    setHasOptionsMenu(true);  // добавляем меню из фрагмента  в наше активити
         return view;
     }
 
@@ -142,20 +130,6 @@ public class LearningWords extends Fragment {
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume: waiting_time.length " + waiting_time.length);
-/*
-        for (int n: waiting_time             ) {
-            Log.d(TAG, "onResume: waiting_time " + n);
-        }
-*/
-
-/*
-        Cat rec = db.getCatDAO().getCatById(33); // Асинхронно считаем данные из базы. Получаем запись с идентификатором ноль.
-        if (rec != null) {
-            rec.name = "ВАськин 55 ";                                  // Заносим новые данные в поле адреса.
-            db.getCatDAO().update(rec);     // Обновляем запись в базе.
-        }
-
-*/
 
 
         int limit = 1;
@@ -203,7 +177,7 @@ public class LearningWords extends Fragment {
         });
         button_12.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-              //  Toast.makeText(context, "ХОРОШО", Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(context, "ХОРОШО", Toast.LENGTH_SHORT).show();
 
                 setTimeStamp(waiting_time[word.waiting_time + 2] * 1000L, word.waiting_time + 2);
             }
@@ -218,14 +192,15 @@ public class LearningWords extends Fragment {
     }
 
     private void setTimeStamp(long time, int waiting_time) {
-     //   Log.d(TAG, "setTimeStamp: time  " + time);
-     //   Log.d(TAG, "setTimeStamp: waiting_time  " + waiting_time);
+        //   Log.d(TAG, "setTimeStamp: time  " + time);
+        //   Log.d(TAG, "setTimeStamp: waiting_time  " + waiting_time);
         long timestamp3 = getCurrentTimeStamp();
-      //  Log.d(TAG, "getCurrentTimeStamp: " + timestamp3);
+        //  Log.d(TAG, "getCurrentTimeStamp: " + timestamp3);
         //   Toast.makeText(context, "" + time, Toast.LENGTH_SHORT).show();
         db.getWordDAO().updateWord(word.id, timestamp3 + time, waiting_time);
 
-        getFragmentManager().beginTransaction()
+        getFragmentManager().
+                beginTransaction()
                 //  .addToBackStack(null)
                 .replace(R.id.fragment_container, LearningWords.newInstance(db), "LearningWords")
                 .commit();
