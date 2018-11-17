@@ -1,4 +1,4 @@
-package roman.boichenko.ivrit.fragments;
+package roman.boichenko.ivrit.fragments.Learning;
 
 import android.app.Activity;
 import android.content.Context;

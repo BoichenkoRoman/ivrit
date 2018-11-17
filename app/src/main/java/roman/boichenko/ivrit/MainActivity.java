@@ -27,8 +27,8 @@ import com.idescout.sql.SqlScoutServer;
 
 import roman.boichenko.ivrit.DTO.wordsBD.WordDB;
 import roman.boichenko.ivrit.External_storage.GetBDwords;
-import roman.boichenko.ivrit.fragments.LearningWords;
-import roman.boichenko.ivrit.fragments.SpellingOfWords;
+import roman.boichenko.ivrit.fragments.Learning.LearningWords;
+import roman.boichenko.ivrit.fragments.Learning.SpellingOfWords;
 
 
 public class MainActivity extends AppCompatActivity {
