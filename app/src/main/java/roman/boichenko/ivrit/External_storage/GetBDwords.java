@@ -15,6 +15,7 @@ import retrofit2.Response;
 import roman.boichenko.ivrit.Constant;
 import roman.boichenko.ivrit.DTO.wordsBD.Word;
 import roman.boichenko.ivrit.MainActivity;
+import roman.boichenko.ivrit.Other.CustomToast;
 import roman.boichenko.ivrit.fragments.Learning.LearningWords;
 
 
@@ -50,11 +51,10 @@ public class GetBDwords {
                     Log.d(TAG, "onResponse: база загружена размер  " + listWords.size());
 
                     MainActivity.db.getWordDAO().insertAll(listWords);
-                    Toast.makeText(context, "Загружено слов: " + listWords.size(), Toast.LENGTH_LONG).show();
+                    //  Toast.makeText(context, "Загружено слов: " + listWords.size(), Toast.LENGTH_LONG).show();
 
-
-                  MainActivity.sharedPref.savePreferencesBoolean(Constant.first_call_to_database, true);
-
+                    CustomToast.makeText(context, "Загружено слов: " + listWords.size(), Toast.LENGTH_LONG).show();
+                    MainActivity.sharedPref.savePreferencesBoolean(Constant.first_call_to_database, true);
 
 
                 } else {
