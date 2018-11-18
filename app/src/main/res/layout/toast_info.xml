@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="240dp"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:layout_gravity="center_horizontal"
+    android:background="@color/colorWhite">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:src="@drawable/warning"
+        android:padding="4dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="ToastPicture" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:maxWidth="260dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Android Tutorial Custom Toast"
+        android:textColor="#000"
+        android:textSize="24sp"
+        android:layout_gravity="center_vertical"/>
+
+</LinearLayout>

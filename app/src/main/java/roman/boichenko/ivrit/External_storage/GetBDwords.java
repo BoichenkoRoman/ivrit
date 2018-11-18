@@ -12,6 +12,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import roman.boichenko.ivrit.Constant;
 import roman.boichenko.ivrit.DTO.wordsBD.Word;
 import roman.boichenko.ivrit.MainActivity;
 import roman.boichenko.ivrit.fragments.Learning.LearningWords;
@@ -52,7 +53,7 @@ public class GetBDwords {
                     Toast.makeText(context, "Загружено слов: " + listWords.size(), Toast.LENGTH_LONG).show();
 
 
-                  MainActivity.sharedPref.savePreferencesBoolean(SharedPreferences_BD, true);
+                  MainActivity.sharedPref.savePreferencesBoolean(Constant.first_call_to_database, true);
 
 
 

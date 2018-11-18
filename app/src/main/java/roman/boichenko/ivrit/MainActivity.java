@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
     public static WordDB db;
 
     SharedPreferences sPref;
-    static final String    first_call_to_database = "первое обращение к бд";
-    static final String EMAIL = "EMAIL";
     public static SharedPref sharedPref;
     public static String accountName = " ";
     public static boolean admin = false;
@@ -172,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
             //  save_SP_email(EMAIL, accountName);
 
-            sharedPref.savePreferenceString(EMAIL, accountName);
+            sharedPref.savePreferenceString(Constant.EMAIL, accountName);
 
 
             getWordsfromBD();
@@ -197,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
 
         //  accountName = read_SP_email();
 
-        accountName = sharedPref.getPreferencesString(EMAIL);
+        accountName = sharedPref.getPreferencesString(Constant.EMAIL);
         textView_navigation_header.setText(accountName);
 
 
@@ -232,8 +230,7 @@ public class MainActivity extends AppCompatActivity {
         //  sPref = getPreferences(MODE_PRIVATE);
         //  boolean saved_db = sPref.getBoolean(SharedPreferences_BD, false);
 
-
-        boolean saved_db = sharedPref.getPreferencesBoolean(first_call_to_database);
+        boolean saved_db = sharedPref.getPreferencesBoolean(Constant.first_call_to_database);
 
         Log.d(TAG, "read_SP_BD: " + saved_db);
         return saved_db;
@@ -257,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
         ed.putString(name, value);
         ed.commit();
 
-        sharedPref.savePreferencesBoolean(first_call_to_database, true);
+        sharedPref.savePreferencesBoolean(Constant.first_call_to_database, true);
 
 
     }
@@ -266,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
         sPref = getPreferences(MODE_PRIVATE);
 
 
-        return sPref.getString(EMAIL, " ");
+        return sPref.getString(Constant.EMAIL, " ");
     }
 
     @Override
