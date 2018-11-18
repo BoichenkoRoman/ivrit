@@ -24,14 +24,7 @@
                 android:background="@color/colorPrimary" />
 
 
-            <!--<android.support.design.widget.TabLayout-->
-            <!--android:id="@+id/tab_layout"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--app:tabIndicatorColor="@android:color/white"-->
-            <!--app:tabIndicatorHeight="6dp"-->
-            <!--app:tabSelectedTextColor="@color/colorPrimary"-->
-            <!--app:tabTextColor="@android:color/white" />-->
+
 
             <FrameLayout
                 android:id="@+id/fragment_container"

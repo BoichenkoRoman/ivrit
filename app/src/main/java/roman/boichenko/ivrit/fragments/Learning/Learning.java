@@ -21,6 +21,7 @@ public class Learning extends Fragment {
     private static final String TAG = "MY_TAG Learning";
     protected static Other other;
     WordDB db;
+    int number = 0;
 
     @Override
     public void onAttach(Activity activity) {
@@ -33,17 +34,16 @@ public class Learning extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = MainActivity.db;
+
+
+
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.learning, container, false);
-
-
         MainActivity.toolbar.setTitle("Запоминание  слов");
-
-
         setHasOptionsMenu(true);  // добавляем меню из фрагмента  в наше активити
         return view;
     }
@@ -53,9 +53,8 @@ public class Learning extends Fragment {
     public void onResume() {
         super.onResume();
         other = new Other();
-        Log.d(TAG, "onResume: 1");
-
-
+        Log.d(TAG, "onResume: "+number);
+        number++;
 
         int limit = 1;
         long timestamp = Learning.other.getCurrentTimeStamp();    //  timestamp  время
@@ -69,10 +68,15 @@ public class Learning extends Fragment {
                 .commit();
 
 
-        Log.d(TAG, "onResume: 2");
-
-       // Fragment fragment = getFragmentManager().findFragmentByTag("LearningWords");
-
+        Fragment fragment = getFragmentManager().findFragmentByTag("Learning");
+        if (fragment != null) {
+            Log.d(TAG, "fragment   Learning  есть   detach ");
+            getFragmentManager().
+                    beginTransaction()
+                    //  .addToBackStack(null)
+                    .detach(fragment)
+                    .commit();
+        }
 
 
 
@@ -109,4 +113,15 @@ public class Learning extends Fragment {
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: ");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d(TAG, "onDetach: ");
+    }
 }

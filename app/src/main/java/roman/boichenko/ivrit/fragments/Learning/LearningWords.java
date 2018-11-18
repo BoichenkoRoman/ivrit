@@ -212,7 +212,7 @@ public class LearningWords extends Fragment {
 
         Fragment fragment = getFragmentManager().findFragmentByTag("LearningWords");
 
-     //   fragment.run_LearningWords();
+        //   fragment.run_LearningWords();
 
 
         if (fragment != null) {
@@ -222,6 +222,19 @@ public class LearningWords extends Fragment {
                     .remove(fragment)
                     .commit();
         }
+
+
+        fragment = getFragmentManager().findFragmentByTag("Learning");
+
+        if (fragment != null) {
+            Log.d(TAG, "fragment   Learning  есть  attach ");
+            getFragmentManager().
+                    beginTransaction()
+                    //  .addToBackStack(null)
+                    .attach(fragment)
+                    .commit();
+        }
+
 
     }
 
