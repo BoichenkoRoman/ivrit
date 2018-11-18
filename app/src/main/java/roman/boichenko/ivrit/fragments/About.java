@@ -9,14 +9,14 @@ import android.view.ViewGroup;
 
 import roman.boichenko.ivrit.R;
 
-public class ExampleFragment extends Fragment {
+public class About extends Fragment {
 
-    private static final int LAYOUT = R.layout.fragment_exapmle;
+    private static final int LAYOUT = R.layout.about;
     private View view;
 
-    public static ExampleFragment getInstanse() {
+    public static About getInstanse() {
         Bundle args = new Bundle();
-        ExampleFragment fragment = new ExampleFragment();
+        About fragment = new About();
         fragment.setArguments(args);
         return fragment;
     }

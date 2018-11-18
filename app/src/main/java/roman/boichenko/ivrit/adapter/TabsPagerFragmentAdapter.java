@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import roman.boichenko.ivrit.fragments.ExampleFragment;
+import roman.boichenko.ivrit.fragments.About;
 
 public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
 
@@ -26,13 +26,13 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return ExampleFragment.getInstanse();
+                return About.getInstanse();
             case 1:
-                return ExampleFragment.getInstanse();
+                return About.getInstanse();
             case 2:
-                return ExampleFragment.getInstanse();
+                return About.getInstanse();
             case 3:
-                return ExampleFragment.getInstanse();
+                return About.getInstanse();
         }
 
         return null;

@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import roman.boichenko.ivrit.DTO.wordsBD.Word;
+import roman.boichenko.ivrit.DTO.wordsBD.WordDB;
 import roman.boichenko.ivrit.MainActivity;
 import roman.boichenko.ivrit.R;
 
@@ -18,6 +20,7 @@ public class Learning extends Fragment {
     Context context;
     private static final String TAG = "MY_TAG Learning";
     protected static Other other;
+    WordDB db;
 
     @Override
     public void onAttach(Activity activity) {
@@ -29,12 +32,13 @@ public class Learning extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        db = MainActivity.db;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.learning, container, false);
+        View view = inflater.inflate(R.layout.learning, container, false);
 
 
         MainActivity.toolbar.setTitle("Запоминание  слов");
@@ -49,14 +53,25 @@ public class Learning extends Fragment {
     public void onResume() {
         super.onResume();
         other = new Other();
+        Log.d(TAG, "onResume: 1");
 
-        Log.d(TAG, "onResume: ");
+
+
+        int limit = 1;
+        long timestamp = Learning.other.getCurrentTimeStamp();    //  timestamp  время
+        Word word = db.getWordDAO().getWordByTimeStamp(timestamp, limit);
+    /*
 
         getFragmentManager().
                 beginTransaction()
                 //  .addToBackStack(null)
-                .replace(R.id.fragment_container, new LearningWords(), "LearningWords")
+                .add(R.id.fragment_container, LearningWords.newInstance(word), "LearningWords")
                 .commit();
+*/
+
+        Log.d(TAG, "onResume: 2");
+
+       // Fragment fragment = getFragmentManager().findFragmentByTag("LearningWords");
 
 
 
@@ -79,4 +94,19 @@ public class Learning extends Fragment {
 
 
     }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: ");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: ");
+
+    }
+
 }

@@ -28,7 +28,7 @@ import com.idescout.sql.SqlScoutServer;
 
 import roman.boichenko.ivrit.DTO.wordsBD.WordDB;
 import roman.boichenko.ivrit.External_storage.GetBDwords;
-import roman.boichenko.ivrit.fragments.ExampleFragment;
+import roman.boichenko.ivrit.fragments.About;
 import roman.boichenko.ivrit.fragments.Learning.Learning;
 
 import roman.boichenko.ivrit.fragments.Learning.SpellingOfWords;
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     static final String SharedPreferences_BD = "SharedPreferences_BD";
     static final String EMAIL = "EMAIL";
 
-    public static String accountName = "123@123.ru";
+    public static String accountName = " ";
     public static boolean admin = false;
 
     @Override
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager()
                     .beginTransaction()
                     // .addToBackStack(null)
-                    .replace(R.id.fragment_container, new Learning(), "LearningWords")
+                    .replace(R.id.fragment_container, new Learning(), "Learning")
                     .commit();
         }
     }
@@ -106,8 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initNavigationView() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //  drawerLayout.setScrimColor(3333);
-        // drawerLayout.setDrawerElevation(0f);
+
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.view_navigation_open, R.string.view_navigation_close);
         drawerLayout.setDrawerListener(toggle);
@@ -125,15 +124,15 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
                 //  переход по меню из  NavigationView
                 switch (menuItem.getItemId()) {
-                    case R.id.learning_words:  // запоминание слов
+                    case R.id.nav_learning_words:  // запоминание слов
                         getSupportFragmentManager()
                                 .beginTransaction()
                                 //  .addToBackStack(null)
-                                .replace(R.id.fragment_container, new Learning(), "LearningWords")
+                                .replace(R.id.fragment_container, new Learning(), "Learning")
                                 .commit();
                         break;
 
-                    case R.id.spelling_of_words:
+                    case R.id.nav_spelling_of_words:
                         getSupportFragmentManager()
                                 .beginTransaction()
                                 //    .addToBackStack(null)
@@ -210,13 +209,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        // ExampleFragment
+        // About
 
 
         getSupportFragmentManager()
                 .beginTransaction()
                 //    .addToBackStack(null)
-                .replace(R.id.fragment_container, new ExampleFragment(), "SpellingOfWords")
+                .replace(R.id.fragment_container, new About(), "SpellingOfWords")
                 .commit();
 
 

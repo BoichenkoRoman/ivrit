@@ -5,43 +5,35 @@
     <item android:title="Пункт 1">
         <menu>
             <item
-                android:id="@+id/spelling_of_words"
+                android:id="@+id/nav_alphabet"
+                android:icon="@drawable/ic_abc"
                 android:orderInCategory="1"
-                android:title="Правописание слов" />
-            <item
-                android:icon="@drawable/ic_learning"
-                android:id="@+id/learning_words"
-                android:orderInCategory="2"
-                android:title="LearningWords" />
-            <item
-                android:orderInCategory="3"
-                android:id="@+id/Alphabet"
                 android:title="Алфавит" />
+            <item
+                android:id="@+id/nav_learning_words"
+                android:icon="@drawable/ic_learning"
+                android:orderInCategory="2"
+                android:title="Запоминание слов" />
+
+
+            <item
+                android:id="@+id/nav_spelling_of_words"
+                android:orderInCategory="3"
+                android:title="Правописание слов" />
         </menu>
     </item>
 
 
-    <item android:title="Пункт 2">
-        <menu>
-
-            <item
-                android:id="@+id/nav_send2"
-                android:title="Send" />
-        </menu>
-    </item>
-
-
-    <item android:title="Пункт 3">
+    <item android:title="Настройки">
         <menu>
             <item
-                android:id="@+id/nav_share3"
+                android:id="@+id/nav_update_database"
                 android:icon="@drawable/ic_update"
                 android:title="Обновить базу данных" />
             <item
-                android:id="@+id/nav_send3"
-
-                android:title="Send" />
-
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_settings"
+                android:title="Настройки" />
         </menu>
     </item>
 
@@ -49,13 +41,10 @@
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_about"
+                android:title="О программе" />
 
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-
-                android:title="Send" />
         </menu>
     </item>
 

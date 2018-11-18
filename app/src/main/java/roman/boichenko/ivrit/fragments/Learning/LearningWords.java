@@ -75,6 +75,13 @@ public class LearningWords extends Fragment {
     String[] waiting_time_string = {"3 мин", "1 час", "1 день", "2 дня", "5 дней", "10 дней", "3 недели", "6 недель", "3 мес",
             "6 мес", "1 год", "1.5 года", "2 года", "3 года"};
 
+    public static LearningWords newInstance(Word word) {
+        Bundle args = new Bundle();
+        LearningWords fragment = new LearningWords();
+        fragment.word = word;
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -134,18 +141,18 @@ public class LearningWords extends Fragment {
         Log.d(TAG, "onResume: ");
 
 
-        int limit = 1;
-        long timestamp = Learning.other.getCurrentTimeStamp();    //  timestamp  время
-        int count = db.getWordDAO().count(timestamp);
+        //   int limit = 1;
+        //  long timestamp = Learning.other.getCurrentTimeStamp();    //  timestamp  время
+        //    int count = db.getWordDAO().count(timestamp);
 
-        word = db.getWordDAO().getWordByTimeStamp(timestamp, limit);
+
         Log.d(TAG, "onResponse   11111: " + word.toString());
 
 
         if (MainActivity.admin) {
             String string_info = " ";
             string_info += "id " + word.id + "  ";
-            string_info += "count  " + count + "  ";
+            //   string_info += "count  " + count + "  ";
             string_info += "waiting_time  " + word.waiting_time + "  ";
             //   text_info_2.setText(String.valueOf(timestamp));
             text_info_1.setText(string_info);
@@ -170,43 +177,53 @@ public class LearningWords extends Fragment {
         button_10.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Toast.makeText(context, "СНОВА", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onClick: СНОВА ");
                 setTimeStamp(waiting_time[0] * 1000L, 0);
             }
         });
         button_11.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Toast.makeText(context, "ТРУДНО", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onClick: ТРУДНО ");
                 setTimeStamp(waiting_time[word.waiting_time + 1] * 1000L, word.waiting_time + 1);
             }
         });
         button_12.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //  Toast.makeText(context, "ХОРОШО", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onClick: ХОРОШО ");
                 setTimeStamp(waiting_time[word.waiting_time + 2] * 1000L, word.waiting_time + 2);
             }
         });
         button_13.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //    Toast.makeText(context, "ЛЕГКО", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onClick: ЛЕГКО ");
                 setTimeStamp(waiting_time[word.waiting_time + 3] * 1000L, word.waiting_time + 3);
             }
         });
     }
 
     private void setTimeStamp(long time, int waiting_time) {
-        long timestamp3 = Learning.other.getCurrentTimeStamp();
-        db.getWordDAO().updateWord(word.id, timestamp3 + time, waiting_time);
+        long timestamp = Learning.other.getCurrentTimeStamp();
+        // записываем новый timestamp    и   waiting_time    для даного слова
+        db.getWordDAO().updateWord(word.id, timestamp + time, waiting_time);
 
-        getFragmentManager().
-                beginTransaction()
-                //  .addToBackStack(null)
-                .replace(R.id.fragment_container, new Learning(), "LearningWords")
-                .commit();
+
+        Fragment fragment = getFragmentManager().findFragmentByTag("LearningWords");
+
+     //   fragment.run_LearningWords();
+
+
+        if (fragment != null) {
+            getFragmentManager().
+                    beginTransaction()
+                    //  .addToBackStack(null)
+                    .remove(fragment)
+                    .commit();
+        }
+
     }
 
-
-    public static void textView_setText(int number) {
-
-    }
 
 }
