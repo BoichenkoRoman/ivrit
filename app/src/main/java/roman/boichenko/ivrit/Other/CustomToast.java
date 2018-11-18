@@ -39,7 +39,7 @@ public class CustomToast extends Toast {
         View rootView = inflater.inflate(R.layout.toast_info, null);
         ImageView toastImage = (ImageView) rootView.findViewById(R.id.imageView1);
 
-     //   toastImage.setImageResource(R.drawable.ok);
+   //    toastImage.setImageResource(R.drawable.ok);
         toastText = (TextView) rootView.findViewById(R.id.textView1);
 
         /*

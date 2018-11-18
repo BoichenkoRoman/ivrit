@@ -20,6 +20,7 @@ public class SharedPref {
 
     public static void savePreferencesBoolean(String key, Boolean value) {
 
+
         CustomToast.makeText(context, key + " " + value).show();
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
