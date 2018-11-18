@@ -60,14 +60,14 @@ public class Learning extends Fragment {
         int limit = 1;
         long timestamp = Learning.other.getCurrentTimeStamp();    //  timestamp  время
         Word word = db.getWordDAO().getWordByTimeStamp(timestamp, limit);
-    /*
+
 
         getFragmentManager().
                 beginTransaction()
-                //  .addToBackStack(null)
+                .addToBackStack(null)
                 .add(R.id.fragment_container, LearningWords.newInstance(word), "LearningWords")
                 .commit();
-*/
+
 
         Log.d(TAG, "onResume: 2");
 

@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import roman.boichenko.ivrit.R;
 
 public class About extends Fragment {
-
-    private static final int LAYOUT = R.layout.about;
     private View view;
 
     public static About getInstanse() {
@@ -25,7 +23,7 @@ public class About extends Fragment {
     @Override
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view = inflater.inflate(LAYOUT, container, false);
+        view = inflater.inflate(R.layout.about, container, false);
         return view;
     }
 

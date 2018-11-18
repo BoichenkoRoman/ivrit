@@ -1,6 +1,7 @@
 package roman.boichenko.ivrit.External_storage;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -20,6 +21,8 @@ public class GetBDwords {
     private static final String TAG = "MY_TAG GetBDwords";
     private static ArrayList<Word> listWords = new ArrayList<>();
     private Context context;
+    SharedPreferences sPref;
+    static final String SharedPreferences_BD = "SharedPreferences_BD";
 
     public GetBDwords(Context context) {
         this.context = context;
@@ -48,6 +51,11 @@ public class GetBDwords {
                     MainActivity.db.getWordDAO().insertAll(listWords);
                     Toast.makeText(context, "Загружено слов: " + listWords.size(), Toast.LENGTH_LONG).show();
 
+
+                  MainActivity.sharedPref.savePreferencesBoolean(SharedPreferences_BD, true);
+
+
+
                 } else {
                     showError("Server error");
                     try {
@@ -63,7 +71,6 @@ public class GetBDwords {
                 showError(" Connection error!");
             }
         });
-
     }
 
 

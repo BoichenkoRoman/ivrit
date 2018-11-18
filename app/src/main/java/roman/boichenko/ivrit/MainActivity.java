@@ -3,9 +3,11 @@ package roman.boichenko.ivrit;
 
 import android.accounts.AccountManager;
 import android.arch.persistence.room.Room;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -49,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
     public static WordDB db;
 
     SharedPreferences sPref;
-    static final String SharedPreferences_BD = "SharedPreferences_BD";
+    static final String    first_call_to_database = "первое обращение к бд";
     static final String EMAIL = "EMAIL";
-
+    public static SharedPref sharedPref;
     public static String accountName = " ";
     public static boolean admin = false;
 
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         fragment_container = findViewById(R.id.fragment_container);
 
+        sharedPref = new SharedPref(this);
 
         initToolbar();
         initNavigationView();
@@ -81,11 +84,18 @@ public class MainActivity extends AppCompatActivity {
             Intent googlePickerIntent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"}, false, null, null, null, null);
             startActivityForResult(googlePickerIntent, PICK_ACCOUNT_REQUEST);
 
+            // About
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    //    .addToBackStack(null)
+                    .replace(R.id.fragment_container, new About(), "About")
+                    .commit();
+
         } else {
             getSupportFragmentManager()
                     .beginTransaction()
                     // .addToBackStack(null)
-                    .replace(R.id.fragment_container, new Learning(), "Learning")
+                    .add(R.id.fragment_container, new Learning(), "Learning")
                     .commit();
         }
     }
@@ -159,7 +169,10 @@ public class MainActivity extends AppCompatActivity {
             //    Log.d(TAG, "onActivityResult: " + data.getStringExtra(AccountManager.KEY_AUTHTOKEN));
             //     Log.d(TAG, "onActivityResult: " + data.getStringExtra(AccountManager.KEY_USERDATA));
             textView_navigation_header.setText(accountName);
-            save_SP_email(EMAIL, accountName);
+
+            //  save_SP_email(EMAIL, accountName);
+
+            sharedPref.savePreferenceString(EMAIL, accountName);
 
 
             getWordsfromBD();
@@ -173,8 +186,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void getWordsfromBD() {
-     //   Log.d(TAG, "onResume: запись в базу данных новых слов ");
-     //   Log.d(TAG, "onResume: accountName  " + accountName);
+        //   Log.d(TAG, "onResume: запись в базу данных новых слов ");
+        //   Log.d(TAG, "onResume: accountName  " + accountName);
 
         // запрос слов с сервера
         GetBDwords getBDwords = new GetBDwords(this);
@@ -182,7 +195,9 @@ public class MainActivity extends AppCompatActivity {
 
         save_SP_BD(); // сохраняем в  SharedPreferences_BD   что было обращение к БД
 
-        accountName = read_SP_email();
+        //  accountName = read_SP_email();
+
+        accountName = sharedPref.getPreferencesString(EMAIL);
         textView_navigation_header.setText(accountName);
 
 
@@ -208,36 +223,31 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
 
-
-        // About
-
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                //    .addToBackStack(null)
-                .replace(R.id.fragment_container, new About(), "SpellingOfWords")
-                .commit();
-
-
-
-
-
-
     }
 
     private boolean read_SP_BD() {
+
+
         // читаем информ из SharedPreferences было ли перове обрашение к
-        sPref = getPreferences(MODE_PRIVATE);
-        boolean saved_db = sPref.getBoolean(SharedPreferences_BD, false);
+        //  sPref = getPreferences(MODE_PRIVATE);
+        //  boolean saved_db = sPref.getBoolean(SharedPreferences_BD, false);
+
+
+        boolean saved_db = sharedPref.getPreferencesBoolean(first_call_to_database);
+
+        Log.d(TAG, "read_SP_BD: " + saved_db);
         return saved_db;
     }
 
     public void save_SP_BD() {
         // сохраняем в  SharedPreferences  что было первое обращение к БД
-        sPref = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor ed = sPref.edit();
-        ed.putBoolean(SharedPreferences_BD, true);
-        ed.commit();
+        //   sPref = getPreferences(MODE_PRIVATE);
+        //   SharedPreferences.Editor ed = sPref.edit();
+        //   ed.putBoolean(SharedPreferences_BD, true);
+        //   ed.commit();
+
+        //    sharedPref.savePreferencesBoolean(SharedPreferences_BD, true);
+
     }
 
     public void save_SP_email(String name, String value) {
@@ -246,10 +256,16 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor ed = sPref.edit();
         ed.putString(name, value);
         ed.commit();
+
+        sharedPref.savePreferencesBoolean(first_call_to_database, true);
+
+
     }
 
     private String read_SP_email() {
         sPref = getPreferences(MODE_PRIVATE);
+
+
         return sPref.getString(EMAIL, " ");
     }
 
