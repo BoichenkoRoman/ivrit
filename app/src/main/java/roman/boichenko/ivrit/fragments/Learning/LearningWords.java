@@ -139,13 +139,6 @@ public class LearningWords extends Fragment {
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume: ");
-
-
-        //   int limit = 1;
-        //  long timestamp = Learning.other.getCurrentTimeStamp();    //  timestamp  время
-        //    int count = db.getWordDAO().count(timestamp);
-
-
         Log.d(TAG, "onResponse   11111: " + word.toString());
 
 

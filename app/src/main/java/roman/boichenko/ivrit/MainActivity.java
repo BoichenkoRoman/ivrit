@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     SharedPreferences sPref;
     public static SharedPref sharedPref;
-    public static String accountName = " ";
+    private String accountName = " ";
     public static boolean admin = false;
 
     @Override
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
 
-        if (!read_SP_BD()) {  //   первый раз запускаем апликацию
+        if (!sharedPref.getPreferencesBoolean(Constant.first_call_to_database)) {  //   первый раз запускаем апликацию
             Log.d(TAG, "onResume:    первый раз запускаем апликацию");
 
             // для   выбора акаунта  google
@@ -90,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
 
         } else {
+            accountName = sharedPref.getPreferencesString(Constant.EMAIL);
+            textView_navigation_header.setText(accountName);
             getSupportFragmentManager()
                     .beginTransaction()
                     // .addToBackStack(null)
@@ -161,21 +163,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == PICK_ACCOUNT_REQUEST && resultCode == RESULT_OK) {
             accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
-            //  TextView infoTextView = (TextView) findViewById(R.id.textView);
-            textView_navigation_header.setText(accountName);
-            //     Log.d(TAG, "onActivityResult: " + data.getStringExtra(AccountManager.KEY_ACCOUNT_TYPE));
-            //    Log.d(TAG, "onActivityResult: " + data.getStringExtra(AccountManager.KEY_AUTHTOKEN));
-            //     Log.d(TAG, "onActivityResult: " + data.getStringExtra(AccountManager.KEY_USERDATA));
-            textView_navigation_header.setText(accountName);
 
-            //  save_SP_email(EMAIL, accountName);
-
+            textView_navigation_header.setText(accountName);
             sharedPref.savePreferenceString(Constant.EMAIL, accountName);
 
 
             getWordsfromBD();
-
-
             if (accountName.equals("boichenko.roman@gmail.com")) {
                 admin = true;
             }
@@ -184,19 +177,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void getWordsfromBD() {
-        //   Log.d(TAG, "onResume: запись в базу данных новых слов ");
-        //   Log.d(TAG, "onResume: accountName  " + accountName);
-
         // запрос слов с сервера
         GetBDwords getBDwords = new GetBDwords(this);
         getBDwords.getListWords();
-
-        save_SP_BD(); // сохраняем в  SharedPreferences_BD   что было обращение к БД
-
-        //  accountName = read_SP_email();
-
-        accountName = sharedPref.getPreferencesString(Constant.EMAIL);
-        textView_navigation_header.setText(accountName);
 
 
     }
@@ -220,52 +203,29 @@ public class MainActivity extends AppCompatActivity {
         sqlScoutServer.resume();
         super.onResume();
 
-
     }
 
-    private boolean read_SP_BD() {
-
-
-        // читаем информ из SharedPreferences было ли перове обрашение к
-        //  sPref = getPreferences(MODE_PRIVATE);
-        //  boolean saved_db = sPref.getBoolean(SharedPreferences_BD, false);
-
-        boolean saved_db = sharedPref.getPreferencesBoolean(Constant.first_call_to_database);
-
-        Log.d(TAG, "read_SP_BD: " + saved_db);
-        return saved_db;
-    }
-
-    public void save_SP_BD() {
-        // сохраняем в  SharedPreferences  что было первое обращение к БД
-        //   sPref = getPreferences(MODE_PRIVATE);
-        //   SharedPreferences.Editor ed = sPref.edit();
-        //   ed.putBoolean(SharedPreferences_BD, true);
-        //   ed.commit();
-
-        //    sharedPref.savePreferencesBoolean(SharedPreferences_BD, true);
-
-    }
-
+/*
     public void save_SP_email(String name, String value) {
         // сохраняем в  SharedPreferences email пользователя
+    /*
         sPref = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor ed = sPref.edit();
         ed.putString(name, value);
         ed.commit();
+*/
+  //      sharedPref.savePreferencesBoolean(Constant.first_call_to_database, true);
 
-        sharedPref.savePreferencesBoolean(Constant.first_call_to_database, true);
 
-
-    }
-
+ //   }
+/*
     private String read_SP_email() {
         sPref = getPreferences(MODE_PRIVATE);
 
 
         return sPref.getString(Constant.EMAIL, " ");
     }
-
+*/
     @Override
     protected void onPause() {
         sqlScoutServer.destroy();

@@ -8,6 +8,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import roman.boichenko.ivrit.Constant;
 import roman.boichenko.ivrit.DTO.wordsBD.Word;
 import roman.boichenko.ivrit.MainActivity;
 
@@ -37,7 +38,8 @@ public class HttpProvider {
     }
 
     public void getListWords(Callback<List<Word>> callback) {
-        Call<List<Word>> call = api.getListWords(MainActivity.accountName);
+        String accountName = MainActivity.sharedPref.getPreferencesString(Constant.EMAIL);
+        Call<List<Word>> call = api.getListWords(accountName);
         call.enqueue(callback);
     }
 
