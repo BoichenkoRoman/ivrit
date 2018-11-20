@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     public static Toolbar toolbar;
     private DrawerLayout drawerLayout;
     FragmentManager fragmentManager;
-    private ViewPager viewPager;
+  //  private ViewPager viewPager;
     public static FrameLayout fragment_container;
     public static TextView textView_navigation_header;
     int PICK_ACCOUNT_REQUEST = 1;
@@ -117,11 +117,9 @@ public class MainActivity extends AppCompatActivity {
     private void initNavigationView() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.view_navigation_open, R.string.view_navigation_close);
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
-
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
         View header = navigationView.getHeaderView(0);
