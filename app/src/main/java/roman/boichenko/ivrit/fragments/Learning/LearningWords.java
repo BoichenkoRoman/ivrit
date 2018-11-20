@@ -45,15 +45,6 @@ public class LearningWords extends Fragment {
     private static final String TAG = "MY_TAG LearningWords";
     WordDB db;
     private Word word;
-/*
-    public static LearningWords newInstance(WordDB db) {
-        Bundle args = new Bundle();
-        LearningWords fragment = new LearningWords();
-        fragment.db = db;
-        fragment.setArguments(args);
-        return fragment;
-    }
-*/
 
     // waiting_time в секундах
     int[] waiting_time = {
@@ -87,7 +78,6 @@ public class LearningWords extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         context = activity;
-        //   Log.d(TAG, "Fragment1 onAttach");
     }
 
     @Override

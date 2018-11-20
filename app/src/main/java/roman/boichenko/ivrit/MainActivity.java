@@ -66,14 +66,12 @@ public class MainActivity extends AppCompatActivity {
 
         fragment_container = findViewById(R.id.fragment_container);
 
-
         initToolbar();
         initNavigationView();
 
         db = Room.databaseBuilder(this, WordDB.class, "words_db")
                 .allowMainThreadQueries()  //получить доступ к базе данных в основном потоке с помощью
                 .build();
-
 
         if (!sharedPref.getPreferencesBoolean(Constant.first_call_to_database)) {  //   первый раз запускаем апликацию
             Log.d(TAG, "onResume:    первый раз запускаем апликацию");
