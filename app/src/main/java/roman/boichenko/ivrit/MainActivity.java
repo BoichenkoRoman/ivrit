@@ -37,7 +37,7 @@ import roman.boichenko.ivrit.fragments.Learning.SpellingOfWords;
 
 
 public class MainActivity extends AppCompatActivity {
-    private static final int LAYOUT = R.layout.activity_main;
+
     public static Toolbar toolbar;
     private DrawerLayout drawerLayout;
     FragmentManager fragmentManager;
@@ -60,12 +60,12 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.AppDefault2); //  указали какая тема по умолчанию
 
         sqlScoutServer = SqlScoutServer.create(this, getPackageName());
+        sharedPref = new SharedPref(this);
         super.onCreate(savedInstanceState);
-        setContentView(LAYOUT);
+        setContentView(R.layout.activity_main);
 
         fragment_container = findViewById(R.id.fragment_container);
 
-        sharedPref = new SharedPref(this);
 
         initToolbar();
         initNavigationView();
@@ -167,21 +167,14 @@ public class MainActivity extends AppCompatActivity {
             textView_navigation_header.setText(accountName);
             sharedPref.savePreferenceString(Constant.EMAIL, accountName);
 
+            // запрос слов с сервера
+            GetBDwords getBDwords = new GetBDwords(this);
+            getBDwords.getListWords();
 
-            getWordsfromBD();
             if (accountName.equals("boichenko.roman@gmail.com")) {
                 admin = true;
             }
         }
-    }
-
-
-    private void getWordsfromBD() {
-        // запрос слов с сервера
-        GetBDwords getBDwords = new GetBDwords(this);
-        getBDwords.getListWords();
-
-
     }
 
 
@@ -205,27 +198,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-/*
-    public void save_SP_email(String name, String value) {
-        // сохраняем в  SharedPreferences email пользователя
-    /*
-        sPref = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor ed = sPref.edit();
-        ed.putString(name, value);
-        ed.commit();
-*/
-  //      sharedPref.savePreferencesBoolean(Constant.first_call_to_database, true);
-
-
- //   }
-/*
-    private String read_SP_email() {
-        sPref = getPreferences(MODE_PRIVATE);
-
-
-        return sPref.getString(Constant.EMAIL, " ");
-    }
-*/
     @Override
     protected void onPause() {
         sqlScoutServer.destroy();

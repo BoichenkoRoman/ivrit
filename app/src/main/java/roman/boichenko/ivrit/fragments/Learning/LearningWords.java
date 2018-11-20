@@ -205,9 +205,6 @@ public class LearningWords extends Fragment {
 
         Fragment fragment = getFragmentManager().findFragmentByTag("LearningWords");
 
-        //   fragment.run_LearningWords();
-
-
         if (fragment != null) {
             getFragmentManager().
                     beginTransaction()
