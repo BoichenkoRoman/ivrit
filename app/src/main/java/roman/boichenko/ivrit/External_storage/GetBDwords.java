@@ -44,15 +44,14 @@ public class GetBDwords {
                     // TODO
                     listWords.addAll(response.body());
 
-                    for (Word w : listWords) {
-                        //  Log.d(TAG, "onResponse: " + w.toString());
-                    }
+//                    for (Word w : listWords) {
+//                        //  Log.d(TAG, "onResponse: " + w.toString());
+//                    }
 
                     Log.d(TAG, "onResponse: база загружена размер  " + listWords.size());
 
                     MainActivity.db.getWordDAO().insertAll(listWords);
                     //  Toast.makeText(context, "Загружено слов: " + listWords.size(), Toast.LENGTH_LONG).show();
-
                     CustomToast.makeText(context, "Загружено слов: " + listWords.size(), Toast.LENGTH_LONG).show();
                     MainActivity.sharedPref.savePreferencesBoolean(Constant.first_call_to_database, true);
 
@@ -77,7 +76,7 @@ public class GetBDwords {
 
     private void showError(String s) {
         Log.d(TAG, "showError: ERROR " + s);
-        // Toast.makeText(, "", Toast.LENGTH_SHORT).show();
+        CustomToast.makeText(context, "showError: ERROR", Toast.LENGTH_SHORT).show();
 
 
     }
