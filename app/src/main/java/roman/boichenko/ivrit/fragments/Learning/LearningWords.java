@@ -128,9 +128,7 @@ public class LearningWords extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume: ");
-        Log.d(TAG, "onResponse   11111: " + word.toString());
-
+        Log.d(TAG, "onResume   11111: " + word.toString());
 
         if (MainActivity.admin) {
             String string_info = " ";
@@ -144,7 +142,6 @@ public class LearningWords extends Fragment {
         text_hebrew.setText(String.valueOf(word.hebrew));
         text_russian.setText(String.valueOf(word.russian));
         text_transcription.setText(String.valueOf(word.transcription));
-
 
         if (word.waiting_time >= 11) {
             word.waiting_time = 10;
@@ -192,7 +189,6 @@ public class LearningWords extends Fragment {
         // записываем новый timestamp    и   waiting_time    для даного слова
         db.getWordDAO().updateWord(word.id, timestamp + time, waiting_time);
 
-
         Fragment fragment = getFragmentManager().findFragmentByTag("LearningWords");
 
         if (fragment != null) {
@@ -202,7 +198,6 @@ public class LearningWords extends Fragment {
                     .remove(fragment)
                     .commit();
         }
-
 
         fragment = getFragmentManager().findFragmentByTag("Learning");
 
@@ -214,9 +209,5 @@ public class LearningWords extends Fragment {
                     .attach(fragment)
                     .commit();
         }
-
-
     }
-
-
 }
