@@ -73,8 +73,10 @@ public class MainActivity extends AppCompatActivity {
         //  установка в контейнере фрагмента    заднего фона  (ночной режим )
         if (sharedPref.getPreferencesBoolean(NIGHT_MODE)) {
             fragment_container.setBackgroundColor(getResources().getColor(R.color.gray));
+            //TODO    добавить цвет текста
         } else {
             fragment_container.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+            //TODO     добавить цвет текста
         }
 
 
