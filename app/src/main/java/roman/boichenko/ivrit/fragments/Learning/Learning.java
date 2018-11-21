@@ -34,9 +34,6 @@ public class Learning extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = MainActivity.db;
-
-
-
     }
 
     @Nullable

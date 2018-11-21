@@ -23,6 +23,7 @@ import java.sql.Timestamp;
 import roman.boichenko.ivrit.DTO.wordsBD.Word;
 import roman.boichenko.ivrit.DTO.wordsBD.WordDB;
 import roman.boichenko.ivrit.MainActivity;
+import roman.boichenko.ivrit.Other.CustomToast;
 import roman.boichenko.ivrit.R;
 
 public class LearningWords extends Fragment {
@@ -129,6 +130,7 @@ public class LearningWords extends Fragment {
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume   11111: " + word.toString());
+
 
         if (MainActivity.admin) {
             String string_info = " ";

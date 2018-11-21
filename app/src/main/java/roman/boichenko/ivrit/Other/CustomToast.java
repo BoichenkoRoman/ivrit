@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +13,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import roman.boichenko.ivrit.R;
+
 /**
  * Application FinancialAccounting
  * Created by EvILeg on 26.07.2015.
  */
 public class CustomToast extends Toast {
-
+    private static final String TAG = "MY_TAG CustomToast";
     private static TextView toastText;
+    private static ImageView toastImage;
+
     /**
      * Construct an empty Toast object.  You must call {@link #setView} before you
      * can call {@link #show}.
@@ -37,9 +41,9 @@ public class CustomToast extends Toast {
          * устанавливается изображение значка информации в всплывающее сообщение
          */
         View rootView = inflater.inflate(R.layout.toast_info, null);
-        ImageView toastImage = (ImageView) rootView.findViewById(R.id.imageView1);
+        toastImage = (ImageView) rootView.findViewById(R.id.imageView);
 
-   //    toastImage.setImageResource(R.drawable.ok);
+        //    toastImage.setImageResource(R.drawable.ok);
         toastText = (TextView) rootView.findViewById(R.id.textView1);
 
         /*
@@ -58,6 +62,7 @@ public class CustomToast extends Toast {
      * текстовых символов или строки
      */
     public static CustomToast makeText(Context context, CharSequence text) {
+        Log.d(TAG, "makeText: 1");
         CustomToast result = new CustomToast(context);
         toastText.setText(text);
 
@@ -73,9 +78,19 @@ public class CustomToast extends Toast {
         CustomToast result = new CustomToast(context);
         result.setDuration(duration);
         toastText.setText(text);
-
+        Log.d(TAG, "makeText: 2");
         return result;
     }
+
+    public static CustomToast makeText(Context context, CharSequence text, int duration, int resId) {
+        CustomToast result = new CustomToast(context);
+        toastImage.setImageResource(resId);
+        result.setDuration(duration);
+        toastText.setText(text);
+        Log.d(TAG, "makeText: 6");
+        return result;
+    }
+
 
     /*
      * Метод вызова сообщения без установки длительности существования
@@ -83,6 +98,7 @@ public class CustomToast extends Toast {
      */
     public static Toast makeText(Context context, int resId)
             throws Resources.NotFoundException {
+        Log.d(TAG, "makeText: 3");
         return makeText(context, context.getResources().getText(resId));
     }
 
@@ -92,6 +108,7 @@ public class CustomToast extends Toast {
      */
     public static Toast makeText(Context context, int resId, int duration)
             throws Resources.NotFoundException {
+        Log.d(TAG, "makeText: 4");
         return makeText(context, context.getResources().getText(resId), duration);
     }
 }

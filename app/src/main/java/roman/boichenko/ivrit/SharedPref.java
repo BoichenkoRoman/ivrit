@@ -19,13 +19,22 @@ public class SharedPref {
     }
 
     public static void savePreferencesBoolean(String key, Boolean value) {
-
-
-        CustomToast.makeText(context, key + " " + value).show();
-
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(key, value).apply();
+    }
+
+
+    public static void savePreferenceString(String key, String value) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(key, value).apply();
+    }
+
+    public static void savePreferenceInteger(String key, Integer value) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(key, value).apply();
     }
 
     /**
@@ -37,14 +46,12 @@ public class SharedPref {
     }
 
 
-    public static void savePreferenceString(String key, String value) {
-
-
-
-        CustomToast.makeText(context, key + " " + value).show();
+    /**
+     * если нет key вернет false
+     */
+    public static Integer getPreferencesInteger(String keyValue) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(key, value).apply();
+        return sharedPreferences.getInt(keyValue, 0);
     }
 
     /**

@@ -34,6 +34,7 @@ import roman.boichenko.ivrit.fragments.About;
 import roman.boichenko.ivrit.fragments.Learning.Learning;
 
 import roman.boichenko.ivrit.fragments.Learning.SpellingOfWords;
+import roman.boichenko.ivrit.fragments.Settings;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     public static Toolbar toolbar;
     private DrawerLayout drawerLayout;
     FragmentManager fragmentManager;
-  //  private ViewPager viewPager;
+    //  private ViewPager viewPager;
     public static FrameLayout fragment_container;
     public static TextView textView_navigation_header;
     int PICK_ACCOUNT_REQUEST = 1;
@@ -145,6 +146,17 @@ public class MainActivity extends AppCompatActivity {
                                 .replace(R.id.fragment_container, new SpellingOfWords(), "SpellingOfWords")
                                 .commit();
                         break;
+
+
+                    case R.id.nav_settings:
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                //    .addToBackStack(null)
+                                .replace(R.id.fragment_container, new Settings(), "Settings")
+                                .commit();
+                        break;
+
+
                 }
                 return true;
             }
