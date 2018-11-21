@@ -120,6 +120,13 @@ public class Settings extends Fragment implements SeekBar.OnSeekBarChangeListene
             }
         }
 */
+
+        if (sharedPref.getPreferencesBoolean(NIGHT_MODE)) {
+            checkBox.setChecked(true);
+        } else {
+            checkBox.setChecked(false);
+        }
+
         //установка ночного режима
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
