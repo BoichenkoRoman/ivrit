@@ -91,4 +91,30 @@
         android:layout_height="2sp"
         android:background="@color/colorPrimaryDark" />
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:padding="2dp">
+
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textSize="35sp"
+            android:text="CheckBox" />
+
+
+        <CheckBox
+            android:id="@+id/checkBoxColor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+
 </LinearLayout>
