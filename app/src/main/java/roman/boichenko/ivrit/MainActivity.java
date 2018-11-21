@@ -6,6 +6,7 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -36,6 +37,7 @@ import roman.boichenko.ivrit.fragments.Learning.Learning;
 import roman.boichenko.ivrit.fragments.Learning.SpellingOfWords;
 import roman.boichenko.ivrit.fragments.Settings;
 
+import static roman.boichenko.ivrit.Constant.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppDefault2); //  указали какая тема по умолчанию
+        //  setTheme(R.style.Night); //  указали какая тема по умолчанию
+        //  setTheme(R.style.Day); //  указали какая тема по умолчанию
 
         sqlScoutServer = SqlScoutServer.create(this, getPackageName());
         sharedPref = new SharedPref(this);
@@ -66,6 +69,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         fragment_container = findViewById(R.id.fragment_container);
+
+        //  установка в контейнере фрагмента    заднего фона  (ночной режим )
+        if (sharedPref.getPreferencesBoolean(NIGHT_MODE)) {
+            fragment_container.setBackgroundColor(getResources().getColor(R.color.gray));
+        } else {
+            fragment_container.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+        }
+
 
         initToolbar();
         initNavigationView();
@@ -223,6 +234,15 @@ public class MainActivity extends AppCompatActivity {
         sqlScoutServer.destroy();
         super.onDestroy();
     }
+/*
+    public static void setBG_green() {
+        fragment_container.setBackgroundColor(getResources().getColor(R.color.colorWhite2));
+    }
+    public  static void setBG_red() {
+        fragment_container.setBackgroundColor(getResources().getColor(R.color.colorPrimary2));
 
+
+    }
+*/
 
 }

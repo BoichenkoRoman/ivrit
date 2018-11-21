@@ -10,21 +10,22 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.google.android.gms.common.util.CrashUtils;
-
+import roman.boichenko.ivrit.MainActivity;
 import roman.boichenko.ivrit.R;
 import roman.boichenko.ivrit.SharedPref;
 
-import static roman.boichenko.ivrit.Constant.SETTINGS_2;
-import static roman.boichenko.ivrit.MainActivity.sharedPref;
+import static roman.boichenko.ivrit.Constant.*;
+import static roman.boichenko.ivrit.MainActivity.*;
 
 public class Settings extends Fragment implements SeekBar.OnSeekBarChangeListener {
     //  SeekBar seekBar;
     Context context;
-
+    CheckBox checkBox;
     Button button_minus;
     Button button_plus;
     private TextView distance;
@@ -57,6 +58,7 @@ public class Settings extends Fragment implements SeekBar.OnSeekBarChangeListene
         final SeekBar seekBar = (SeekBar) view.findViewById(R.id.seekBar);
         distance = (TextView) view.findViewById(R.id.distance);
         textView = (TextView) view.findViewById(R.id.textView3);
+        checkBox = (CheckBox) view.findViewById(R.id.checkBox);
 
         seekBar.setProgress(20);
         textView.setText("20");
@@ -89,7 +91,7 @@ public class Settings extends Fragment implements SeekBar.OnSeekBarChangeListene
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Log.d(TAG, "onClick: button_plus " +settings_2 );
+                Log.d(TAG, "onClick: button_plus " + settings_2);
                 SharedPref.savePreferenceInteger(SETTINGS_2, ++settings_2);
                 textView.setText(String.valueOf(settings_2));
                 return true;
@@ -101,8 +103,6 @@ public class Settings extends Fragment implements SeekBar.OnSeekBarChangeListene
 
         seekBar.setOnSeekBarChangeListener(this);
 
-        // Inflate the layout for this fragment
-        //  return inflater.inflate(R.layout.settings, container, false);
 
         return view;
     }
@@ -120,6 +120,26 @@ public class Settings extends Fragment implements SeekBar.OnSeekBarChangeListene
             }
         }
 */
+        //установка ночного режима
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    //  textView.setText("Флажок выбран");
+                    Log.d(TAG, "onCheckedChanged: Флажок выбран ");
+                    MainActivity.fragment_container.setBackgroundColor(getResources().getColor(R.color.gray));
+                    SharedPref.savePreferencesBoolean(NIGHT_MODE, true);
+                    // Night_mode
+                } else {
+                    //  textView.setText("Флажок не выбран");
+                    Log.d(TAG, "onCheckedChanged: Флажок  не выбран ");
+                    MainActivity.fragment_container.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+                    SharedPref.savePreferencesBoolean(NIGHT_MODE, false);
+                }
+            }
+        });
+
+
     }
 
     @Override

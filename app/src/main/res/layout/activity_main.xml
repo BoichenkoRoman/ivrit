@@ -21,7 +21,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary" />
+                android:background="@color/colorPrimary" />  <!--  цвет  Toolbar-->
 
 
 
@@ -31,7 +31,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="3dp"
-                android:background="#52ecbb"></FrameLayout>
+
+                ></FrameLayout>
 
         </android.support.design.widget.AppBarLayout>
 
