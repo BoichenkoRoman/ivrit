@@ -3,11 +3,10 @@
     android:id="@+id/LL_settings"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-
-    >
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -20,6 +19,7 @@
         android:background="@color/colorPrimaryDark" />
 
     <TextView
+        android:id="@+id/settings_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -46,7 +46,7 @@
         android:background="@color/colorPrimaryDark" />
 
     <TextView
-
+        android:id="@+id/settings_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -75,6 +75,7 @@
 
 
         <Button
+
             android:id="@+id/button_plus"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

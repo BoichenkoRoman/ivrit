@@ -15,6 +15,8 @@ import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import roman.boichenko.ivrit.MainActivity;
 import roman.boichenko.ivrit.R;
 import roman.boichenko.ivrit.SharedPref;
@@ -30,8 +32,13 @@ public class Settings extends Fragment implements SeekBar.OnSeekBarChangeListene
     Button button_plus;
     private TextView distance;
     private TextView textView;
-    int settings_2;
+    private TextView settings;
+    private TextView settings_1;
+    private TextView settings_2;
+    private TextView textView4;
+    int int_settings_2;
     private static final String TAG = "MY_TAG Settings";
+    private TextView[] textView_arr;
 
     @Override
     public void onAttach(Activity activity) {
@@ -44,8 +51,8 @@ public class Settings extends Fragment implements SeekBar.OnSeekBarChangeListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        settings_2 = sharedPref.getPreferencesInteger(SETTINGS_2);
-        Log.d(TAG, "onCreate: settings_2 " + settings_2);
+        int_settings_2 = sharedPref.getPreferencesInteger(SETTINGS_2);
+        Log.d(TAG, "onCreate: settings_2 " + int_settings_2);
 
     }
 
@@ -56,55 +63,74 @@ public class Settings extends Fragment implements SeekBar.OnSeekBarChangeListene
         View view = inflater.inflate(R.layout.settings, container, false);
 
         final SeekBar seekBar = (SeekBar) view.findViewById(R.id.seekBar);
+        button_minus = view.findViewById(R.id.button_minus);
+        button_plus = view.findViewById(R.id.button_plus);
+
         distance = (TextView) view.findViewById(R.id.distance);
         textView = (TextView) view.findViewById(R.id.textView3);
+
+        settings = (TextView) view.findViewById(R.id.settings);
+        settings_1 = (TextView) view.findViewById(R.id.settings_1);
+        settings_2 = (TextView) view.findViewById(R.id.settings_2);
+        textView4 = (TextView) view.findViewById(R.id.textView4);
+        textView_arr = new TextView[]{distance, textView, settings, settings_1, settings_2, textView4};
+
         checkBox = (CheckBox) view.findViewById(R.id.checkBox);
+
+        if (sharedPref.getPreferencesBoolean(NIGHT_MODE)) {
+            set_night_mode();
+        } else {
+            set_day_mode();
+        }
+
 
         seekBar.setProgress(20);
         textView.setText("20");
 
-        textView.setText(String.valueOf(settings_2));
+        textView.setText(String.valueOf(int_settings_2));
 
-        button_minus = view.findViewById(R.id.button_minus);
-        button_plus = view.findViewById(R.id.button_plus);
+
         button_minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: button_minus ");
-                SharedPref.savePreferenceInteger(SETTINGS_2, --settings_2);
-                textView.setText(String.valueOf(settings_2));
+                SharedPref.savePreferenceInteger(SETTINGS_2, --int_settings_2);
+                textView.setText(String.valueOf(int_settings_2));
 
             }
         });
-        /*
+
         button_plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: button_plus ");
-                SharedPref.savePreferenceInteger(SETTINGS_2, ++settings_2);
-                textView.setText(String.valueOf(settings_2));
+                SharedPref.savePreferenceInteger(SETTINGS_2, ++int_settings_2);
+                textView.setText(String.valueOf(int_settings_2));
             }
         });
-*/
-
-        View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Log.d(TAG, "onClick: button_plus " + settings_2);
-                SharedPref.savePreferenceInteger(SETTINGS_2, ++settings_2);
-                textView.setText(String.valueOf(settings_2));
-                return true;
-            }
-        };
-
-
-        button_plus.setOnTouchListener(mOnTouchListener);
 
         seekBar.setOnSeekBarChangeListener(this);
-
-
         return view;
+    }
+
+    //   ночной режим
+    public void set_night_mode() {
+        checkBox.setChecked(true);
+        MainActivity.fragment_container.setBackgroundColor(getResources().getColor(R.color.gray));
+
+        for (TextView textView : textView_arr) {
+            textView.setTextColor(getResources().getColor(R.color.colorWhite));
+        }
+    }
+
+    //   дневной режим
+    public void set_day_mode() {
+        checkBox.setChecked(false);
+        MainActivity.fragment_container.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+
+        for (TextView textView : textView_arr) {
+            textView.setTextColor(getResources().getColor(R.color.black));
+        }
     }
 
 
@@ -112,36 +138,21 @@ public class Settings extends Fragment implements SeekBar.OnSeekBarChangeListene
     public void onStart() {
         super.onStart();
 
-    /*    button_plus.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                Log.d(TAG, "onClick: button_plus ");
-                return true;
-            }
-        }
-*/
-
-        if (sharedPref.getPreferencesBoolean(NIGHT_MODE)) {
-            checkBox.setChecked(true);
-        } else {
-            checkBox.setChecked(false);
-        }
-
         //установка ночного режима
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    //  textView.setText("Флажок выбран");
-                    Log.d(TAG, "onCheckedChanged: Флажок выбран ");
-                    MainActivity.fragment_container.setBackgroundColor(getResources().getColor(R.color.gray));
+                 //   Log.d(TAG, "onCheckedChanged:  выбран  ночного режима ");
                     SharedPref.savePreferencesBoolean(NIGHT_MODE, true);
+
+                    set_night_mode();
                     // Night_mode
                 } else {
-                    //  textView.setText("Флажок не выбран");
-                    Log.d(TAG, "onCheckedChanged: Флажок  не выбран ");
-                    MainActivity.fragment_container.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+                  //  Log.d(TAG, "onCheckedChanged:   не выбран  дневной  режима  ");
                     SharedPref.savePreferencesBoolean(NIGHT_MODE, false);
+
+                    set_day_mode();
                 }
             }
         });
@@ -162,6 +173,5 @@ public class Settings extends Fragment implements SeekBar.OnSeekBarChangeListene
     public void onStopTrackingTouch(SeekBar seekBar) {
 
     }
-
 
 }

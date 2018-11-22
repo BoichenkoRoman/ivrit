@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_settings:
                         getSupportFragmentManager()
                                 .beginTransaction()
-                                //    .addToBackStack(null)
+                                .addToBackStack(null)
                                 .replace(R.id.fragment_container, new Settings(), "Settings")
                                 .commit();
                         break;
