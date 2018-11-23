@@ -133,12 +133,11 @@ public class LearningWords extends Fragment {
 
 
         if (MainActivity.admin) {
-            String string_info = " ";
-            string_info += "id " + word.id + "  ";
-            //   string_info += "count  " + count + "  ";
-            string_info += "waiting_time  " + word.waiting_time + "  ";
-            //   text_info_2.setText(String.valueOf(timestamp));
-            text_info_1.setText(string_info);
+            data_for_admin();
+
+
+        } else {
+            // Log.d(TAG, "onResume:  НЕ ADMIN");
         }
 
         text_hebrew.setText(String.valueOf(word.hebrew));
@@ -161,6 +160,7 @@ public class LearningWords extends Fragment {
                 // Toast.makeText(context, "СНОВА", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onClick: СНОВА ");
                 setTimeStamp(waiting_time[0] * 1000L, 0);
+                Learning.words_arr_random.add(word);   //  добавляем если нажали снова первая кнопка
             }
         });
         button_11.setOnClickListener(new View.OnClickListener() {
@@ -184,6 +184,24 @@ public class LearningWords extends Fragment {
                 setTimeStamp(waiting_time[word.waiting_time + 3] * 1000L, word.waiting_time + 3);
             }
         });
+    }
+
+
+    private void data_for_admin() {
+        //   Log.d(TAG, "onResume:  ADMIN");
+        String string_info = " ";
+        string_info += "id " + word.id + "  ";
+        //   string_info += "count  " + count + "  ";
+        string_info += "waiting_time  " + word.waiting_time + "  ";
+        //   text_info_2.setText(String.valueOf(timestamp));
+
+
+        string_info += "size " + Learning.words_arr_random.size() + "  ";
+
+
+        text_info_1.setText(string_info);
+
+
     }
 
     private void setTimeStamp(long time, int waiting_time) {

@@ -29,6 +29,10 @@ import android.widget.Toast;
 import com.google.android.gms.common.AccountPicker;
 import com.idescout.sql.SqlScoutServer;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
 import roman.boichenko.ivrit.DTO.wordsBD.WordDB;
 import roman.boichenko.ivrit.External_storage.GetBDwords;
 import roman.boichenko.ivrit.fragments.About;
@@ -58,10 +62,18 @@ public class MainActivity extends AppCompatActivity {
     private String accountName = " ";
     public static boolean admin = false;
 
+    // private HashMap mapAdmin;
+    //  private Map<Integer, String> mapAdmin = new HashMap<Integer, String>();
+    private HashSet<String> hashSet_Admin = new HashSet<String>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //  setTheme(R.style.Night); //  указали какая тема по умолчанию
         //  setTheme(R.style.Day); //  указали какая тема по умолчанию
+        hashSet_Admin.add("boichenko.roman@gmail.com");
+        hashSet_Admin.add("jra220576@gmail.com");
+
 
         sqlScoutServer = SqlScoutServer.create(this, getPackageName());
         sharedPref = new SharedPref(this);
@@ -110,6 +122,9 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.fragment_container, new Learning(), "Learning")
                     .commit();
         }
+
+        check_admin();
+
     }
 
     private void initToolbar() {
@@ -168,8 +183,6 @@ public class MainActivity extends AppCompatActivity {
                                 .replace(R.id.fragment_container, new Settings(), "Settings")
                                 .commit();
                         break;
-
-
                 }
                 return true;
             }
@@ -192,12 +205,23 @@ public class MainActivity extends AppCompatActivity {
             GetBDwords getBDwords = new GetBDwords(this);
             getBDwords.getListWords();
 
-            if (accountName.equals("boichenko.roman@gmail.com")) {
-                admin = true;
-            }
+
         }
     }
 
+
+    private void check_admin() {
+        //   Log.d(TAG, "check_admin: accountName "+ accountName);
+
+        if (hashSet_Admin.contains(accountName)) {
+            //  Log.d(TAG, "check_admin: true");
+            admin = true;
+
+        } else {
+            // Log.d(TAG, "check_admin: false");
+        }
+
+    }
 
     public void showError(String s) {
         Log.d(TAG, "showError: ERROR" + s);
@@ -236,15 +260,6 @@ public class MainActivity extends AppCompatActivity {
         sqlScoutServer.destroy();
         super.onDestroy();
     }
-/*
-    public static void setBG_green() {
-        fragment_container.setBackgroundColor(getResources().getColor(R.color.colorWhite2));
-    }
-    public  static void setBG_red() {
-        fragment_container.setBackgroundColor(getResources().getColor(R.color.colorPrimary2));
 
-
-    }
-*/
 
 }

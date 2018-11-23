@@ -10,6 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
 
 import roman.boichenko.ivrit.DTO.wordsBD.Word;
 import roman.boichenko.ivrit.DTO.wordsBD.WordDB;
@@ -23,6 +30,10 @@ public class Learning extends Fragment {
     WordDB db;
     int number = 0;
 
+    List<Word> words_arr;
+    public static ArrayList<Word> words_arr_random;
+    TextView textView5;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -34,6 +45,19 @@ public class Learning extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = MainActivity.db;
+
+        words_arr = new ArrayList<>();
+        words_arr_random = new ArrayList<>();
+        other = new Other();
+        long timestamp = Learning.other.getCurrentTimeStamp();
+        words_arr = db.getWordDAO().getWordByTimeStamp(timestamp);
+
+        Random random = new Random();
+        for (int i = 0; i < 10; i++) {
+            int rand = random.nextInt(words_arr.size());
+            //  Log.d(TAG, "onResume: r " + r);
+            words_arr_random.add(words_arr.get(rand));
+        }
     }
 
     @Nullable
@@ -42,6 +66,9 @@ public class Learning extends Fragment {
         View view = inflater.inflate(R.layout.learning, container, false);
         MainActivity.toolbar.setTitle("Запоминание  слов");
         setHasOptionsMenu(true);  // добавляем меню из фрагмента  в наше активити
+
+
+        textView5 = view.findViewById(R.id.textView5);
         return view;
     }
 
@@ -49,51 +76,50 @@ public class Learning extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        other = new Other();
-        Log.d(TAG, "onResume: "+number);
-        number++;
+        Log.d(TAG, "onResume:  number 333   " + number);
+/*
+        Collections.sort(words_arr_random, new Comparator<Word>() {
+            public int compare(Word w1, Word w2) {
+                return Long.valueOf(w1.timeStamp).compareTo(Long.valueOf(w2.timeStamp));
+            }
+        });
+*/
 
-        int limit = 1;
-        long timestamp = Learning.other.getCurrentTimeStamp();    //  timestamp  время
-        Word word = db.getWordDAO().getWordByTimeStamp(timestamp, limit);
+        Log.d(TAG, " words_arr_random размер  " + words_arr_random.size());
+        Log.d(TAG, "----------------------- ");
 
+        for (Word word3 : words_arr_random) {
 
-        getFragmentManager().
-                beginTransaction()
-                .addToBackStack(null)
-                .add(R.id.fragment_container, LearningWords.newInstance(word), "LearningWords")
-                .commit();
+            Log.d(TAG, "id  " + word3.id + " " + "timeStamp " + word3.timeStamp + " " + word3.russian);
+            //   Log.d(TAG, "onResume: " + word3.timeStamp);
+        }
+        Log.d(TAG, "----------------------- ");
 
+        if (words_arr_random.size() != 0) {
+            Word word = words_arr_random.remove(0);
 
-        Fragment fragment = getFragmentManager().findFragmentByTag("Learning");
-        if (fragment != null) {
-            Log.d(TAG, "fragment   Learning  есть   detach ");
             getFragmentManager().
                     beginTransaction()
-                    //  .addToBackStack(null)
-                    .detach(fragment)
+                    .addToBackStack(null)
+                    .add(R.id.fragment_container, LearningWords.newInstance(word), "LearningWords")
                     .commit();
+
+
+            Fragment fragment = getFragmentManager().findFragmentByTag("Learning");
+            if (fragment != null) {
+                Log.d(TAG, "fragment   Learning  есть   detach ");
+                getFragmentManager().
+                        beginTransaction()
+                        //  .addToBackStack(null)
+                        .detach(fragment)
+                        .commit();
+            }
+            number++;
+        } else {
+
+            textView5.setText("на сегоднешний день все слова закончились ");
+            Log.d(TAG, "onResume:  слова закончились ");
         }
-
-
-
-
-        /*
-        for (int n: waiting_time             ) {
-            Log.d(TAG, "onResume: waiting_time " + n);
-        }
-*/
-
-/*
-        Cat rec = db.getCatDAO().getCatById(33); // Асинхронно считаем данные из базы. Получаем запись с идентификатором ноль.
-        if (rec != null) {
-            rec.name = "ВАськин 55 ";                                  // Заносим новые данные в поле адреса.
-            db.getCatDAO().update(rec);     // Обновляем запись в базе.
-        }
-
-*/
-
-
     }
 
 
