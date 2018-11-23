@@ -155,6 +155,7 @@ public class LearningWords extends Fragment {
         button_13.setText(Html.fromHtml("ЛЕГКО <br/><small>" + waiting_time_string[word.waiting_time + 3] + "</small>"));
 
 
+
         button_10.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Toast.makeText(context, "СНОВА", Toast.LENGTH_SHORT).show();
