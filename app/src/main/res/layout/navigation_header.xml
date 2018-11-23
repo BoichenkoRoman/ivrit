@@ -39,8 +39,6 @@
         android:layout_marginTop="5dp"
         android:shadowColor="#000"
 
-
-        android:text="11111"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="15sp"
 

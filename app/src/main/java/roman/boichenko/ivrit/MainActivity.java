@@ -36,6 +36,7 @@ import java.util.Map;
 import roman.boichenko.ivrit.DTO.wordsBD.WordDB;
 import roman.boichenko.ivrit.External_storage.GetBDwords;
 import roman.boichenko.ivrit.fragments.About;
+import roman.boichenko.ivrit.fragments.Learning.Alphabet;
 import roman.boichenko.ivrit.fragments.Learning.Learning;
 
 import roman.boichenko.ivrit.fragments.Learning.SpellingOfWords;
@@ -47,32 +48,32 @@ public class MainActivity extends AppCompatActivity {
 
     public static Toolbar toolbar;
     private DrawerLayout drawerLayout;
-    FragmentManager fragmentManager;
+    //  FragmentManager fragmentManager;
     //  private ViewPager viewPager;
     public static FrameLayout fragment_container;
     public static TextView textView_navigation_header;
-    int PICK_ACCOUNT_REQUEST = 1;
+    //  int PICK_ACCOUNT_REQUEST = 1;
     private static final String TAG = "MY_TAG MainActivity";
 
     private SqlScoutServer sqlScoutServer;
     public static WordDB db;
 
-    SharedPreferences sPref;
+    // SharedPreferences sPref;
     public static SharedPref sharedPref;
-    private String accountName = " ";
-    public static boolean admin = false;
+    //   private String accountName = " ";
+    public static boolean admin = true;
 
     // private HashMap mapAdmin;
     //  private Map<Integer, String> mapAdmin = new HashMap<Integer, String>();
-    private HashSet<String> hashSet_Admin = new HashSet<String>();
+    //  private HashSet<String> hashSet_Admin = new HashSet<String>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //  setTheme(R.style.Night); //  указали какая тема по умолчанию
         //  setTheme(R.style.Day); //  указали какая тема по умолчанию
-        hashSet_Admin.add("boichenko.roman@gmail.com");
-        hashSet_Admin.add("jra220576@gmail.com");
+        //   hashSet_Admin.add("boichenko.roman@gmail.com");
+        //     hashSet_Admin.add("jra220576@gmail.com");
 
 
         sqlScoutServer = SqlScoutServer.create(this, getPackageName());
@@ -102,9 +103,13 @@ public class MainActivity extends AppCompatActivity {
         if (!sharedPref.getPreferencesBoolean(Constant.first_call_to_database)) {  //   первый раз запускаем апликацию
             Log.d(TAG, "onResume:    первый раз запускаем апликацию");
 
+            // запрос слов с сервера
+            GetBDwords getBDwords = new GetBDwords(this);
+            getBDwords.getListWords();
+
             // для   выбора акаунта  google
-            Intent googlePickerIntent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"}, false, null, null, null, null);
-            startActivityForResult(googlePickerIntent, PICK_ACCOUNT_REQUEST);
+            //      Intent googlePickerIntent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"}, false, null, null, null, null);
+            //    startActivityForResult(googlePickerIntent, PICK_ACCOUNT_REQUEST);
 
             // About
             getSupportFragmentManager()
@@ -114,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
 
         } else {
-            accountName = sharedPref.getPreferencesString(Constant.EMAIL);
-            textView_navigation_header.setText(accountName);
+            //  accountName = sharedPref.getPreferencesString(Constant.EMAIL);
+            //  textView_navigation_header.setText(accountName);
             getSupportFragmentManager()
                     .beginTransaction()
                     // .addToBackStack(null)
@@ -123,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
 
-        check_admin();
+        //   check_admin();
 
     }
 
@@ -166,7 +171,14 @@ public class MainActivity extends AppCompatActivity {
                                 .replace(R.id.fragment_container, new Learning(), "Learning")
                                 .commit();
                         break;
-
+                    case R.id.nav_alphabet:  // запоминание слов
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                //  .addToBackStack(null)
+                                .replace(R.id.fragment_container, new Alphabet(), "Learning")
+                                .commit();
+                        break;
+/*
                     case R.id.nav_spelling_of_words:
                         getSupportFragmentManager()
                                 .beginTransaction()
@@ -174,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                                 .replace(R.id.fragment_container, new SpellingOfWords(), "SpellingOfWords")
                                 .commit();
                         break;
-
+*/
 
                     case R.id.nav_settings:
                         getSupportFragmentManager()
@@ -189,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
+/*
     @Override
     // для   выбора акаунта  google
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
@@ -200,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
 
             textView_navigation_header.setText(accountName);
             sharedPref.savePreferenceString(Constant.EMAIL, accountName);
-
+            check_admin();
             // запрос слов с сервера
             GetBDwords getBDwords = new GetBDwords(this);
             getBDwords.getListWords();
@@ -209,20 +221,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+*/
 
-    private void check_admin() {
-        //   Log.d(TAG, "check_admin: accountName "+ accountName);
+    /*
+        private void check_admin() {
+            //   Log.d(TAG, "check_admin: accountName "+ accountName);
 
-        if (hashSet_Admin.contains(accountName)) {
-            //  Log.d(TAG, "check_admin: true");
-            admin = true;
+            if (hashSet_Admin.contains(accountName)) {
+                //  Log.d(TAG, "check_admin: true");
+                admin = true;
 
-        } else {
-            // Log.d(TAG, "check_admin: false");
+            } else {
+                // Log.d(TAG, "check_admin: false");
+            }
+
         }
-
-    }
-
+    */
     public void showError(String s) {
         Log.d(TAG, "showError: ERROR" + s);
         new AlertDialog.Builder(this)

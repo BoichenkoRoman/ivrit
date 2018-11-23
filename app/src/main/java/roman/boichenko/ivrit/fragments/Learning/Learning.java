@@ -53,7 +53,7 @@ public class Learning extends Fragment {
         words_arr = db.getWordDAO().getWordByTimeStamp(timestamp);
 
         Random random = new Random();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 25; i++) {
             int rand = random.nextInt(words_arr.size());
             //  Log.d(TAG, "onResume: r " + r);
             words_arr_random.add(words_arr.get(rand));
@@ -67,7 +67,6 @@ public class Learning extends Fragment {
         MainActivity.toolbar.setTitle("Запоминание  слов");
         setHasOptionsMenu(true);  // добавляем меню из фрагмента  в наше активити
 
-
         textView5 = view.findViewById(R.id.textView5);
         return view;
     }
@@ -77,13 +76,13 @@ public class Learning extends Fragment {
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume:  number 333   " + number);
-/*
+
         Collections.sort(words_arr_random, new Comparator<Word>() {
             public int compare(Word w1, Word w2) {
                 return Long.valueOf(w1.timeStamp).compareTo(Long.valueOf(w2.timeStamp));
             }
         });
-*/
+
 
         Log.d(TAG, " words_arr_random размер  " + words_arr_random.size());
         Log.d(TAG, "----------------------- ");

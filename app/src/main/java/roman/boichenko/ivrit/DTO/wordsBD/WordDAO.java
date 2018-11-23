@@ -14,14 +14,14 @@ import java.util.List;
 public interface WordDAO {
 
     // Добавление кота в базу данных
-    @Insert
-    void add(Word word);
+  @Insert
+   void add(Word word);
 
-    // Добавление котов в базу данных
+    // Добавление всехслов в базу данных
     @Insert
     void insertAll(List<Word> employees);
 
-    // Меняем кота
+
     @Update
     void update(Word word);
 

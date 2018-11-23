@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <item android:title="Пункт 1">
+    <item android:title="Изучение">
         <menu>
             <item
                 android:id="@+id/nav_alphabet"
@@ -16,10 +16,10 @@
                 android:title="Запоминание слов" />
 
 
-            <item
-                android:id="@+id/nav_spelling_of_words"
-                android:orderInCategory="3"
-                android:title="Правописание слов" />
+            <!--<item-->
+                <!--android:id="@+id/nav_spelling_of_words"-->
+                <!--android:orderInCategory="3"-->
+                <!--android:title="Правописание слов" />-->
         </menu>
     </item>
 
@@ -38,7 +38,7 @@
     </item>
 
 
-    <item android:title="Communicate">
+    <item android:title="Связь">
         <menu>
             <item
                 android:id="@+id/nav_about"

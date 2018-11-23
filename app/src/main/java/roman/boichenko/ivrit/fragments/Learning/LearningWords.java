@@ -131,14 +131,11 @@ public class LearningWords extends Fragment {
         super.onResume();
         Log.d(TAG, "onResume   11111: " + word.toString());
 
-
+        ///   Закрываем для  всех
         if (MainActivity.admin) {
             data_for_admin();
-
-
-        } else {
-            // Log.d(TAG, "onResume:  НЕ ADMIN");
         }
+
 
         text_hebrew.setText(String.valueOf(word.hebrew));
         text_russian.setText(String.valueOf(word.russian));
@@ -153,7 +150,6 @@ public class LearningWords extends Fragment {
         button_11.setText(Html.fromHtml("ТРУДНО <br/><small>" + waiting_time_string[word.waiting_time + 1] + "</small>"));
         button_12.setText(Html.fromHtml("ХОРОШО <br/><small>" + waiting_time_string[word.waiting_time + 2] + "</small>"));
         button_13.setText(Html.fromHtml("ЛЕГКО <br/><small>" + waiting_time_string[word.waiting_time + 3] + "</small>"));
-
 
 
         button_10.setOnClickListener(new View.OnClickListener() {
