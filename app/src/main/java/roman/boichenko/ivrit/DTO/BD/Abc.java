@@ -2,11 +2,12 @@ package roman.boichenko.ivrit.DTO.BD;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.graphics.drawable.Drawable;
 
 @Entity(tableName = "abcTable")
 public class Abc {
     @PrimaryKey
-    int id;
+    public int id;
     public String russian;
     public String img;
     public String hebrew;

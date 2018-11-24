@@ -1,22 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="alphabet" />
-
-
-    <ImageView
+    <LinearLayout
 
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/text_hebrew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="5dp"
+            android:textSize="35sp" />
+
+        <ScrollView
+            android:id="@+id/LL_answer2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/LL_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="invisible">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="2sp"
+                    android:background="@color/colorPrimaryDark" />
+
+
+                <TextView
+                    android:id="@+id/text_russian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="5dp"
+                    android:text="text_russian"
+                    android:textSize="30sp" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/alef" />
+
+
+                <TextView
+                    android:id="@+id/text_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="text_russian"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <!-- тестова информация  -->
+    <LinearLayout
+        android:id="@+id/LL_show_info"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@drawable/alef" />
+        android:layout_above="@+id/LL_show_answer"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="60dp"
+        android:orientation="vertical">
 
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/text_info_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:padding="5dp"
+
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/text_info_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+
+    <!-- кнопка  показать ответ -->
+    <LinearLayout
+        android:id="@+id/LL_show_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_show_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="показать ответ" />
+
+
+    </LinearLayout>
+
+
+    <!-- кнопки отложить слово на время  -->
+    <LinearLayout
+        android:id="@+id/LL_time_for_words"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:textColor="@color/colorWhite"
+        android:visibility="invisible">
+
+
+        <Button
+            android:id="@+id/button_10"
+            style="@style/CustomButton"
+            android:background="@color/Button_1" />
+
+        <Button
+            android:id="@+id/button_11"
+            style="@style/CustomButton"
+            android:background="@color/Button_2"
+            android:text="трудно" />
+
+        <Button
+
+            android:id="@+id/button_12"
+            style="@style/CustomButton"
+            android:background="@color/Button_3"
+            android:text="Хорошо" />
+
+        <Button
+            android:id="@+id/button_13"
+            style="@style/CustomButton"
+            android:background="@color/Button_4"
+            android:text="Легко" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
+
+
+
+

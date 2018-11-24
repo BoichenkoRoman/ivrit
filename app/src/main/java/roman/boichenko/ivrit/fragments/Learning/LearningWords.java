@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,53 +14,41 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import roman.boichenko.ivrit.DTO.BD.Word;
 import roman.boichenko.ivrit.DTO.BD.WordDB;
 import roman.boichenko.ivrit.MainActivity;
 import roman.boichenko.ivrit.R;
 
+import static roman.boichenko.ivrit.fragments.Learning.Other.*;
+
 public class LearningWords extends Fragment {
     Context context;
 
-    Button button_show_answer;
-    Button button_10;
-    Button button_11;
-    Button button_12;
-    Button button_13;
-    LinearLayout LL_show_answer;
-    LinearLayout LL_time_for_words;
-    LinearLayout LL_answer;
-    TextView text_hebrew;
-    TextView text_russian;
-    TextView text_transcription;
-    TextView text_info_1;
-    TextView text_info_2;
+    private Button button_show_answer;
+    private Button button_10;
+    private Button button_11;
+    private Button button_12;
+    private Button button_13;
+    private LinearLayout LL_show_answer;
+    private LinearLayout LL_time_for_words;
+    private LinearLayout LL_answer;
+    private TextView text_hebrew;
+    private TextView text_russian;
+    private TextView text_transcription;
+    private TextView text_info_1;
+    private TextView text_info_2;
 
     private static final String TAG = "MY_TAG LearningWords";
     WordDB db;
     private Word word;
 
     // waiting_time в секундах
-    int[] waiting_time = {
-            180,  //3 мин                         [0]
-            3600, // 60минут  1 час
-            86400,//  +24 часа = 1 день
-            2 * 86400, //   172800
-            5 * 86400, //
-            10 * 86400, // 10 дней
-            3 * 604800,  //  3 недели
-            6 * 604800,  //
-            3 * 2629743, //  3 месяца
-            6 * 2629743, //
-            31556926, //   год                    [10]
-            47335389,   //  1,5* 31556926  = 1.5 год
-            2 * 31556926,   //   63113852mc
-            3 * 31556926};    //             //      [13]
 
-    String[] waiting_time_string = {"3 мин", "1 час", "1 день", "2 дня", "5 дней", "10 дней", "3 недели", "6 недель", "3 мес",
-            "6 мес", "1 год", "1.5 года", "2 года", "3 года"};
 
+    /*
+        String[] waiting_time_string = {"3 мин", "1 час", "1 день", "2 дня", "5 дней", "10 дней", "3 недели", "6 недель", "3 мес",
+                "6 мес", "1 год", "1.5 года", "2 года", "3 года"};
+    */
     public static LearningWords newInstance(Word word) {
         Bundle args = new Bundle();
         LearningWords fragment = new LearningWords();
