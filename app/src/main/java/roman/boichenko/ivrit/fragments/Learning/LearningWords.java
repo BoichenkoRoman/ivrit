@@ -3,7 +3,6 @@ package roman.boichenko.ivrit.fragments.Learning;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
@@ -15,15 +14,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.sql.Timestamp;
 
 
-import roman.boichenko.ivrit.DTO.wordsBD.Word;
-import roman.boichenko.ivrit.DTO.wordsBD.WordDB;
+import roman.boichenko.ivrit.DTO.BD.Word;
+import roman.boichenko.ivrit.DTO.BD.WordDB;
 import roman.boichenko.ivrit.MainActivity;
-import roman.boichenko.ivrit.Other.CustomToast;
 import roman.boichenko.ivrit.R;
 
 public class LearningWords extends Fragment {
@@ -84,7 +79,7 @@ public class LearningWords extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        db = MainActivity.db;
+        db = MainActivity.bd_word;
     }
 
     @Nullable

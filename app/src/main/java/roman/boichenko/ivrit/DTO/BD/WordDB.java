@@ -1,4 +1,4 @@
-package roman.boichenko.ivrit.DTO.wordsBD;
+package roman.boichenko.ivrit.DTO.BD;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;

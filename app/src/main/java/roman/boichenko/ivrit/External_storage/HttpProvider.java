@@ -9,7 +9,7 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import roman.boichenko.ivrit.Constant;
-import roman.boichenko.ivrit.DTO.wordsBD.Word;
+import roman.boichenko.ivrit.DTO.BD.Word;
 import roman.boichenko.ivrit.MainActivity;
 
 public class HttpProvider {

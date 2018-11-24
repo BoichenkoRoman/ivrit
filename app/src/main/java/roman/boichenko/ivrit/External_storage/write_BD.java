@@ -13,20 +13,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import roman.boichenko.ivrit.Constant;
-import roman.boichenko.ivrit.DTO.wordsBD.Word;
+import roman.boichenko.ivrit.DTO.BD.Word;
 import roman.boichenko.ivrit.MainActivity;
 import roman.boichenko.ivrit.Other.CustomToast;
-import roman.boichenko.ivrit.fragments.Learning.LearningWords;
 
 
-public class GetBDwords {
-    private static final String TAG = "MY_TAG GetBDwords";
+public class write_BD {
+    private static final String TAG = "MY_TAG write_BD";
     private static ArrayList<Word> listWords = new ArrayList<>();
     private Context context;
-    SharedPreferences sPref;
-    static final String SharedPreferences_BD = "SharedPreferences_BD";
+  //  SharedPreferences sPref;
+  //  static final String SharedPreferences_BD = "SharedPreferences_BD";
 
-    public GetBDwords(Context context) {
+    public write_BD(Context context) {
         this.context = context;
     }
 
@@ -50,7 +49,7 @@ public class GetBDwords {
 
                     Log.d(TAG, "onResponse: база загружена размер  " + listWords.size());
 
-                    MainActivity.db.getWordDAO().insertAll(listWords);
+                    MainActivity.bd_word.getWordDAO().insertAll(listWords);
                     //  Toast.makeText(context, "Загружено слов: " + listWords.size(), Toast.LENGTH_LONG).show();
                     CustomToast.makeText(context, "Загружено слов: " + listWords.size(), Toast.LENGTH_LONG).show();
                     MainActivity.sharedPref.savePreferencesBoolean(Constant.first_call_to_database, true);

@@ -1,18 +1,10 @@
 package roman.boichenko.ivrit;
 
 
-import android.accounts.AccountManager;
 import android.arch.persistence.room.Room;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -26,20 +18,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.google.android.gms.common.AccountPicker;
 import com.idescout.sql.SqlScoutServer;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-
-import roman.boichenko.ivrit.DTO.wordsBD.WordDB;
-import roman.boichenko.ivrit.External_storage.GetBDwords;
+import roman.boichenko.ivrit.DTO.BD.AbcDB;
+import roman.boichenko.ivrit.DTO.BD.WordDB;
+import roman.boichenko.ivrit.External_storage.write_BD;
 import roman.boichenko.ivrit.fragments.About;
 import roman.boichenko.ivrit.fragments.Learning.Alphabet;
 import roman.boichenko.ivrit.fragments.Learning.Learning;
 
-import roman.boichenko.ivrit.fragments.Learning.SpellingOfWords;
 import roman.boichenko.ivrit.fragments.Settings;
 
 import static roman.boichenko.ivrit.Constant.*;
@@ -56,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MY_TAG MainActivity";
 
     private SqlScoutServer sqlScoutServer;
-    public static WordDB db;
+    public static WordDB bd_word;
+    public static AbcDB bd_abc;
 
     // SharedPreferences sPref;
     public static SharedPref sharedPref;
@@ -96,15 +84,19 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
         initNavigationView();
 
-        db = Room.databaseBuilder(this, WordDB.class, "words_db")
-                .allowMainThreadQueries()  //получить доступ к базе данных в основном потоке с помощью
+        bd_word = Room.databaseBuilder(this, WordDB.class, "words_db")
+                .allowMainThreadQueries()  //получить доступ к базе данных в основном потоке
+                .build();
+
+        bd_abc = Room.databaseBuilder(this, AbcDB.class, "abc_db")
+                .allowMainThreadQueries()  //получить доступ к базе данных в основном потоке
                 .build();
 
         if (!sharedPref.getPreferencesBoolean(Constant.first_call_to_database)) {  //   первый раз запускаем апликацию
             Log.d(TAG, "onResume:    первый раз запускаем апликацию");
 
             // запрос слов с сервера
-            GetBDwords getBDwords = new GetBDwords(this);
+            write_BD getBDwords = new write_BD(this);
             getBDwords.getListWords();
 
             // для   выбора акаунта  google
@@ -214,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
             sharedPref.savePreferenceString(Constant.EMAIL, accountName);
             check_admin();
             // запрос слов с сервера
-            GetBDwords getBDwords = new GetBDwords(this);
+            write_BD getBDwords = new write_BD(this);
             getBDwords.getListWords();
 
 

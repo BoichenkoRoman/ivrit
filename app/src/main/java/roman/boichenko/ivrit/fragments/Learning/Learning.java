@@ -18,8 +18,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
-import roman.boichenko.ivrit.DTO.wordsBD.Word;
-import roman.boichenko.ivrit.DTO.wordsBD.WordDB;
+import roman.boichenko.ivrit.DTO.BD.Word;
+import roman.boichenko.ivrit.DTO.BD.WordDB;
 import roman.boichenko.ivrit.MainActivity;
 import roman.boichenko.ivrit.R;
 
@@ -44,7 +44,7 @@ public class Learning extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        db = MainActivity.db;
+        db = MainActivity.bd_word;
 
         words_arr = new ArrayList<>();
         words_arr_random = new ArrayList<>();

@@ -1,4 +1,4 @@
-package roman.boichenko.ivrit.DTO.wordsBD;
+package roman.boichenko.ivrit.DTO.BD;
 
 
 import android.arch.persistence.room.Dao;
@@ -7,7 +7,6 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Dao
