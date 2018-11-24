@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
             // запрос слов с сервера
             write_BD getBDwords = new write_BD(this);
             getBDwords.getListWords();
+            getBDwords.getListAbc();
 
             // для   выбора акаунта  google
             //      Intent googlePickerIntent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"}, false, null, null, null, null);

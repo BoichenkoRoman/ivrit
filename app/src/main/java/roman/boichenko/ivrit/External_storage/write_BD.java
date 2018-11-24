@@ -22,8 +22,8 @@ public class write_BD {
     private static final String TAG = "MY_TAG write_BD";
     private static ArrayList<Word> listWords = new ArrayList<>();
     private Context context;
-  //  SharedPreferences sPref;
-  //  static final String SharedPreferences_BD = "SharedPreferences_BD";
+    //  SharedPreferences sPref;
+    //  static final String SharedPreferences_BD = "SharedPreferences_BD";
 
     public write_BD(Context context) {
         this.context = context;
@@ -70,6 +70,11 @@ public class write_BD {
                 showError(" Connection error!");
             }
         });
+    }
+
+
+    public void getListAbc() {
+        //TODO    загружаем список букв в базу данных
     }
 
 
