@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     public static WordDB bd_word;
     public static AbcDB bd_abc;
     public static SharedPref sharedPref;
-    public static boolean admin = false;
+    public static boolean admin = true;
 
 
 

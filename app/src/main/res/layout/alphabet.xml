@@ -5,29 +5,37 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
 
+    <TextView
+        android:id="@+id/text_hebrew"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
 
+        android:gravity="center"
+        android:padding="5dp"
+        android:textSize="40sp" />
 
-        <TextView
-            android:id="@+id/text_hebrew"
-            android:layout_width="wrap_content"
+    <ScrollView
+        android:id="@+id/ScrollView"
+        android:layout_below="@id/text_hebrew"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/LL"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:textSize="35sp" />
 
+
+            android:orientation="vertical">
 
 
             <LinearLayout
-                android:scrollbars="vertical"
                 android:id="@+id/LL_answer"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:scrollbars="vertical"
                 android:visibility="invisible">
 
 
@@ -43,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="5dp"
-                    android:text="text_russian"
+
                     android:textSize="30sp" />
 
                 <ImageView
@@ -59,19 +67,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:text="text_russian"
+
                     android:textSize="20sp" />
 
             </LinearLayout>
 
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
     <!-- тестова информация  -->
     <LinearLayout
         android:id="@+id/LL_show_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/LL_show_answer"
+        android:layout_below="@id/ScrollView"
+
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
