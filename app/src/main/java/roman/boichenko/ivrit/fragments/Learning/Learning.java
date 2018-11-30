@@ -48,14 +48,16 @@ public class Learning extends Fragment {
 
         words_arr = new ArrayList<>();
         words_arr_random = new ArrayList<>();
+
         other = new Other();
         long timestamp = Learning.other.getCurrentTimeStamp();
+        // масив всех слов   до  текущего  timestamp
         words_arr = db.getWordDAO().getWordByTimeStamp(timestamp);
 
         Random random = new Random();
         for (int i = 0; i < 25; i++) {
             int rand = random.nextInt(words_arr.size());
-            //  Log.d(TAG, "onResume: r " + r);
+            // выбираем из всех    25   рандомных
             words_arr_random.add(words_arr.get(rand));
         }
     }
@@ -77,6 +79,7 @@ public class Learning extends Fragment {
         super.onResume();
         Log.d(TAG, "onResume:  number 333   " + number);
 
+        //сортируем по   времени    вперед самые первые
         Collections.sort(words_arr_random, new Comparator<Word>() {
             public int compare(Word w1, Word w2) {
                 return Long.valueOf(w1.timeStamp).compareTo(Long.valueOf(w2.timeStamp));

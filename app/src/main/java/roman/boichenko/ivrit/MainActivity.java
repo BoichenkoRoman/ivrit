@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 
 import com.idescout.sql.SqlScoutServer;
-
 import roman.boichenko.ivrit.DTO.BD.AbcDB;
 import roman.boichenko.ivrit.DTO.BD.WordDB;
 import roman.boichenko.ivrit.External_storage.write_BD;
@@ -35,34 +34,23 @@ public class MainActivity extends AppCompatActivity {
 
     public static Toolbar toolbar;
     private DrawerLayout drawerLayout;
-    //  FragmentManager fragmentManager;
-    //  private ViewPager viewPager;
+
     public static FrameLayout fragment_container;
     public static TextView textView_navigation_header;
-    //  int PICK_ACCOUNT_REQUEST = 1;
+
     private static final String TAG = "MY_TAG MainActivity";
 
     private SqlScoutServer sqlScoutServer;
     public static WordDB bd_word;
     public static AbcDB bd_abc;
-
-    // SharedPreferences sPref;
     public static SharedPref sharedPref;
-    //   private String accountName = " ";
     public static boolean admin = true;
 
-    // private HashMap mapAdmin;
-    //  private Map<Integer, String> mapAdmin = new HashMap<Integer, String>();
-    //  private HashSet<String> hashSet_Admin = new HashSet<String>();
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //  setTheme(R.style.Night); //  указали какая тема по умолчанию
-        //  setTheme(R.style.Day); //  указали какая тема по умолчанию
-        //   hashSet_Admin.add("boichenko.roman@gmail.com");
-        //     hashSet_Admin.add("jra220576@gmail.com");
-
 
         sqlScoutServer = SqlScoutServer.create(this, getPackageName());
         sharedPref = new SharedPref(this);
@@ -100,9 +88,6 @@ public class MainActivity extends AppCompatActivity {
             getBDwords.getListWords();
             getBDwords.getListAbc();
 
-            // для   выбора акаунта  google
-            //      Intent googlePickerIntent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"}, false, null, null, null, null);
-            //    startActivityForResult(googlePickerIntent, PICK_ACCOUNT_REQUEST);
 
             // About
             getSupportFragmentManager()
@@ -112,16 +97,16 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
 
         } else {
-            //  accountName = sharedPref.getPreferencesString(Constant.EMAIL);
-            //  textView_navigation_header.setText(accountName);
+
             getSupportFragmentManager()
                     .beginTransaction()
                     // .addToBackStack(null)
-                    .add(R.id.fragment_container, new Learning(), "Learning")
+                    //  .add(R.id.fragment_container, new Learning(), "Learning")
+                    .add(R.id.fragment_container, new Alphabet(), "Learning")
                     .commit();
         }
 
-        //   check_admin();
+
 
     }
 
@@ -171,15 +156,7 @@ public class MainActivity extends AppCompatActivity {
                                 .replace(R.id.fragment_container, new Alphabet(), "Learning")
                                 .commit();
                         break;
-/*
-                    case R.id.nav_spelling_of_words:
-                        getSupportFragmentManager()
-                                .beginTransaction()
-                                //    .addToBackStack(null)
-                                .replace(R.id.fragment_container, new SpellingOfWords(), "SpellingOfWords")
-                                .commit();
-                        break;
-*/
+
 
                     case R.id.nav_settings:
                         getSupportFragmentManager()
@@ -188,48 +165,20 @@ public class MainActivity extends AppCompatActivity {
                                 .replace(R.id.fragment_container, new Settings(), "Settings")
                                 .commit();
                         break;
+                    case R.id.nav_about:
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .addToBackStack(null)
+                                .replace(R.id.fragment_container, new About(), "Settings")
+                                .commit();
+                        break;
                 }
                 return true;
             }
         });
     }
 
-/*
-    @Override
-    // для   выбора акаунта  google
-    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-        Log.d(TAG, "onActivityResult: ");
 
-        if (requestCode == PICK_ACCOUNT_REQUEST && resultCode == RESULT_OK) {
-            accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
-
-            textView_navigation_header.setText(accountName);
-            sharedPref.savePreferenceString(Constant.EMAIL, accountName);
-            check_admin();
-            // запрос слов с сервера
-            write_BD getBDwords = new write_BD(this);
-            getBDwords.getListWords();
-
-
-        }
-    }
-
-*/
-
-    /*
-        private void check_admin() {
-            //   Log.d(TAG, "check_admin: accountName "+ accountName);
-
-            if (hashSet_Admin.contains(accountName)) {
-                //  Log.d(TAG, "check_admin: true");
-                admin = true;
-
-            } else {
-                // Log.d(TAG, "check_admin: false");
-            }
-
-        }
-    */
     public void showError(String s) {
         Log.d(TAG, "showError: ERROR" + s);
         new AlertDialog.Builder(this)
