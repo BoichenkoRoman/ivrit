@@ -203,7 +203,7 @@ public class Alphabet extends Fragment {
         string_info += "waiting_time  " + abc.waiting_time + "  ";
         //   text_info_2.setText(String.valueOf(timestamp));
         string_info += "size " + abc_arr.size() + "  ";
-        text_info_1.setText(string_info);
+//        text_info_1.setText(string_info);
 
 
     }
