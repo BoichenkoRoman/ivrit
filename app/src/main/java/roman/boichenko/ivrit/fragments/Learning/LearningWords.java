@@ -21,6 +21,7 @@ import roman.boichenko.ivrit.R;
 
 import static roman.boichenko.ivrit.fragments.Learning.Other.*;
 
+// класс  принимает слово   и отображает его на дисплей ,  сохраняет в  БД   время следующего показа слова
 public class LearningWords extends Fragment {
     Context context;
 
@@ -42,13 +43,6 @@ public class LearningWords extends Fragment {
     WordDB db;
     private Word word;
 
-    // waiting_time в секундах
-
-
-    /*
-        String[] waiting_time_string = {"3 мин", "1 час", "1 день", "2 дня", "5 дней", "10 дней", "3 недели", "6 недель", "3 мес",
-                "6 мес", "1 год", "1.5 года", "2 года", "3 года"};
-    */
     public static LearningWords newInstance(Word word) {
         Bundle args = new Bundle();
         LearningWords fragment = new LearningWords();
@@ -139,7 +133,7 @@ public class LearningWords extends Fragment {
                 // Toast.makeText(context, "СНОВА", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onClick: СНОВА ");
                 setTimeStamp(waiting_time[0] * 1000L, 0);
-                Learning.words_arr_random.add(word);   //  добавляем если нажали снова первая кнопка
+                Learning.words_arr_learning.add(word);   //  добавляем если нажали снова первая кнопка
             }
         });
         button_11.setOnClickListener(new View.OnClickListener() {
@@ -175,7 +169,7 @@ public class LearningWords extends Fragment {
         //   text_info_2.setText(String.valueOf(timestamp));
 
 
-        string_info += "size " + Learning.words_arr_random.size() + "  ";
+        string_info += "size " + Learning.words_arr_learning.size() + "  ";
 
 
         text_info_1.setText(string_info);

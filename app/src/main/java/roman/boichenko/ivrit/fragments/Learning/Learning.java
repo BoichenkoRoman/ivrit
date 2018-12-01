@@ -22,44 +22,80 @@ import roman.boichenko.ivrit.DTO.BD.Word;
 import roman.boichenko.ivrit.DTO.BD.WordDB;
 import roman.boichenko.ivrit.MainActivity;
 import roman.boichenko.ivrit.R;
+import roman.boichenko.ivrit.SharedPref;
+
+import static roman.boichenko.ivrit.Constant.*;
 
 public class Learning extends Fragment {
-    Context context;
+    private Context context;
     private static final String TAG = "MY_TAG Learning";
     protected static Other other;
     WordDB db;
     int number = 0;
+    //  private static SharedPref sharedPref;
 
-    List<Word> words_arr;
-    public static ArrayList<Word> words_arr_random;
+    private List<Word> words_arr_bd;  //   колекция всех слов  из бд
+    //  private List<Word> words_arr_;  //   колекция всех слов  из бд
+    public static ArrayList<Word> words_arr_learning;
     TextView textView5;
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        context = activity;
-        //   Log.d(TAG, "Fragment1 onAttach");
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        //   sharedPref = new SharedPref(context);
+        MainActivity.sharedPref.savePreferenceInteger(WINDOWS, 2);
+
         super.onCreate(savedInstanceState);
         db = MainActivity.bd_word;
 
-        words_arr = new ArrayList<>();
-        words_arr_random = new ArrayList<>();
+        words_arr_bd = new ArrayList<>();
+        words_arr_learning = new ArrayList<>();
 
         other = new Other();
         long timestamp = Learning.other.getCurrentTimeStamp();
         // масив всех слов   до  текущего  timestamp
-        words_arr = db.getWordDAO().getWordByTimeStamp(timestamp);
+        words_arr_bd = db.getWordDAO().getWordByTimeStamp(timestamp);
+
+   /*
+        Collections.sort(words_arr_bd, new Comparator<Word>() {
+            public int compare(Word w1, Word w2) {
+                return Long.valueOf(w2.timeStamp).compareTo(Long.valueOf(w1.timeStamp));
+            }
+        });
+
+     */
+        Log.d(TAG, "onCreate:  отсортированный входящий лист  words_arr_bd " + words_arr_bd.size());
+        for (Word word : words_arr_bd) {
+            if (word.timeStamp != 0) {
+                words_arr_learning.add(word);
+            }
+        }
+
+
+        Log.d(TAG, "onCreate:   входящий лист 1  words_arr_bd " + words_arr_bd.size() + " ------------------------------------------------------------");
+        for (Word word : words_arr_learning) {
+            Log.d(TAG, "onCreate:  " + word.toString());
+        }
+        Log.d(TAG, "onCreate:   входящий лист 1 end  words_arr_bd " + words_arr_bd.size() + " ------------------------------------------------------------");
+
 
         Random random = new Random();
-        for (int i = 0; i < 25; i++) {
-            int rand = random.nextInt(words_arr.size());
+
+        int words_arr_bd_size = words_arr_bd.size() > 25 ? 25 : words_arr_bd.size();
+        Log.d(TAG, "onCreate: words_arr_bd_size = " + words_arr_bd_size);
+        for (int i = 0; i < words_arr_bd_size; i++) {
+            int rand = random.nextInt(words_arr_bd.size());
             // выбираем из всех    25   рандомных
-            words_arr_random.add(words_arr.get(rand));
+            words_arr_learning.add(words_arr_bd.get(rand));
         }
+
+
+        for (Word word : words_arr_learning) {
+            Log.d(TAG, "onCreate:  " + word.toString());
+        }
+        Log.d(TAG, "onCreate:   входящий лист  2  words_arr_bd " + words_arr_learning.size() + " ------------------------------------------------------------");
+
+
     }
 
     @Nullable
@@ -80,25 +116,25 @@ public class Learning extends Fragment {
         Log.d(TAG, "onResume:  number 333   " + number);
 
         //сортируем по   времени    вперед самые первые
-        Collections.sort(words_arr_random, new Comparator<Word>() {
+        Collections.sort(words_arr_learning, new Comparator<Word>() {
             public int compare(Word w1, Word w2) {
                 return Long.valueOf(w1.timeStamp).compareTo(Long.valueOf(w2.timeStamp));
             }
         });
 
-
-        Log.d(TAG, " words_arr_random размер  " + words_arr_random.size());
+/*
+        Log.d(TAG, " words_arr_learning размер  " + words_arr_learning.size());
         Log.d(TAG, "----------------------- ");
 
-        for (Word word3 : words_arr_random) {
-
+        for (Word word3 : words_arr_learning) {
             Log.d(TAG, "id  " + word3.id + " " + "timeStamp " + word3.timeStamp + " " + word3.russian);
             //   Log.d(TAG, "onResume: " + word3.timeStamp);
         }
-        Log.d(TAG, "----------------------- ");
 
-        if (words_arr_random.size() != 0) {
-            Word word = words_arr_random.remove(0);
+        Log.d(TAG, "----------------------- ");
+*/
+        if (words_arr_learning.size() != 0) {
+            Word word = words_arr_learning.remove(0);
 
             getFragmentManager().
                     beginTransaction()

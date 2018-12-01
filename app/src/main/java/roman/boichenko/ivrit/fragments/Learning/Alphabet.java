@@ -1,7 +1,8 @@
 package roman.boichenko.ivrit.fragments.Learning;
 
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
+
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,8 +15,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import roman.boichenko.ivrit.DTO.BD.Abc;
@@ -23,7 +26,9 @@ import roman.boichenko.ivrit.DTO.BD.AbcDB;
 
 import roman.boichenko.ivrit.MainActivity;
 import roman.boichenko.ivrit.R;
+import roman.boichenko.ivrit.SharedPref;
 
+import static roman.boichenko.ivrit.Constant.*;
 import static roman.boichenko.ivrit.fragments.Learning.Other.*;
 
 
@@ -33,15 +38,17 @@ public class Alphabet extends Fragment {
     AbcDB db;
     List<Abc> abc_arr;
     private Abc abc;
-
+    private Context context;
     private Button button_show_answer;
     private Button button_10;
+    private Button button_alphabet;
     private Button button_11;
     private Button button_12;
     private Button button_13;
     private LinearLayout LL_show_answer;
     private LinearLayout LL_time_for_words;
     private LinearLayout LL_answer;
+    private LinearLayout LL_show_info;
     private TextView text_hebrew;
     private TextView text_russian;
     private TextView text_description;
@@ -53,11 +60,10 @@ public class Alphabet extends Fragment {
     private Other other;
 
 
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.sharedPref.savePreferenceInteger(WINDOWS, 1);
         db = MainActivity.bd_abc;
         abc_arr = new ArrayList<>();
         other = new Other();
@@ -65,8 +71,13 @@ public class Alphabet extends Fragment {
 
         //  abc_arr = db.getAbcDAO().getAllAbc();    //   запрос на все буквы
         abc_arr = db.getAbcDAO().getAbcByTimeStamp(timestamp);    //   запрос на  буквы  который меньше сейчас времени
+        Collections.shuffle(abc_arr);
 
-
+/*
+        for (Abc abc : abc_arr) {
+            Log.d(TAG, "onCreate: " + abc.toString());
+        }
+*/
     }
 
 
@@ -80,6 +91,7 @@ public class Alphabet extends Fragment {
         LL_show_answer = view.findViewById(R.id.LL_show_answer);
         LL_time_for_words = view.findViewById(R.id.LL_time_for_words);
         LL_answer = view.findViewById(R.id.LL_answer);
+        LL_show_info = view.findViewById(R.id.LL_show_info);
 
         text_hebrew = view.findViewById(R.id.text_hebrew);
         text_russian = view.findViewById(R.id.text_russian);
@@ -99,6 +111,21 @@ public class Alphabet extends Fragment {
                 LL_answer.setVisibility(View.VISIBLE);
                 //TODO
                 //      Log.d(TAG, "onClick: обработка нажатия \"показать ответ\" ");
+
+            }
+        });
+
+        button_alphabet = view.findViewById(R.id.button_alphabet);
+
+        button_alphabet.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {  //  кнопка показать ответ
+                // Toast.makeText(context, "button_alphabet", Toast.LENGTH_SHORT).show();
+                //TODO
+                getFragmentManager()
+                        .beginTransaction()
+                        //  .addToBackStack(null)
+                        .replace(R.id.fragment_container, new Learning(), "Learning")
+                        .commit();
 
             }
         });
@@ -192,6 +219,20 @@ public class Alphabet extends Fragment {
         } else {
             text_hebrew.setTextSize(20);
             text_hebrew.setText("на сегодня все буквы пройдены");
+         /*
+            getFragmentManager()
+                    .beginTransaction()
+                    //  .addToBackStack(null)
+                    .replace(R.id.fragment_container, new Learning(), "Learning")
+                    .commit();
+*/
+
+            button_alphabet.setVisibility(View.VISIBLE);
+            LL_show_answer.setVisibility(View.GONE);
+            LL_time_for_words.setVisibility(View.GONE);
+            LL_show_info.setVisibility(View.GONE);
+
+
         }
     }
 
@@ -203,7 +244,7 @@ public class Alphabet extends Fragment {
         string_info += "waiting_time  " + abc.waiting_time + "  ";
         //   text_info_2.setText(String.valueOf(timestamp));
         string_info += "size " + abc_arr.size() + "  ";
-//        text_info_1.setText(string_info);
+        text_info_1.setText(string_info);
 
 
     }

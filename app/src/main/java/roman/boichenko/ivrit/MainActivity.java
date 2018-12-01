@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 
 import com.idescout.sql.SqlScoutServer;
+
 import roman.boichenko.ivrit.DTO.BD.AbcDB;
 import roman.boichenko.ivrit.DTO.BD.WordDB;
 import roman.boichenko.ivrit.External_storage.write_BD;
@@ -45,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
     public static AbcDB bd_abc;
     public static SharedPref sharedPref;
     public static boolean admin = true;
-
-
 
 
     @Override
@@ -98,17 +97,33 @@ public class MainActivity extends AppCompatActivity {
 
         } else {
 
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    // .addToBackStack(null)
-                    //  .add(R.id.fragment_container, new Learning(), "Learning")
-                    .add(R.id.fragment_container, new Alphabet(), "Learning")
-                    .commit();
+            switch (sharedPref.getPreferencesInteger(WINDOWS)) {
+                case 1:
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            // .addToBackStack(null)
+                            //  .add(R.id.fragment_container, new Learning(), "Learning")
+                            .add(R.id.fragment_container, new Alphabet(), "Learning")
+                            .commit();
+                    break;
+
+                case 2:
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            // .addToBackStack(null)
+                            //  .add(R.id.fragment_container, new Learning(), "Learning")
+                            .add(R.id.fragment_container, new Learning(), "Learning")
+                            .commit();
+                    break;
+
+            }
+
+
         }
 
 
-
     }
+
 
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);

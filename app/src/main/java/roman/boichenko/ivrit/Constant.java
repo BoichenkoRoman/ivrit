@@ -11,5 +11,6 @@ public class Constant {
     public static final String EMAIL = "EMAIL";
     public static final String SETTINGS_2 = "SETTINGS_2";
     public static final String NIGHT_MODE = "Night_mode";
+    public static final String WINDOWS = "WINDOWS";
 
 }
