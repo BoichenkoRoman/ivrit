@@ -51,7 +51,9 @@ public class Search_word extends Fragment {
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.search_word, container, false);
+
         button = view.findViewById(R.id.button);
+        editText = view.findViewById(R.id.editText);
         return view;
     }
 
@@ -64,14 +66,15 @@ public class Search_word extends Fragment {
                 Toast.makeText(context, "Поиск", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onClick: СНОВА ");
 
-                // getWordByNameRussian
+                String search = editText.getText().toString();
+                // search = "%" + search + "%";
+                Log.d(TAG, "onClick: search " + search);
+                words_search = db.getWordDAO().getWordByNameRussian(search);
+                words_temp = db.getWordDAO().getWordByNameHebrew(search, search + " %", "% " + search);
+                words_search.addAll(words_temp);
 
-                //    words_search = db.getWordDAO().getWordByNameRussian("%дом%");
-                //    words_temp = db.getWordDAO().getWordByNameHebrew("%בית%");
-               //    words_search.addAll(words_temp);
-
-             //   words_temp.clear();
-                words_temp = db.getWordDAO().getWordByNameHebrewPlural("%ב%י%ת%");
+                words_temp.clear();
+                words_temp = db.getWordDAO().getWordByNameHebrewPlural(search,search + " %", "% " + search);
 
                 words_search.addAll(words_temp);
 
@@ -82,20 +85,6 @@ public class Search_word extends Fragment {
 
             }
         });
-//        /*
-//        String str = "<p align=right> <b> "
-//                + "<br>" +"Hi!" + "  </br> "
-//                + "<br> How are you "+" </br>"
-//                + "<br>I am fine" + " </br> </b> </p>";
-//         */
-//        String str = "О программе v6.03 30.11.2018";
-//
-//
-//        //   textView1.setText(Html.fromHtml(str));
-//
-//        str = "Учите что угодно, где угодно и когда угодно. Эффективно используйте время, которое вы тратите в транспорте, в очередях и в любой другой ситуации, когда вам нечем заняться.";
-//
-//        //   textView2.setText(Html.fromHtml(str));
 
 
     }

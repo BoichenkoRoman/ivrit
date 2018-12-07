@@ -60,11 +60,11 @@ public interface WordDAO {
     @Query("SELECT * FROM wordsTable  WHERE  russian LIKE:russian")
     List<Word> getWordByNameRussian(String russian);
 
-    @Query("SELECT * FROM wordsTable  WHERE  hebrew LIKE:hebrew")
-    List<Word> getWordByNameHebrew(String hebrew);
+    @Query("SELECT * FROM wordsTable  WHERE  hebrewWithoutNikudot LIKE :hebrew  or hebrewWithoutNikudot LIKE :hebrew1  or hebrewWithoutNikudot LIKE:hebrew2")
+    List<Word> getWordByNameHebrew(String hebrew, String hebrew1, String hebrew2);
 
-    @Query("SELECT * FROM wordsTable  WHERE  hebrewPlural LIKE:hebrewPlural")
-    List<Word> getWordByNameHebrewPlural(String hebrewPlural);
+    @Query("SELECT * FROM wordsTable  WHERE hebrewPluralWithoutNikudot  LIKE:hebrew  or hebrewPluralWithoutNikudot  LIKE:hebrew1  or hebrewPluralWithoutNikudot LIKE:hebrew2")
+    List<Word> getWordByNameHebrewPlural(String hebrew, String hebrew1, String hebrew2);
 
 
     // Получение кота по идентификатору

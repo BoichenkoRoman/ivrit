@@ -11,7 +11,7 @@ import roman.boichenko.ivrit.DTO.BD.Word;
 public interface Api {
     @GET("showBDwords.php")
         // общий список   из  таблицы mazganim
-    Call<List<Word>> getListWords(@Query("email") String email);    // Call - Эта обертка нужна для работы Retrofit.
+    Call<List<Word>> getListWords();    // Call - Эта обертка нужна для работы Retrofit.   //@Query("email") String email
     // В ней мы указываем, какой тип данных ожидаем получить из messages1.json - т.е. List<Mazgan>.
     // <то что мы ждем от сервера >
 

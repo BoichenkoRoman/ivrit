@@ -12,7 +12,9 @@ public class Word {
 
     public String russian;
     public String hebrew;
+    public String hebrewWithoutNikudot;
     public String hebrewPlural;
+    public String hebrewPluralWithoutNikudot;
     public String transcription;
     public String transcriptionPlural;
     public String gender;
@@ -21,12 +23,13 @@ public class Word {
     public long timeStamp;
     public int waiting_time;
 
-
-    public Word(int id, String russian, String hebrew, String hebrewPlural, String transcription, String transcriptionPlural, String gender, String theme, String example, long timeStamp, int waiting_time) {
+    public Word(int id, String russian, String hebrew, String hebrewWithoutNikudot, String hebrewPlural, String hebrewPluralWithoutNikudot, String transcription, String transcriptionPlural, String gender, String theme, String example, long timeStamp, int waiting_time) {
         this.id = id;
         this.russian = russian;
         this.hebrew = hebrew;
+        this.hebrewWithoutNikudot = hebrewWithoutNikudot;
         this.hebrewPlural = hebrewPlural;
+        this.hebrewPluralWithoutNikudot = hebrewPluralWithoutNikudot;
         this.transcription = transcription;
         this.transcriptionPlural = transcriptionPlural;
         this.gender = gender;
@@ -42,7 +45,9 @@ public class Word {
                 "id=" + id +
                 ", russian='" + russian + '\'' +
                 ", hebrew='" + hebrew + '\'' +
+                ", hebrewWithoutNikudot='" + hebrewWithoutNikudot + '\'' +
                 ", hebrewPlural='" + hebrewPlural + '\'' +
+                ", hebrewPluralWithoutNikudot='" + hebrewPluralWithoutNikudot + '\'' +
                 ", transcription='" + transcription + '\'' +
                 ", transcriptionPlural='" + transcriptionPlural + '\'' +
                 ", gender='" + gender + '\'' +

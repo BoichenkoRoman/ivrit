@@ -73,28 +73,28 @@ public class Learning extends Fragment {
 
 
         Log.d(TAG, "onCreate:   входящий лист 1  words_arr_bd " + words_arr_bd.size() + " ------------------------------------------------------------");
-        for (Word word : words_arr_learning) {
-            Log.d(TAG, "onCreate:  " + word.toString());
-        }
-        Log.d(TAG, "onCreate:   входящий лист 1 end  words_arr_bd " + words_arr_bd.size() + " ------------------------------------------------------------");
+      //  for (Word word : words_arr_learning) {
+      //      Log.d(TAG, "onCreate:  " + word.toString());
+     //   }
+     //   Log.d(TAG, "onCreate:   входящий лист 1 end  words_arr_bd " + words_arr_bd.size() + " ------------------------------------------------------------");
 
 
         Random random = new Random();
 
         int words_arr_bd_size = words_arr_bd.size() > 25 ? 25 : words_arr_bd.size();
-        Log.d(TAG, "onCreate: words_arr_bd_size = " + words_arr_bd_size);
+      //  Log.d(TAG, "onCreate: words_arr_bd_size = " + words_arr_bd_size);
         for (int i = 0; i < words_arr_bd_size; i++) {
             int rand = random.nextInt(words_arr_bd.size());
             // выбираем из всех    25   рандомных
             words_arr_learning.add(words_arr_bd.get(rand));
         }
 
-
+/*
         for (Word word : words_arr_learning) {
             Log.d(TAG, "onCreate:  " + word.toString());
         }
         Log.d(TAG, "onCreate:   входящий лист  2  words_arr_bd " + words_arr_learning.size() + " ------------------------------------------------------------");
-
+*/
 
     }
 

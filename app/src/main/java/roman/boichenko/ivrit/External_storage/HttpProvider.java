@@ -38,8 +38,8 @@ public class HttpProvider {
     }
 
     public void getListWords(Callback<List<Word>> callback) {
-        String accountName = MainActivity.sharedPref.getPreferencesString(Constant.EMAIL);
-        Call<List<Word>> call = api.getListWords(accountName);
+      //  String accountName = MainActivity.sharedPref.getPreferencesString(Constant.EMAIL);
+        Call<List<Word>> call = api.getListWords();
         call.enqueue(callback);
     }
 

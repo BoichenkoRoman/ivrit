@@ -39,10 +39,11 @@ public class write_BD {
                 if (response.isSuccessful()) {
                     // TODO
                     listWords.addAll(response.body());
-
-//                    for (Word w : listWords) {
-//                        //  Log.d(TAG, "onResponse: " + w.toString());
-//                    }
+/*
+                    for (Word w : listWords) {
+                        Log.d(TAG, "onResponse: " + w.toString());
+                    }
+*/
 
                     Log.d(TAG, "onResponse: база загружена размер  " + listWords.size());
 
