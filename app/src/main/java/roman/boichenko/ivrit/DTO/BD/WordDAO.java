@@ -13,10 +13,10 @@ import java.util.List;
 public interface WordDAO {
 
     // Добавление кота в базу данных
-  @Insert
-   void add(Word word);
+    @Insert
+    void add(Word word);
 
-    // Добавление всехслов в базу данных
+    // Добавление всех слов в базу данных
     @Insert
     void insertAll(List<Word> employees);
 
@@ -53,6 +53,18 @@ public interface WordDAO {
 
     @Query("SELECT * FROM wordsTable  WHERE  timeStamp <=:timeStamp")
     List<Word> getWordByTimeStamp(long timeStamp);
+
+
+    //   russian      hebrew   hebrewPlural
+    // WHERE UniversityName LIKE '%State%'
+    @Query("SELECT * FROM wordsTable  WHERE  russian LIKE:russian")
+    List<Word> getWordByNameRussian(String russian);
+
+    @Query("SELECT * FROM wordsTable  WHERE  hebrew LIKE:hebrew")
+    List<Word> getWordByNameHebrew(String hebrew);
+
+    @Query("SELECT * FROM wordsTable  WHERE  hebrewPlural LIKE:hebrewPlural")
+    List<Word> getWordByNameHebrewPlural(String hebrewPlural);
 
 
     // Получение кота по идентификатору

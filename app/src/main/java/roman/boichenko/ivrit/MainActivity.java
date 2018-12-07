@@ -27,6 +27,7 @@ import roman.boichenko.ivrit.fragments.About;
 import roman.boichenko.ivrit.fragments.Learning.Alphabet;
 import roman.boichenko.ivrit.fragments.Learning.Learning;
 
+import roman.boichenko.ivrit.fragments.Search_word;
 import roman.boichenko.ivrit.fragments.Settings;
 
 import static roman.boichenko.ivrit.Constant.*;
@@ -131,8 +132,18 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                Toast.makeText(MainActivity.this, "Поиск слова", Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(MainActivity.this, "Поиск слова", Toast.LENGTH_SHORT).show();
                 //TODO
+
+           //     Search_word
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        //  .addToBackStack(null)
+                        .replace(R.id.fragment_container, new Search_word(), "Search_word")
+                        .commit();
+
+
+
                 return false;
             }
         });
@@ -168,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager()
                                 .beginTransaction()
                                 //  .addToBackStack(null)
-                                .replace(R.id.fragment_container, new Alphabet(), "Learning")
+                                .replace(R.id.fragment_container, new Alphabet(), "Alphabet")
                                 .commit();
                         break;
 
@@ -184,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager()
                                 .beginTransaction()
                                 .addToBackStack(null)
-                                .replace(R.id.fragment_container, new About(), "Settings")
+                                .replace(R.id.fragment_container, new About(), "About")
                                 .commit();
                         break;
                 }
