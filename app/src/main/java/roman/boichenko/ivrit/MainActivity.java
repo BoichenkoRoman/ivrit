@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     public static WordDB bd_word;
     public static AbcDB bd_abc;
     public static SharedPref sharedPref;
-    public static boolean admin = true;
+    public static boolean admin = false;
 
 
     @Override
@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
             getBDwords.getListWords();
             getBDwords.getListAbc();
 
+            //установили значение   админа
+            sharedPref.savePreferencesBoolean(Constant.ADMIN, false);
 
             // About
             getSupportFragmentManager()
@@ -132,17 +134,17 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-             //   Toast.makeText(MainActivity.this, "Поиск слова", Toast.LENGTH_SHORT).show();
+                //   Toast.makeText(MainActivity.this, "Поиск слова", Toast.LENGTH_SHORT).show();
                 //TODO
-
+/*
            //     Search_word
                 getSupportFragmentManager()
                         .beginTransaction()
-                        //  .addToBackStack(null)
+                        .addToBackStack(null)
                         .replace(R.id.fragment_container, new Search_word(), "Search_word")
                         .commit();
 
-
+*/
 
                 return false;
             }

@@ -138,7 +138,7 @@ public class Learning extends Fragment {
 
             getFragmentManager().
                     beginTransaction()
-                    .addToBackStack(null)
+                  //  .addToBackStack(null)
                     .add(R.id.fragment_container, LearningWords.newInstance(word), "LearningWords")
                     .commit();
 
@@ -155,7 +155,7 @@ public class Learning extends Fragment {
             number++;
         } else {
 
-            textView5.setText("на сегоднешний день все слова закончились ");
+            textView5.setText("на текущий урок все слова закончились попробуйте  позже ");
             Log.d(TAG, "onResume:  слова закончились ");
         }
     }

@@ -97,7 +97,7 @@ public class Alphabet extends Fragment {
         text_russian = view.findViewById(R.id.text_russian);
         text_description = view.findViewById(R.id.text_description);
         imageView = view.findViewById(R.id.imageView);
-        //  text_transcription = view.findViewById(R.id.text_transcription);
+
 
         text_info_1 = view.findViewById(R.id.text_info_1);
         text_info_2 = view.findViewById(R.id.text_info_2);
@@ -149,7 +149,7 @@ public class Alphabet extends Fragment {
 
 
     private void run() {
-        Log.d(TAG, "run: ");
+      //  Log.d(TAG, "run: ");
 
         LL_show_answer.setVisibility(View.VISIBLE);
         LL_time_for_words.setVisibility(View.INVISIBLE);

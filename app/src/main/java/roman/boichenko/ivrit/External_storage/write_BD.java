@@ -139,8 +139,6 @@ public class write_BD {
     private void showError(String s) {
         Log.d(TAG, "showError: ERROR " + s);
         CustomToast.makeText(context, "showError: ERROR", Toast.LENGTH_SHORT).show();
-
-
     }
 
 }

@@ -12,5 +12,6 @@ public class Constant {
     public static final String SETTINGS_2 = "SETTINGS_2";
     public static final String NIGHT_MODE = "Night_mode";
     public static final String WINDOWS = "WINDOWS";
+    public static final String ADMIN = "ADMIN";
 
 }
