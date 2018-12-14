@@ -17,6 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:padding="5dp"
             android:textSize="35sp" />
 
@@ -26,13 +27,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="invisible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="2sp"
                 android:background="@color/colorPrimaryDark" />
-
 
             <TextView
                 android:id="@+id/text_transcription"
@@ -42,7 +42,6 @@
                 android:padding="5dp"
                 android:text="text_transcription"
                 android:textSize="25sp" />
-
 
 
             <TextView
@@ -78,16 +77,13 @@
             android:id="@+id/text_info_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:padding="5dp"
-
             android:textSize="15sp" />
         <TextView
             android:id="@+id/text_info_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-
             android:textSize="15sp" />
 
     </LinearLayout>

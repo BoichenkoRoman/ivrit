@@ -15,6 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
@@ -38,12 +39,19 @@ public class Learning extends Fragment {
     //  private List<Word> words_arr_;  //   колекция всех слов  из бд
     public static ArrayList<Word> words_arr_learning;
     TextView textView5;
+    private HashSet<Integer> spelling;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         //   sharedPref = new SharedPref(context);
         MainActivity.sharedPref.savePreferenceInteger(WINDOWS, 2);
+
+        // когда показывать провописание
+        spelling = new HashSet();
+        //   spelling.add(0);
+        //    spelling.add(6);
+        //   spelling.add(8);
 
         super.onCreate(savedInstanceState);
         db = MainActivity.bd_word;
@@ -64,7 +72,7 @@ public class Learning extends Fragment {
         });
 
      */
-        Log.d(TAG, "onCreate:  отсортированный входящий лист  words_arr_bd " + words_arr_bd.size());
+        //   Log.d(TAG, "onCreate:  отсортированный входящий лист  words_arr_bd " + words_arr_bd.size());
         for (Word word : words_arr_bd) {
             if (word.timeStamp != 0) {
                 words_arr_learning.add(word);
@@ -72,17 +80,17 @@ public class Learning extends Fragment {
         }
 
 
-        Log.d(TAG, "onCreate:   входящий лист 1  words_arr_bd " + words_arr_bd.size() + " ------------------------------------------------------------");
-      //  for (Word word : words_arr_learning) {
-      //      Log.d(TAG, "onCreate:  " + word.toString());
-     //   }
-     //   Log.d(TAG, "onCreate:   входящий лист 1 end  words_arr_bd " + words_arr_bd.size() + " ------------------------------------------------------------");
+        //   Log.d(TAG, "onCreate:   входящий лист 1  words_arr_bd " + words_arr_bd.size() + " ------------------------------------------------------------");
+        //  for (Word word : words_arr_learning) {
+        //      Log.d(TAG, "onCreate:  " + word.toString());
+        //   }
+        //   Log.d(TAG, "onCreate:   входящий лист 1 end  words_arr_bd " + words_arr_bd.size() + " ------------------------------------------------------------");
 
 
         Random random = new Random();
 
         int words_arr_bd_size = words_arr_bd.size() > 25 ? 25 : words_arr_bd.size();
-      //  Log.d(TAG, "onCreate: words_arr_bd_size = " + words_arr_bd_size);
+        //  Log.d(TAG, "onCreate: words_arr_bd_size = " + words_arr_bd_size);
         for (int i = 0; i < words_arr_bd_size; i++) {
             int rand = random.nextInt(words_arr_bd.size());
             // выбираем из всех    25   рандомных
@@ -113,7 +121,7 @@ public class Learning extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume:  number 333   " + number);
+        //  Log.d(TAG, "onResume:  number 333   " + number);
 
         //сортируем по   времени    вперед самые первые
         Collections.sort(words_arr_learning, new Comparator<Word>() {
@@ -136,16 +144,25 @@ public class Learning extends Fragment {
         if (words_arr_learning.size() != 0) {
             Word word = words_arr_learning.remove(0);
 
-            getFragmentManager().
-                    beginTransaction()
-                  //  .addToBackStack(null)
-                    .add(R.id.fragment_container, LearningWords.newInstance(word), "LearningWords")
-                    .commit();
 
+            if (spelling.contains(word.waiting_time)) {
+                getFragmentManager().
+                        beginTransaction()
+                        .addToBackStack(null)
+                        .add(R.id.fragment_container, SpellingOfWords.newInstance(word), "SpellingOfWords")
+                        .commit();
+
+            } else {
+                getFragmentManager().
+                        beginTransaction()
+                        //  .addToBackStack(null)
+                        .add(R.id.fragment_container, LearningWords.newInstance(word), "LearningWords")
+                        .commit();
+            }
 
             Fragment fragment = getFragmentManager().findFragmentByTag("Learning");
             if (fragment != null) {
-                Log.d(TAG, "fragment   Learning  есть   detach ");
+                //  Log.d(TAG, "fragment   Learning  есть   detach ");
                 getFragmentManager().
                         beginTransaction()
                         //  .addToBackStack(null)
@@ -156,7 +173,7 @@ public class Learning extends Fragment {
         } else {
 
             textView5.setText("на текущий урок все слова закончились попробуйте  позже ");
-            Log.d(TAG, "onResume:  слова закончились ");
+            //   Log.d(TAG, "onResume:  слова закончились ");
         }
     }
 
@@ -164,25 +181,22 @@ public class Learning extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        Log.d(TAG, "onStart: ");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.d(TAG, "onPause: ");
 
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "onDestroy: ");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(TAG, "onDetach: ");
+
     }
 }

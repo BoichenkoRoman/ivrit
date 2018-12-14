@@ -24,6 +24,8 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
+import roman.boichenko.ivrit.DTO.BD.Word;
+import roman.boichenko.ivrit.DTO.BD.WordDB;
 import roman.boichenko.ivrit.MainActivity;
 import roman.boichenko.ivrit.R;
 
@@ -32,18 +34,30 @@ import android.widget.LinearLayout.LayoutParams;
 public class SpellingOfWords extends Fragment {
     Context context;
 
-    TextView textView;
-    TextView textView2;
+    TextView textView_rus;
+    //  TextView textView2;
     TextView textEl;
-    Button button;
+    TextView textView1;
+    TextView textView3;
+    TextView text_transcription;
+    Button button_words;
     GridLayout gridLayout;
     int error;
 
     TextView[] arr_TextView;
-
+    WordDB db;
+    private Word word;
     EditText editText;
 
     private static final String TAG = "MY_TAG SpellingOfWords";
+
+    public static SpellingOfWords newInstance(Word word) {
+        Bundle args = new Bundle();
+        SpellingOfWords fragment = new SpellingOfWords();
+        fragment.word = word;
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -62,17 +76,19 @@ public class SpellingOfWords extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.words, container, false);
+        View view = inflater.inflate(R.layout.spelling_of_words, container, false);
         MainActivity.toolbar.setTitle("Правописание слов");
         gridLayout = view.findViewById(R.id.gridLayout);
 
         editText = view.findViewById(R.id.EditText1);
         gridLayout.setPadding(10, 10, 10, 10);
 
-        textView = view.findViewById(R.id.textView);
-        textView2 = view.findViewById(R.id.textView2);
+        textView_rus = view.findViewById(R.id.textView_rus);
+        textView1 = view.findViewById(R.id.textView1);
+        textView3 = view.findViewById(R.id.textView3);
+        text_transcription = view.findViewById(R.id.text_transcription);
         textEl = view.findViewById(R.id.textView1);
-        button = view.findViewById(R.id.button_words);
+        button_words = view.findViewById(R.id.button_words);
 
 
         setHasOptionsMenu(true);  // добавляем меню из фрагмента  в наше активити
@@ -83,10 +99,9 @@ public class SpellingOfWords extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        //Log.d(TAG, "onStart: ");
-        final String slovo1 = "לֶקסִיקוֹן";
 
-        textView.setText("лексикон");
+        final String slovo1 = word.hebrewWithoutNikudot;
+        textView_rus.setText(word.russian);
         Log.d(TAG, "slovo1: " + slovo1 + "  " + slovo1.length());
 
 
@@ -94,11 +109,12 @@ public class SpellingOfWords extends Fragment {
 
         final int slovo_length = slovo2.length();
         Log.d(TAG, "slovo2: " + slovo2 + "  " + slovo_length);
-        textView2.setText(slovo2);
+        //  textView2.setText(slovo2);
 
-
+        textView3.setText(String.valueOf(word.id ));
+        text_transcription.setText(String.valueOf(word.transcription ));
         // показать ответ
-        button.setOnClickListener(new View.OnClickListener() {
+        button_words.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
                 wordVerification(editText.getText().toString());
@@ -131,7 +147,7 @@ public class SpellingOfWords extends Fragment {
                 // действия, когда вводится какой то текст
                 // s - то, что вводится, для преобразования в строку - s.toString()
                 textEl.setText("");
-                button.setVisibility(View.VISIBLE);
+                button_words.setVisibility(View.VISIBLE);
                 TextVievInvisible();
             }
 
@@ -159,7 +175,7 @@ public class SpellingOfWords extends Fragment {
                                                   (keyCode == KeyEvent.KEYCODE_ENTER)) {
                                               // сохраняем текст, введенный до нажатия Enter в переменную
                                               String strWord = editText.getText().toString();
-                                              //    Toast.makeText(context, "введеное слово - " + strWord, Toast.LENGTH_SHORT).show();
+                                             //   Toast.makeText(context, "введеное слово - " + strWord, Toast.LENGTH_SHORT).show();
                                               wordVerification(strWord);
                                               return true;
                                           }
@@ -168,16 +184,16 @@ public class SpellingOfWords extends Fragment {
                                   }
         );
 
-        arr_TextView = new TextView[slovo_length];
+        //  arr_TextView = new TextView[slovo_length];
 
 
         for (int i = 0; i < slovo_length; i++) {
             TextView txt = new TextView(context, null, R.style.CustomTextView);
             txt.setId(i);
-            txt.setTextSize(20);
+            txt.setTextSize(25);
             txt.setText(String.valueOf(slovo2.charAt(slovo_length - 1 - i)));
             txt.setGravity(Gravity.CENTER);
-            txt.setVisibility(View.INVISIBLE);
+            txt.setVisibility(View.GONE);
 
             LayoutParams layoutParams1 = new LayoutParams(width_txt, LayoutParams.WRAP_CONTENT);
             txt.setLayoutParams(layoutParams1);
@@ -190,6 +206,9 @@ public class SpellingOfWords extends Fragment {
 
     private void hideKeyboard() {
         //скрыть клавиатуру
+        text_transcription.setVisibility(View.VISIBLE);
+        button_words.setVisibility(View.INVISIBLE);
+
         Activity activity = getActivity();
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         try {
@@ -205,7 +224,7 @@ public class SpellingOfWords extends Fragment {
         //  menu.findItem(R.id.menu_refresh).setVisible(false); // можем скрыть некоторые пункты
     }
 
-
+    // удаление огласовок
     public String removeМocalization(String str) {
         // удаление  огласовок  из слова возврашаем новое слово
         char[] myCharArray = str.toCharArray();
@@ -220,29 +239,27 @@ public class SpellingOfWords extends Fragment {
 
     public void buttononClick() {
         //   Toast.makeText(context, "111", Toast.LENGTH_SHORT).show();
-      //  Log.d(TAG, "buttononClick: 111");
+        //  Log.d(TAG, "buttononClick: 111");
         wordVerification("");
     }
 
 
     private void TextVievInvisible() {
         for (TextView txt : arr_TextView) {
-            txt.setVisibility(View.INVISIBLE);
+            txt.setVisibility(View.GONE);
         }
     }
 
 
     public void wordVerification(String word) {
-        hideKeyboard();
+        hideKeyboard(); // спрятали клаву
         error = 0;
-
-
         //проверка  слова которое ввел пользователь  и  вывод  на экран результата
-        //    Log.d(TAG, "rr2:    word   " + word);
+
 
         //  скрываем все  буквы   и делаем фон  TextView  как  родитеяля
         for (TextView txt : arr_TextView) {
-            txt.setVisibility(View.INVISIBLE);
+            txt.setVisibility(View.GONE);
             txt.setBackgroundResource(R.color.colorPrimary);
         }
 
@@ -279,7 +296,7 @@ public class SpellingOfWords extends Fragment {
             textEl.setText("Вы допустили ошибок: " + error);
 
         } else {
-            button.setVisibility(View.INVISIBLE);
+            button_words.setVisibility(View.INVISIBLE);
             textEl.setText(Html.fromHtml("<p><font color=\"#fff\">Поздравляю! Так держать.</font>"));
         }
     }

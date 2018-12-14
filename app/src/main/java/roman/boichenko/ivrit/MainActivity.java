@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -15,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.idescout.sql.SqlScoutServer;
@@ -29,6 +29,7 @@ import roman.boichenko.ivrit.fragments.Learning.Learning;
 
 import roman.boichenko.ivrit.fragments.Search_word;
 import roman.boichenko.ivrit.fragments.Settings;
+
 
 import static roman.boichenko.ivrit.Constant.*;
 
@@ -46,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
     public static WordDB bd_word;
     public static AbcDB bd_abc;
     public static SharedPref sharedPref;
-    public static boolean admin = false;
-
+    public static boolean admin = true;
+    Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,9 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     getSupportFragmentManager()
                             .beginTransaction()
-                            // .addToBackStack(null)
-                            //  .add(R.id.fragment_container, new Learning(), "Learning")
-                            .add(R.id.fragment_container, new Alphabet(), "Learning")
+                            .replace(R.id.fragment_container, new Alphabet(), "Alphabet")
                             .commit();
                     break;
 
@@ -114,8 +113,7 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager()
                             .beginTransaction()
                             // .addToBackStack(null)
-                            //  .add(R.id.fragment_container, new Learning(), "Learning")
-                            .add(R.id.fragment_container, new Learning(), "Learning")
+                            .replace(R.id.fragment_container, new Learning(), "Learning")
                             .commit();
                     break;
 
@@ -136,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 //   Toast.makeText(MainActivity.this, "Поиск слова", Toast.LENGTH_SHORT).show();
                 //TODO
-/*
+
            //     Search_word
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -144,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                         .replace(R.id.fragment_container, new Search_word(), "Search_word")
                         .commit();
 
-*/
+
 
                 return false;
             }
@@ -170,14 +168,14 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
                 //  переход по меню из  NavigationView
                 switch (menuItem.getItemId()) {
-                    case R.id.nav_learning_words:  // запоминание слов
+                    case R.id.nav_learning_words:
                         getSupportFragmentManager()
                                 .beginTransaction()
                                 //  .addToBackStack(null)
                                 .replace(R.id.fragment_container, new Learning(), "Learning")
                                 .commit();
                         break;
-                    case R.id.nav_alphabet:  // запоминание слов
+                    case R.id.nav_alphabet:
                         getSupportFragmentManager()
                                 .beginTransaction()
                                 //  .addToBackStack(null)
@@ -189,14 +187,15 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_settings:
                         getSupportFragmentManager()
                                 .beginTransaction()
-                                .addToBackStack(null)
+                                // .addToBackStack(null)
                                 .replace(R.id.fragment_container, new Settings(), "Settings")
                                 .commit();
                         break;
+
                     case R.id.nav_about:
                         getSupportFragmentManager()
                                 .beginTransaction()
-                                .addToBackStack(null)
+                                //   .addToBackStack(null)
                                 .replace(R.id.fragment_container, new About(), "About")
                                 .commit();
                         break;
@@ -221,7 +220,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        Log.d(TAG, "onResume: ");
         sqlScoutServer.resume();
         super.onResume();
 
