@@ -64,14 +64,6 @@ public class Learning extends Fragment {
         // масив всех слов   до  текущего  timestamp
         words_arr_bd = db.getWordDAO().getWordByTimeStamp(timestamp);
 
-   /*
-        Collections.sort(words_arr_bd, new Comparator<Word>() {
-            public int compare(Word w1, Word w2) {
-                return Long.valueOf(w2.timeStamp).compareTo(Long.valueOf(w1.timeStamp));
-            }
-        });
-
-     */
         //   Log.d(TAG, "onCreate:  отсортированный входящий лист  words_arr_bd " + words_arr_bd.size());
         for (Word word : words_arr_bd) {
             if (word.timeStamp != 0) {
@@ -80,37 +72,39 @@ public class Learning extends Fragment {
         }
 
 
-        //   Log.d(TAG, "onCreate:   входящий лист 1  words_arr_bd " + words_arr_bd.size() + " ------------------------------------------------------------");
-        //  for (Word word : words_arr_learning) {
-        //      Log.d(TAG, "onCreate:  " + word.toString());
-        //   }
-        //   Log.d(TAG, "onCreate:   входящий лист 1 end  words_arr_bd " + words_arr_bd.size() + " ------------------------------------------------------------");
+        Collections.sort(words_arr_learning, new Comparator<Word>() {
+            public int compare(Word w1, Word w2) {
+                return Long.valueOf(w1.timeStamp).compareTo(Long.valueOf(w2.timeStamp));
+            }
+        });
 
 
-        Random random = new Random();
-
-        int words_arr_bd_size = words_arr_bd.size() > 25 ? 25 : words_arr_bd.size();
-        //  Log.d(TAG, "onCreate: words_arr_bd_size = " + words_arr_bd_size);
-        for (int i = 0; i < words_arr_bd_size; i++) {
-            int rand = random.nextInt(words_arr_bd.size());
-            // выбираем из всех    25   рандомных
-            words_arr_learning.add(words_arr_bd.get(rand));
+        // если изучающих слов меньше  чем 30    то добавим новых
+        if (words_arr_learning.size() < 30) {
+            //  добавляем новые слова
+            Random random = new Random();
+            int words_arr_bd_size = words_arr_bd.size() > 25 ? 25 : words_arr_bd.size();
+            //  Log.d(TAG, "onCreate: words_arr_bd_size = " + words_arr_bd_size);
+            for (int i = 0; i < words_arr_bd_size; i++) {
+                int rand = random.nextInt(words_arr_bd.size());
+                // выбираем из всех    25   рандомных
+                words_arr_learning.add(words_arr_bd.get(rand));
+            }
         }
 
 /*
         for (Word word : words_arr_learning) {
             Log.d(TAG, "onCreate:  " + word.toString());
         }
-        Log.d(TAG, "onCreate:   входящий лист  2  words_arr_bd " + words_arr_learning.size() + " ------------------------------------------------------------");
+        Log.d(TAG, "onCreate: words_arr_learning.size " + words_arr_learning.size());
 */
-
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.learning, container, false);
-        MainActivity.toolbar.setTitle("Запоминание  слов");
+       MainActivity.toolbar.setTitle("Запоминание  слов");
         setHasOptionsMenu(true);  // добавляем меню из фрагмента  в наше активити
 
         textView5 = view.findViewById(R.id.textView5);
@@ -121,29 +115,9 @@ public class Learning extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //  Log.d(TAG, "onResume:  number 333   " + number);
 
-        //сортируем по   времени    вперед самые первые
-        Collections.sort(words_arr_learning, new Comparator<Word>() {
-            public int compare(Word w1, Word w2) {
-                return Long.valueOf(w1.timeStamp).compareTo(Long.valueOf(w2.timeStamp));
-            }
-        });
-
-/*
-        Log.d(TAG, " words_arr_learning размер  " + words_arr_learning.size());
-        Log.d(TAG, "----------------------- ");
-
-        for (Word word3 : words_arr_learning) {
-            Log.d(TAG, "id  " + word3.id + " " + "timeStamp " + word3.timeStamp + " " + word3.russian);
-            //   Log.d(TAG, "onResume: " + word3.timeStamp);
-        }
-
-        Log.d(TAG, "----------------------- ");
-*/
         if (words_arr_learning.size() != 0) {
             Word word = words_arr_learning.remove(0);
-
 
             if (spelling.contains(word.waiting_time)) {
                 getFragmentManager().
@@ -173,7 +147,7 @@ public class Learning extends Fragment {
         } else {
 
             textView5.setText("на текущий урок все слова закончились попробуйте  позже ");
-            //   Log.d(TAG, "onResume:  слова закончились ");
+            //  Log.d(TAG, "onResume:  слова закончились ");
         }
     }
 

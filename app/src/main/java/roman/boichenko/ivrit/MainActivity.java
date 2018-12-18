@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        initToolbar();
+ initToolbar();
         initNavigationView();
 
         bd_word = Room.databaseBuilder(this, WordDB.class, "words_db")
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
            //     Search_word
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .addToBackStack(null)
+                    //    .addToBackStack(null)
                         .replace(R.id.fragment_container, new Search_word(), "Search_word")
                         .commit();
 
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
+      NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
         View header = navigationView.getHeaderView(0);
         textView_navigation_header = (TextView) header.findViewById(R.id.textView_navigation_header);
 
