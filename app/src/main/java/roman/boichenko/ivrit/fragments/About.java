@@ -44,7 +44,7 @@ public class About extends Fragment {
                 + "<br> How are you "+" </br>"
                 + "<br>I am fine" + " </br> </b> </p>";
          */
-        String str = "О программе v7.00 08.12.2018";
+        String str = "О программе v7.00 18.12.2018";
 
 
         textView1.setText(Html.fromHtml(str));

@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
- initToolbar();
+        initToolbar();
         initNavigationView();
 
         bd_word = Room.databaseBuilder(this, WordDB.class, "words_db")
@@ -100,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
 
         } else {
-
             switch (sharedPref.getPreferencesInteger(WINDOWS)) {
                 case 1:
                     getSupportFragmentManager()
@@ -116,13 +115,8 @@ public class MainActivity extends AppCompatActivity {
                             .replace(R.id.fragment_container, new Learning(), "Learning")
                             .commit();
                     break;
-
             }
-
-
         }
-
-
     }
 
 
@@ -135,13 +129,12 @@ public class MainActivity extends AppCompatActivity {
                 //   Toast.makeText(MainActivity.this, "Поиск слова", Toast.LENGTH_SHORT).show();
                 //TODO
 
-           //     Search_word
+                //     Search_word
                 getSupportFragmentManager()
                         .beginTransaction()
-                    //    .addToBackStack(null)
+                        //    .addToBackStack(null)
                         .replace(R.id.fragment_container, new Search_word(), "Search_word")
                         .commit();
-
 
 
                 return false;
@@ -157,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
-      NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
         View header = navigationView.getHeaderView(0);
         textView_navigation_header = (TextView) header.findViewById(R.id.textView_navigation_header);
 
